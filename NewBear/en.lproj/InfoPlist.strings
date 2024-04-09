@@ -1,0 +1,15 @@
+/* 
+  InfoPlist.strings
+  NewBear
+
+  Created by He Cho on 2024/4/5.
+  
+*/
+
+
+
+CFBundleDisplayName = "NewBear";
+CFBundleName = "NewBear";
+
+NSCameraUsageDescription = "Scan QR code";
+NSPhotoLibraryUsageDescription = "Save to the gallery";

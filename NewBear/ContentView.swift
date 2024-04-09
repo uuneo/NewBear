@@ -6,56 +6,126 @@
 //
 
 import SwiftUI
-import SwiftData
+import RealmSwift
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
+    
+    @EnvironmentObject var paw: pawManager
+    @EnvironmentObject var pageView:pageState
+    @ObservedResults(NotificationMessage.self) var messages
+    @State var toastText:String = ""
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        TabView(selection: $pageView.page) {
+            // MARK: 信息页面
+            NavigationStack{
+                MessageView()
+                    .navigationTitle(NSLocalizedString("bottomBarMsg",comment: ""))
+            }.tabItem {
+                Label(NSLocalizedString("bottomBarMsg",comment: ""), systemImage: "ellipsis.message")
+            }
+            .tag(pageState.tabPage.message)
+            .badge(messages.where({!$0.isRead}).count)
+            // MARK: 设置页面
+            NavigationStack{
+                SettingView()
+                    .navigationTitle(NSLocalizedString("bottomBarSettings",comment: ""))
+            }.tabItem {
+                Label(NSLocalizedString("bottomBarSettings",comment: ""), systemImage: "gearshape")
+            }
+            .tag(pageState.tabPage.setting)
+        }
+        .toast(info: $toastText)
+        // MARK: sheet
+        .sheet(isPresented: pageState.shared.sheetPageShow){
+            switch pageState.shared.sheetPage {
+            case .servers:
+                ServerListView(showClose: true)
+            case .appIcon:
+                NavigationStack{
+                    pawAppIconView()
+                }.presentationDetents([.medium])
+            case .addServer:
+                addServerView()
+            case .web:
+                SFSafariViewWrapper(url: pageState.shared.webUrl)
+                    .ignoresSafeArea()
+            default:
+                EmptyView()
+            }
+        }
+        // MARK: full
+        .fullScreenCover(isPresented: pageState.shared.fullPageShow){
+            switch pageState.shared.fullPage {
+            case .login:
+                LoginView(registerUrl: pageState.shared.scanUrl)
+            case .servers:
+                ServerListView(showClose: true)
+            case .example:
+                CustomHelpView()
+            case .music:
+                RingtongView()
+            case .scan:
+                ScanView { code, mode in
+                    if mode == 0 {
+                        let (mode1,msg) = paw.addServer(url: code)
+                        self.toastText = msg
+                        if mode1{
+                            //                            pageView.sheetPage = .servers
+                            pageView.fullPage = .none
+                            pageView.sheetPage = .none
+                            pageView.page = .setting
+                            pageView.showServerListView = true
+                        }
+                    }else if mode == 1{
+                        pageView.scanUrl = code
+                        pageView.fullPage = .login
                     }
                 }
-                .onDelete(perform: deleteItems)
+            case .web:
+                SFSafariViewWrapper(url: pageState.shared.webUrl)
+                    .ignoresSafeArea()
+            default:
+                EmptyView()
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+        }
+        
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            Task(priority: .background){
+                let messageNotCloud = messages.where({!$0.cloud})
+                if messageNotCloud.count == 0{
+#if DEBUG
+                    print("没有数据")
+#endif
+                    
                 }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                let result = await CloudKitManager.shared.uploadCloud(Array(messageNotCloud))
+                do{
+                    let realm = try await Realm()
+                    try realm.write{
+                        for message in result{
+                            if let thawedObject = message.thaw(){
+                                thawedObject.cloud = true
+                            }
+                            
+                        }
                     }
+                }catch{
+#if DEBUG
+                    print(error)
+#endif
+                    
                 }
-            }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+                
             }
         }
+        
+        
     }
+    
+    
+    
 }
 
 #Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+    ContentView().environmentObject(pawManager.shared)
 }

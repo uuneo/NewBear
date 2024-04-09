@@ -1,0 +1,16 @@
+/* 
+  InfoPlist.strings
+  NewBear
+
+  Created by He Cho on 2024/4/5.
+  
+*/
+
+
+
+
+CFBundleDisplayName = "NewBear";
+CFBundleName = "NewBear";
+
+NSCameraUsageDescription = "扫描二维码";
+NSPhotoLibraryUsageDescription = "保存消息图片到相册";
