@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		191251272BC594760004CC14 /* NetWorkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191251262BC594760004CC14 /* NetWorkManager.swift */; };
 		197A34022BC534B000A76EB7 /* NewBearApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34012BC534B000A76EB7 /* NewBearApp.swift */; };
 		197A34042BC534B000A76EB7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34032BC534B000A76EB7 /* ContentView.swift */; };
 		197A34082BC534B200A76EB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 197A34072BC534B200A76EB7 /* Assets.xcassets */; };
@@ -156,7 +155,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		191251262BC594760004CC14 /* NetWorkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkManager.swift; sourceTree = "<group>"; };
 		197A33FE2BC534B000A76EB7 /* NewBear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewBear.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		197A34012BC534B000A76EB7 /* NewBearApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBearApp.swift; sourceTree = "<group>"; };
 		197A34032BC534B000A76EB7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -362,7 +360,6 @@
 				197A34142BC5352300A76EB7 /* PageState.swift */,
 				197A34152BC5352300A76EB7 /* PawManager.swift */,
 				197A34162BC5352300A76EB7 /* RealmManager.swift */,
-				191251262BC594760004CC14 /* NetWorkManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -737,7 +734,6 @@
 				197A34A62BC5352300A76EB7 /* MessageDetailView.swift in Sources */,
 				197A34682BC5352300A76EB7 /* RealmManager.swift in Sources */,
 				197A34A82BC5352300A76EB7 /* MessagesView.swift in Sources */,
-				191251272BC594760004CC14 /* NetWorkManager.swift in Sources */,
 				197A34662BC5352300A76EB7 /* PageState.swift in Sources */,
 				197A346D2BC5352300A76EB7 /* MessageModal.swift in Sources */,
 				197A34732BC5352300A76EB7 /* ToolsManager.swift in Sources */,
