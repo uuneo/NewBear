@@ -58,7 +58,6 @@ class CloudKitManager {
             print("Successfully saved record to CloudKit")
 #endif
            
-           
             return true
         }catch{
 #if DEBUG

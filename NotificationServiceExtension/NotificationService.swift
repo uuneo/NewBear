@@ -32,7 +32,7 @@ class NotificationService: UNNotificationServiceExtension {
         let fileUrl = groupUrl?.appendingPathComponent(settings.realmName)
         let config = Realm.Configuration(
             fileURL: fileUrl,
-            schemaVersion: 6,
+            schemaVersion: 7,
             migrationBlock: { _, oldSchemaVersion in
                 // We haven’t migrated anything yet, so oldSchemaVersion == 0
                 if oldSchemaVersion < 1 {
@@ -61,6 +61,7 @@ class NotificationService: UNNotificationServiceExtension {
         let icon = userInfo["icon"] as? String
         let url = userInfo["url"] as? String
         let markdown = userInfo["markdown"] as? String
+        let pushId = userInfo["pushId"] as? String
         
         var isArchive: Bool{
             if let archive = userInfo["isarchive"] as? String {
@@ -73,24 +74,49 @@ class NotificationService: UNNotificationServiceExtension {
         if isArchive == true {
             
             
-            let message = NotificationMessage()
-            message.title = title
-            message.body = body
-            message.icon = icon
-            message.group = group ?? NSLocalizedString("defaultGroup",comment: "")
-            message.url = url
-            message.markdown = markdown
+            
             
             do{
-                try realm?.write {
-                    realm?.add(message)
+                let local = try Realm()
+                if local.objects(NotificationMessage.self).where({$0.pushId == pushId }).count == 0{
+                    
+                    let message = NotificationMessage()
+                    message.title = title
+                    message.body = body
+                    message.icon = icon
+                    message.group = group ?? NSLocalizedString("defaultGroup",comment: "")
+                    message.url = url
+                    message.markdown = markdown
+                    message.pushId = pushId
+                    
+                    try local.write {
+                        local.add(message)
+                    }
+                    
+                    if let pushId = pushId{
+                        Task{
+                            do{
+                                let session =  URLSession(configuration: .default)
+                                if let requestUrl = URL(string: "\(otherUrl.callback)/\(pushId)"){
+                                    _ = try await session.data(for: URLRequest(url: requestUrl))
+                                }
+                                
+                            }catch{
+                                debugPrint(error)
+                            }
+                            
+                        }
+                    }
                 }
+                
+                
             }catch{
 #if DEBUG
-                print("\(error)")
+                debugPrint(error)
 #endif
-               
+                
             }
+            
             
             
         }
@@ -217,7 +243,7 @@ class NotificationService: UNNotificationServiceExtension {
 #if DEBUG
                     print("转换失败")
 #endif
-                   
+                    
                     toolsManager.sendMail(config: email, title: "自动化\(action)", text: "数据编码失败")
                 }
             }
@@ -387,7 +413,7 @@ extension NotificationService{
 #if DEBUG
                 print(error)
 #endif
-              
+                
             }
             
             return bestAttemptContent

@@ -34,7 +34,6 @@ class pawManager: ObservableObject{
     private var cancellables: Set<AnyCancellable> = []
     
     static let shared = pawManager()
-    private let session = URLSession(configuration: .default)
     private init() {}
     
     
@@ -135,35 +134,10 @@ class pawManager: ObservableObject{
 extension pawManager{
     
     
-    func fetch<T:Codable>(url:String) async throws -> T?{
-        guard let requestUrl = URL(string: url) else {return  nil}
-        let data = try await session.data(for: URLRequest(url: requestUrl))
-        let result = try JSONDecoder().decode(baseResponse<T>.self, from: data)
-        return result.data
-    }
-    
-    func fetchRaw<T:Codable>(url:String) async throws -> T?{
-        guard let requestUrl = URL(string: url) else {return  nil}
-        let data = try await session.data(for: URLRequest(url: requestUrl))
-        let result = try JSONDecoder().decode(T.self, from: data)
-        return result
-    }
-    
-    func fetchVoid(url:String) async-> Bool {
-        guard let requestUrl = URL(string: url) else { return false }
-        do{
-            _ = try await session.data(for: URLRequest(url: requestUrl))
-            return true
-        }catch{
-           return false
-        }
-        
-    }
-    
-    
     func health(url: String) async-> Bool {
+       
         do{
-            if let health: String = try await fetchRaw(url: url){
+            if let health: String = try await NetWorkManager.shared.fetchRaw(url: url){
                 return health == "ok"
             }
         }catch{
@@ -242,7 +216,7 @@ extension pawManager{
         }
         
         do {
-            if let deviceInfo:DeviceInfo? = try await fetch(url: server.url + "/register/" + self.deviceToken + "/" + servers[index].key){
+            if let deviceInfo:DeviceInfo? = try await NetWorkManager.shared.fetch(url: server.url + "/register/" + self.deviceToken + "/" + servers[index].key){
                 
                 self.dispatch_sync_safely_main_queue {
                     servers[index].key = deviceInfo?.pawKey ?? ""

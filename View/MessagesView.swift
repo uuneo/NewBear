@@ -30,172 +30,172 @@ struct MessageView: View {
     
     
     var body: some View {
-        List {
-        
-            ForEach(messages,id: \.id){ message in
-                Button {
-                    withAnimation {
-                        self.selectGroup = getGroup(message.group)
-                        self.showItems.toggle()
-                    }
-                    RealmManager.shared.readMessage(messagesRaw.where({$0.group == message.group}))
-                } label: {
-                    LabeledContent {
-                        VStack{
-                            HStack{
-                                
-                                Text( getGroup(message.group) )
-                                    .font(.title3.weight(.bold))
-                                    .foregroundStyle(Color("textBlack"))
-                                Spacer()
-                                Text(message.createDate.agoFormatString())
-                                    .font(.caption2)
-                                Image(systemName: "chevron.forward")
-                                    .font(.caption2)
-                            }
-                            
-                            HStack{
-                                Group {
-                                    if let title = message.title{
-                                        Text( "【\(title)】\(message.body ?? "")")
-                                    }else{
-                                        Text(message.body ?? "")
-                                        
-                                    }
-                                }
-                                .font(.footnote)
-                                .lineLimit(2)
-                                .foregroundStyle(.gray)
-                                
-                                Spacer()
-                            }
-                            
-                            
-                            
-                            
+       
+            List {
+            
+                ForEach(messages,id: \.id){ message in
+                    Button {
+                        withAnimation {
+                            self.selectGroup = getGroup(message.group)
+                            self.showItems.toggle()
                         }
+                        RealmManager.shared.readMessage(messagesRaw.where({$0.group == message.group}))
                     } label: {
-                        HStack{
-                            HStack{
+                        LabeledContent {
+                            VStack{
+                                HStack{
+                                    
+                                    Text( getGroup(message.group) )
+                                        .font(.headline.weight(.bold))
+                                        .foregroundStyle(Color("textBlack"))
+                                    Spacer()
+                                    Text(message.createDate.agoFormatString())
+                                        .font(.caption2)
+                                    Image(systemName: "chevron.forward")
+                                        .font(.caption2)
+                                }
                                 
+                                HStack{
+                                    Group {
+                                        if let title = message.title{
+                                            Text( "【\(title)】\(message.body ?? "")")
+                                        }else{
+                                            Text(message.body ?? "")
+                                            
+                                        }
+                                    }
+                                    .font(.footnote)
+                                    .lineLimit(2)
+                                    .foregroundStyle(.gray)
+                                    
+                                    Spacer()
+                                }
+                                
+                                
+                                
+                                
+                            }
+                        } label: {
+                            HStack{
                                 if messagesRaw.where({!$0.isRead && $0.group == message.group}).count > 0{
                                     Circle()
                                         .fill(.blue)
                                         .frame(width: 10,height: 10)
                                 }
-                            }.frame(width: 10)
-                            
-                            VStack( spacing:10){
                                 
-                                Group{
-                                    if let icon = message.icon,
-                                       toolsManager.startsWithHttpOrHttps(icon){
-                                        
-                                        AsyncImageView(imageUrl: icon )
-                                        
-                                    }else{
-                                        Image("logo")
-                                            .resizable()
+                                VStack( spacing:10){
+                                    
+                                    Group{
+                                        if let icon = message.icon,
+                                           toolsManager.startsWithHttpOrHttps(icon){
+                                            
+                                            AsyncImageView(imageUrl: icon )
+                                            
+                                        }else{
+                                            Image("logo")
+                                                .resizable()
+                                        }
                                     }
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 45, height: 45, alignment: .center)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    
+                                    
                                 }
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 45, height: 45, alignment: .center)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                
-                                
                             }
+                            .frame(minWidth: 60)
                         }
-                        .frame(minWidth: 60)
+                        
+                    }
+                    .swipeActions(edge: .leading) {
+                        Button {
+                            let realm = RealmManager.shared
+                            let alldata = realm.getObject()?.where({$0.group == message.group})
+                            if let alldata = alldata{
+                                let _ = realm.updateObjects(alldata) { data in
+                                    data?.isRead = true
+                                }
+                            }
+                        } label: {
+                            Label(NSLocalizedString("groupMarkRead",comment: ""), systemImage: "envelope")
+                        }.tint(.blue)
                     }
                     
-                }
-                .swipeActions(edge: .leading) {
-                    Button {
-                        let realm = RealmManager.shared
-                        let alldata = realm.getObject()?.where({$0.group == message.group})
-                        if let alldata = alldata{
-                            let _ = realm.updateObjects(alldata) { data in
-                                data?.isRead = true
-                            }
-                        }
-                    } label: {
-                        Label(NSLocalizedString("groupMarkRead",comment: ""), systemImage: "envelope")
-                    }.tint(.blue)
+                }.onDelete(perform: { indexSet in
+                    for index in indexSet{
+                        RealmManager.shared.delByGroup(getGroup(messages[index].group))
+                    }
+                })
+            }
+            
+            .listStyle(.plain)
+            .navigationDestination(isPresented: $showItems) {
+                MessageDetailView(groupName: self.selectGroup)
+    //                .navigationBarBackButtonHidden(true)
+            }
+           
+            .toolbar{
+                ToolbarItem {
+                    
+                    Button{
+                        pageState.shared.fullPage = .example
+                    }label:{
+                        Image(systemName: "questionmark.circle")
+                        
+                    } .foregroundStyle(Color("textBlack"))
+                        .accessibilityIdentifier("HelpButton")
                 }
                 
-            }.onDelete(perform: { indexSet in
-                for index in indexSet{
-                    RealmManager.shared.delByGroup(getGroup(messages[index].group))
+                ToolbarItem{
+                    Button{
+                        self.showAction = true
+                    }label: {
+                        Image("baseline_delete_outline_black_24pt")
+                        
+                    }  .foregroundStyle(Color("textBlack"))
+                    
                 }
-            })
-        }
-        
-        .listStyle(.plain)
-        .navigationDestination(isPresented: $showItems) {
-            MessageDetailView(groupName: self.selectGroup)
-//                .navigationBarBackButtonHidden(true)
-        }
+            }
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic)){
+                
+                if let filterMessages = filterMessage(messagesRaw, searchText){
+                    Text( String(format: NSLocalizedString("findMessageCount" ,comment: "找到\(filterMessages.count)条数据"), filterMessages.count))
+                        .foregroundStyle(.gray)
+                    ForEach(filterMessages,id: \.id){message in
+                        MessageItem(message: message,searchText: searchText)
+                    }
+                }else{
+                    Text( String(format: NSLocalizedString("findMessageCount" ,comment: "找到 0 条数据"), 0))
+                        .foregroundStyle(.gray)
+                }
+            }
+            .actionSheet(isPresented: $showAction) {
+                ActionSheet(title: Text(NSLocalizedString("deleteTimeMessage",comment: "")),buttons: [
+                    .destructive(Text(NSLocalizedString("allTime",comment: "")), action: {
+                        deleteMessage(.allTime)
+                    }),
+                    .destructive(Text(NSLocalizedString("monthAgo",comment: "")), action: {
+                        deleteMessage( .lastMonth)
+                    }),
+                    .destructive(Text(NSLocalizedString("weekAgo",comment: "")), action: {
+                        deleteMessage( .lastWeek)
+                    }),
+                    .destructive(Text(NSLocalizedString("dayAgo",comment: "")), action: {
+                        deleteMessage( .lastDay)
+                    }),
+                    .destructive(Text(NSLocalizedString("hourAgo",comment: "")), action: {
+                        deleteMessage( .lastHour)
+                    }),
+                    .default(Text(NSLocalizedString("allMarkRead",comment: "")), action: {
+                        deleteMessage( .markRead)
+                    }),
+                    .cancel()
+                    
+                ])
+            }
+            .toast(info: $toastText)
+            
        
-        .toolbar{
-            ToolbarItem {
-                
-                Button{
-                    pageState.shared.fullPage = .example
-                }label:{
-                    Image(systemName: "questionmark.circle")
-                    
-                } .foregroundStyle(Color("textBlack"))
-                    .accessibilityIdentifier("HelpButton")
-            }
-            
-            ToolbarItem{
-                Button{
-                    self.showAction = true
-                }label: {
-                    Image("baseline_delete_outline_black_24pt")
-                    
-                }  .foregroundStyle(Color("textBlack"))
-                
-            }
-        }
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic)){
-            
-            if let filterMessages = filterMessage(messagesRaw, searchText){
-                Text( String(format: NSLocalizedString("findMessageCount" ,comment: "找到\(filterMessages.count)条数据"), filterMessages.count))
-                    .foregroundStyle(.gray)
-                ForEach(filterMessages,id: \.id){message in
-                    MessageItem(message: message,searchText: searchText)
-                }
-            }else{
-                Text( String(format: NSLocalizedString("findMessageCount" ,comment: "找到 0 条数据"), 0))
-                    .foregroundStyle(.gray)
-            }
-        }
-        .actionSheet(isPresented: $showAction) {
-            ActionSheet(title: Text(NSLocalizedString("deleteTimeMessage",comment: "")),buttons: [
-                .destructive(Text(NSLocalizedString("allTime",comment: "")), action: {
-                    deleteMessage(.allTime)
-                }),
-                .destructive(Text(NSLocalizedString("monthAgo",comment: "")), action: {
-                    deleteMessage( .lastMonth)
-                }),
-                .destructive(Text(NSLocalizedString("weekAgo",comment: "")), action: {
-                    deleteMessage( .lastWeek)
-                }),
-                .destructive(Text(NSLocalizedString("dayAgo",comment: "")), action: {
-                    deleteMessage( .lastDay)
-                }),
-                .destructive(Text(NSLocalizedString("hourAgo",comment: "")), action: {
-                    deleteMessage( .lastHour)
-                }),
-                .default(Text(NSLocalizedString("allMarkRead",comment: "")), action: {
-                    deleteMessage( .markRead)
-                }),
-                .cancel()
-                
-            ])
-        }
-        .toast(info: $toastText)
     }
     
     

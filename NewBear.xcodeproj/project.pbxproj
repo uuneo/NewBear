@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		191251272BC594760004CC14 /* NetWorkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191251262BC594760004CC14 /* NetWorkManager.swift */; };
 		197A34022BC534B000A76EB7 /* NewBearApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34012BC534B000A76EB7 /* NewBearApp.swift */; };
 		197A34042BC534B000A76EB7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34032BC534B000A76EB7 /* ContentView.swift */; };
 		197A34082BC534B200A76EB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 197A34072BC534B200A76EB7 /* Assets.xcassets */; };
@@ -119,6 +120,7 @@
 		197A35142BC53EE900A76EB7 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 197A35132BC53EE900A76EB7 /* CryptoSwift */; };
 		197A35162BC53EF800A76EB7 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 197A35152BC53EF800A76EB7 /* CryptoSwift */; };
 		197A35172BC5437A00A76EB7 /* Localizable.strings in Sources */ = {isa = PBXBuildFile; fileRef = 197A34F82BC5391100A76EB7 /* Localizable.strings */; };
+		197A35192BC552A000A76EB7 /* StartPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A35182BC552A000A76EB7 /* StartPageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +156,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		191251262BC594760004CC14 /* NetWorkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkManager.swift; sourceTree = "<group>"; };
 		197A33FE2BC534B000A76EB7 /* NewBear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewBear.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		197A34012BC534B000A76EB7 /* NewBearApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBearApp.swift; sourceTree = "<group>"; };
 		197A34032BC534B000A76EB7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -254,6 +257,7 @@
 		197A34FA2BC5391400A76EB7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		197A34FB2BC5399A00A76EB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		197A34FC2BC53B8E00A76EB7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		197A35182BC552A000A76EB7 /* StartPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -358,6 +362,7 @@
 				197A34142BC5352300A76EB7 /* PageState.swift */,
 				197A34152BC5352300A76EB7 /* PawManager.swift */,
 				197A34162BC5352300A76EB7 /* RealmManager.swift */,
+				191251262BC594760004CC14 /* NetWorkManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -463,6 +468,7 @@
 				197A345F2BC5352300A76EB7 /* ServerListView.swift */,
 				197A34602BC5352300A76EB7 /* SettingsView.swift */,
 				197A34612BC5352300A76EB7 /* SignInView.swift */,
+				197A35182BC552A000A76EB7 /* StartPageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -716,6 +722,7 @@
 				197A349E2BC5352300A76EB7 /* toastView.swift in Sources */,
 				197A346C2BC5352300A76EB7 /* Enums.swift in Sources */,
 				197A34692BC5352300A76EB7 /* ConstantConfig.swift in Sources */,
+				197A35192BC552A000A76EB7 /* StartPageView.swift in Sources */,
 				197A34992BC5352300A76EB7 /* AsyncImageView.swift in Sources */,
 				197A34702BC5352300A76EB7 /* PushExample.swift in Sources */,
 				197A34AD2BC5352300A76EB7 /* SettingsView.swift in Sources */,
@@ -730,6 +737,7 @@
 				197A34A62BC5352300A76EB7 /* MessageDetailView.swift in Sources */,
 				197A34682BC5352300A76EB7 /* RealmManager.swift in Sources */,
 				197A34A82BC5352300A76EB7 /* MessagesView.swift in Sources */,
+				191251272BC594760004CC14 /* NetWorkManager.swift in Sources */,
 				197A34662BC5352300A76EB7 /* PageState.swift in Sources */,
 				197A346D2BC5352300A76EB7 /* MessageModal.swift in Sources */,
 				197A34732BC5352300A76EB7 /* ToolsManager.swift in Sources */,
@@ -959,7 +967,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twown.paw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -995,7 +1003,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twown.paw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

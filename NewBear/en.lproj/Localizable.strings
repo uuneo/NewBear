@@ -310,3 +310,6 @@ findMessageCount = "Found %1$d records";
 
 
 defaultGroup = "Def";
+
+startUse = "Home Page";
+

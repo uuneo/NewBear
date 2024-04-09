@@ -23,6 +23,7 @@ final class NotificationMessage: Object , ObjectKeyIdentifiable{
     @Persisted var url:String?
     @Persisted var cloud:Bool = false
     @Persisted var markdown:String?
+    @Persisted var pushId:String?
     
 }
 
@@ -30,7 +31,7 @@ final class NotificationMessage: Object , ObjectKeyIdentifiable{
 
 extension NotificationMessage: Codable{
     enum CodingKeys: String, CodingKey {
-        case id, title, body, icon, group, createDate, isRead, url,cloud,markdown
+        case id, title, body, icon, group, createDate, isRead, url,cloud,markdown,pushId
     }
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -43,6 +44,7 @@ extension NotificationMessage: Codable{
         try container.encodeIfPresent(url, forKey: .url)
         try container.encodeIfPresent(cloud, forKey: .cloud)
         try container.encodeIfPresent(markdown, forKey: .markdown)
+        try container.encodeIfPresent(pushId, forKey: .pushId)
     }
    
 }
@@ -70,6 +72,7 @@ extension NotificationMessage {
         self.url = record["url"] as? String
         self.cloud = record["cloud"] as? Bool ?? true
         self.markdown = record["markdown"] as? String
+        self.pushId = record["pushId"] as? String
     }
     
     
@@ -91,6 +94,7 @@ extension NotificationMessage{
         record["url"] = self.url
         record["cloud"] = true
         record["markdown"] = self.markdown
+        record["pushId"] = self.pushId
         return record
     }
     

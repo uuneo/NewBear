@@ -32,7 +32,7 @@ class AppDelegate: NSObject, UIApplicationDelegate{
         
         let config = Realm.Configuration(
             fileURL: fileUrl,
-            schemaVersion: 6,
+            schemaVersion: 7,
             migrationBlock: { _, oldSchemaVersion in
                 // We haven’t migrated anything yet, so oldSchemaVersion == 0
                 if oldSchemaVersion < 1 {

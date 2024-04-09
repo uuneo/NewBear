@@ -105,7 +105,9 @@ extension CustomHelpView{
                                 paw.dispatch_sync_safely_main_queue {
                                     if ok{
                                         if let url = URL(string: resultUrl){
+                                            
                                             UIApplication.shared.open(url)
+                                            self.dismiss()
                                         }
                                     }else{
                                         self.toastText = NSLocalizedString("offline",comment: "")
