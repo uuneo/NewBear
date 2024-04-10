@@ -75,9 +75,9 @@ struct SettingView: View {
                                     self.toastText = text
                                 }
                                
-                                // TODO: 这个位置有警告，暂时不清楚什么原因，不影响使用
                                 self.exportJSON()
-                                isShareSheetPresented = true
+                                self.isShareSheetPresented.toggle()
+                               
                             }else{
                                 toolsManager.async_set_localString("nothingMessage") { text in
                                     self.toastText = text
@@ -525,6 +525,7 @@ struct SettingView: View {
 
 extension SettingView{
     
+    
     func exportJSON() {
         do {
             let msgs = Array(messages)
@@ -532,22 +533,23 @@ extension SettingView{
             
             guard let jsonString = String(data: jsonData, encoding: .utf8),
                   let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else{
-                toolsManager.async_set_localString("exportFail") { text in
-                    self.toastText = text
-                }
+                
+                self.toastText = NSLocalizedString("exportFail", comment: "")
+               
                 return
             }
             
             let fileURL = documentsDirectory.appendingPathComponent("messages.json")
             try jsonString.write(to: fileURL, atomically: false, encoding: .utf8)
             self.jsonFileUrl = fileURL
-            
-            toolsManager.async_set_localString("exportSuccess") { text in
-                self.toastText = text
-            }
+            self.toastText = NSLocalizedString("exportSuccess", comment: "")
+
 #if DEBUG
             print("JSON file saved at: \(fileURL.absoluteString)")
 #endif
+            
+            
+           
            
         } catch {
             
