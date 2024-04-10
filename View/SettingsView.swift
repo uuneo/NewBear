@@ -301,6 +301,29 @@ struct SettingView: View {
                         
                         
                     }
+                    
+                    Button{
+                        pageView.webUrl = otherUrl.issues
+                        pageView.fullPage = .web
+                        
+                    }label: {
+                        HStack(alignment:.center){
+                            Label {
+                                Text(NSLocalizedString("contactMe",comment: ""))
+                                    .foregroundStyle(Color("textBlack"))
+                            } icon: {
+                                Image(systemName: "questionmark.circle")
+                                    .scaleEffect(0.9)
+                            }
+
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.gray)
+                        }
+                        
+                       
+
+                    }
                    
                 }
                 

@@ -21,6 +21,7 @@ class pageState: ObservableObject{
         case appIcon
         case addServer
         case web
+        case issues
         case none
     }
 

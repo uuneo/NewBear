@@ -27,6 +27,7 @@ struct otherUrl {
     static let actinsRunUrl = "https://github.com/96bit/AlarmPaw/actions/runs/"
     static let musicUrl = "https://convertio.co/mp3-caf/"
     static let callback = defaultServer + "/callback"
+    static let issues = "https://github.com/uuneo/NewBear/issues/new"
 }
 
 

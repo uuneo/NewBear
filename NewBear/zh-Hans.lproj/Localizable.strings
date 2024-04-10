@@ -303,3 +303,5 @@ findMessageCount = "找到 %1$d 条数据";
 defaultGroup = "默认";
 
 startUse = "进入首页";
+
+contactMe = "发现问题";

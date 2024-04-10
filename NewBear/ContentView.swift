@@ -84,6 +84,9 @@ struct ContentView: View {
             case .web:
                 SFSafariViewWrapper(url: pageState.shared.webUrl)
                     .ignoresSafeArea()
+            case .issues:
+                SFSafariViewWrapper(url: pageState.shared.webUrl)
+                    .ignoresSafeArea()
             default:
                 EmptyView()
             }
