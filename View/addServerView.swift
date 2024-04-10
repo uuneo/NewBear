@@ -85,7 +85,10 @@ struct addServerView: View {
     func addServer(url: String)-> Bool{
        
         if !toolsManager.startsWithHttpOrHttps(url){
-            self.toastText = NSLocalizedString("verifyFail",comment: "")
+            toolsManager.async_set_localString("verifyFail") { text in
+                self.toastText = text
+            }
+            
             return false
         }
         
@@ -97,9 +100,13 @@ struct addServerView: View {
             }else{
                 paw.servers.append(serverInfo(url: url, key: ""))
             }
-            self.toastText = NSLocalizedString("addSuccess",comment: "")
+            toolsManager.async_set_localString("addSuccess") { text in
+                self.toastText = text
+            }
         }else{
-            self.toastText =  NSLocalizedString("serverExist",comment: "")
+            toolsManager.async_set_localString("serverExist") { text in
+                self.toastText = text
+            }
             return false
         }
         

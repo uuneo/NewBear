@@ -61,7 +61,10 @@ struct cloudMessageView: View {
                             self.exportJSON()
                             self.isShareSheetPresented = true
                         }else{
-                            self.toastText = NSLocalizedString("notData",comment: "")
+                            toolsManager.async_set_localString("notData") { text in
+                                self.toastText = text
+                            }
+                           
                         }
                         self.showLoading = false
                     }label: {
@@ -115,11 +118,13 @@ struct cloudMessageView: View {
            
             let itemId  = messages[index2].id
             let res = await  CloudKitManager.shared.deleteMessage(itemId)
-            paw.dispatch_sync_safely_main_queue {
-                self.toastText = NSLocalizedString( res ? "deleteSuccess" :"deleteFail",comment: "")
-                if res{
-                    messages.remove(atOffsets: index)
-                }
+            
+            toolsManager.async_set_localString( res ? "deleteSuccess" :"deleteFail") { text in
+                self.toastText = text
+            }
+            
+            if res{
+                messages.remove(atOffsets: index)
             }
         }
 
@@ -171,11 +176,14 @@ struct cloudMessageView: View {
         catch{
 #if DEBUG
             print(error)
+            
+            
+            toolsManager.async_set_localString( "getFail") { text in
+                self.toastText = text
+            }
 #endif
            
-            pawManager.shared.dispatch_sync_safely_main_queue {
-                self.toastText = NSLocalizedString("getFail",comment: "")
-            }
+            
         }
         
         pawManager.shared.dispatch_sync_safely_main_queue {
@@ -192,20 +200,31 @@ struct cloudMessageView: View {
             
             guard let jsonString = String(data: jsonData, encoding: .utf8),
                   let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else{
-                self.toastText = NSLocalizedString("exportFail",comment: "")
+                
+                toolsManager.async_set_localString("exportFail") { text in
+                    self.toastText = text
+                }
+               
                 return
             }
             
             let fileURL = documentsDirectory.appendingPathComponent("messages.json")
             try jsonString.write(to: fileURL, atomically: false, encoding: .utf8)
             self.jsonFileUrl = fileURL
-            self.toastText = NSLocalizedString("exportSuccess",comment: "")
+            
+            toolsManager.async_set_localString("exportSuccess") { text in
+                self.toastText = text
+            }
+
 #if DEBUG
             print("JSON file saved at: \(fileURL.absoluteString)")
 #endif
            
         } catch {
-            self.toastText = NSLocalizedString("exportFail",comment: "")
+            toolsManager.async_set_localString("exportFail") { text in
+                self.toastText = text
+            }
+
 #if DEBUG
             print("Error encoding JSON: \(error.localizedDescription)")
 #endif

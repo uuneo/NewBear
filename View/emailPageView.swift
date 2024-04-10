@@ -25,12 +25,26 @@ struct emailPageView: View {
                     self.showLoading = true
                     paw.dispatch_async_queue{
                         toolsManager.sendMail(config: paw.email, title:   NSLocalizedString("toMailTestTitle", comment: "自动化: NewBear"), text:NSLocalizedString("toMailTestText", comment:  "{title:\"标题\",...}")){ error in
-                            paw.dispatch_sync_safely_main_queue {
-                                if error != nil {
-                                    self.toastText = NSLocalizedString("sendMailFail", comment: "调用失败")
-                                }else{
-                                    self.toastText = NSLocalizedString("sendMailSuccess", comment:  "调用成功")
+                            
+                           
+                            
+                            
+                            if error != nil {
+                                toolsManager.async_set_localString( "sendMailFail", "调用失败") { text in
+                                    self.toastText = text
                                 }
+                            }else{
+                                toolsManager.async_set_localString( "sendMailSuccess", "调用成功") { text in
+                                    self.toastText = text
+                                }
+                            }
+                            
+                            
+                            
+                            
+                            
+                            paw.dispatch_sync_safely_main_queue {
+                               
                                 self.showLoading = false
                             }
                             

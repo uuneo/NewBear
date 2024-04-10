@@ -125,12 +125,17 @@ struct SettingView: View {
                         Button {
                             
                             if RealmManager.shared.getObject()?.count ?? 0 > 0{
-                                self.toastText = NSLocalizedString("controlSuccess",comment: "")
+                                toolsManager.async_set_localString("controlSuccess") { text in
+                                    self.toastText = text
+                                }
+                               
                                 // TODO: 这个位置有警告，暂时不清楚什么原因，不影响使用
                                 self.exportJSON()
                                 isShareSheetPresented = true
                             }else{
-                                self.toastText = NSLocalizedString("nothingMessage",comment: "")
+                                toolsManager.async_set_localString("nothingMessage") { text in
+                                    self.toastText = text
+                                }
                             }
                             
                             
@@ -149,9 +154,14 @@ struct SettingView: View {
                     Button{
                         if paw.deviceToken != ""{
                             paw.copy(text: paw.deviceToken)
-                            self.toastText = NSLocalizedString("copySuccessText",comment: "")
+                            toolsManager.async_set_localString("copySuccessText") { text in
+                                self.toastText = text
+                            }
+                         
                         }else{
-                            self.toastText =  NSLocalizedString("needRegister",comment: "")
+                            toolsManager.async_set_localString("needRegister") { text in
+                                self.toastText = text
+                            }
                         }
                     }label: {
                         HStack{
@@ -431,20 +441,29 @@ extension SettingView{
             
             guard let jsonString = String(data: jsonData, encoding: .utf8),
                   let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else{
-                self.toastText = NSLocalizedString("exportFail",comment: "")
+                toolsManager.async_set_localString("exportFail") { text in
+                    self.toastText = text
+                }
                 return
             }
             
             let fileURL = documentsDirectory.appendingPathComponent("messages.json")
             try jsonString.write(to: fileURL, atomically: false, encoding: .utf8)
             self.jsonFileUrl = fileURL
-            self.toastText = NSLocalizedString("exportSuccess",comment: "")
+            
+            toolsManager.async_set_localString("exportSuccess") { text in
+                self.toastText = text
+            }
 #if DEBUG
             print("JSON file saved at: \(fileURL.absoluteString)")
 #endif
            
         } catch {
-            self.toastText = NSLocalizedString("exportFail",comment: "")
+            
+            toolsManager.async_set_localString("exportFail") { text in
+                self.toastText = text
+            }
+           
 #if DEBUG
             print("Error encoding JSON: \(error.localizedDescription)")
 #endif

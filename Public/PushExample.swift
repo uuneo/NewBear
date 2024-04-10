@@ -19,11 +19,8 @@ struct pushExample {
         
         pushExample(header: NSLocalizedString("pushExampleHeader3",comment: ""), footer: NSLocalizedString("pushExampleFooter3",comment: ""), title: NSLocalizedString("pushExampleTitle3",comment: ""),params: NSLocalizedString("pushExampleParams3",comment: "")),
         
-        
         pushExample(header: NSLocalizedString("pushExampleHeader4",comment: ""), footer: NSLocalizedString("pushExampleFooter4",comment: ""), title: NSLocalizedString("pushExampleTitle4",comment: ""),params: NSLocalizedString("pushExampleParams4",comment: "")),
         
-        
-        pushExample(header: NSLocalizedString("pushExampleHeader5",comment: ""), footer: NSLocalizedString("pushExampleFooter5",comment: ""), title: NSLocalizedString("pushExampleTitle5",comment: ""),params: NSLocalizedString("pushExampleParams5",comment: "")),
         
         pushExample(header: NSLocalizedString("pushExampleHeader6",comment: ""), footer: NSLocalizedString("pushExampleFooter6",comment: ""), title: NSLocalizedString("pushExampleTitle6",comment: ""),params: NSLocalizedString("pushExampleParams6",comment: "")),
         

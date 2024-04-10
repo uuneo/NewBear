@@ -112,7 +112,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         }
         self.copyTips.text = NSLocalizedString("groupMessageMode", comment: "复制成功")
         self.copyTips.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 10)
-        completion(.dismiss)
+        completion(.doNotDismiss)
     }
     
     

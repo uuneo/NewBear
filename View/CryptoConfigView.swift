@@ -120,7 +120,12 @@ struct CryptoConfigView: View {
                 ToolbarItem {
                     Button {
                         if verifyKey() && verifyIv(){
-                            self.toastText = NSLocalizedString("cryptoConfigSuccess", comment: "验证成功")
+                           
+                            toolsManager.async_set_localString("cryptoConfigSuccess", "验证成功"){text in
+                                self.toastText = text
+                            }
+                            
+                           
                         }
                     } label: {
                         Text(NSLocalizedString("cryptoConfigVerify", comment: "验证"))
@@ -133,7 +138,9 @@ struct CryptoConfigView: View {
     func verifyKey()-> Bool{
         if cryptoFields.key.count != expectKeyLength{
             cryptoFields.key = ""
-            self.toastText = NSLocalizedString("cryptoConfigKeyFail", comment: "Key参数长度不正确")
+            toolsManager.async_set_localString("cryptoConfigKeyFail", "Key参数长度不正确"){text in
+                self.toastText = text
+            }
             return false
         }
         return true
@@ -142,7 +149,10 @@ struct CryptoConfigView: View {
     func verifyIv() -> Bool{
         if cryptoFields.iv.count != 16 {
             cryptoFields.iv = ""
-            self.toastText = NSLocalizedString("cryptoConfigIvFail", comment: "Iv参数长度不正确")
+           
+            toolsManager.async_set_localString("cryptoConfigIvFail", "Iv参数长度不正确"){text in
+                self.toastText = text
+            }
             return false
         }
         return true
@@ -151,7 +161,10 @@ struct CryptoConfigView: View {
     
     func createCopyText(){
         if cryptoFields.iv == "" || cryptoFields.key == ""{
-            self.toastText = NSLocalizedString("cryptoConfigParamsFail", comment: "参数不全")
+            
+            toolsManager.async_set_localString("cryptoConfigParamsFail", "参数不全"){text in
+                self.toastText = text
+            }
             return
         }
         let text =   """
@@ -185,7 +198,9 @@ struct CryptoConfigView: View {
                     """
         
         pawManager.shared.copy(text: text)
-        self.toastText = NSLocalizedString("copySuccessText", comment: "复制成功")
+        toolsManager.async_set_localString("copySuccessText", "复制成功"){text in
+            self.toastText = text
+        }
     }
 }
 

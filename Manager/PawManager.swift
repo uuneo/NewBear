@@ -119,6 +119,8 @@ class pawManager: ObservableObject{
             }
         }
     }
+
+
     
     func dispatch_async_queue(_ qos:DispatchQoS.QoSClass = .background,of block: @escaping () -> ()){
         DispatchQueue.global(qos: qos).async{

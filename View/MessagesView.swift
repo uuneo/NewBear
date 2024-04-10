@@ -36,7 +36,7 @@ struct MessageView: View {
                 ForEach(messages,id: \.id){ message in
                     Button {
                         withAnimation {
-                            self.selectGroup = getGroup(message.group)
+                            self.selectGroup = toolsManager.getGroup(message.group)
                             self.showItems.toggle()
                         }
                         RealmManager.shared.readMessage(messagesRaw.where({$0.group == message.group}))
@@ -45,7 +45,7 @@ struct MessageView: View {
                             VStack{
                                 HStack{
                                     
-                                    Text( getGroup(message.group) )
+                                    Text( toolsManager.getGroup(message.group) )
                                         .font(.headline.weight(.bold))
                                         .foregroundStyle(Color("textBlack"))
                                     Spacer()
@@ -123,7 +123,7 @@ struct MessageView: View {
                     
                 }.onDelete(perform: { indexSet in
                     for index in indexSet{
-                        RealmManager.shared.delByGroup(getGroup(messages[index].group))
+                        RealmManager.shared.delByGroup(toolsManager.getGroup(messages[index].group))
                     }
                 })
             }
@@ -223,7 +223,10 @@ extension MessageView{
         let realm = RealmManager.shared
         
         if realm.getObject()?.count == 0{
-            self.toastText = NSLocalizedString("nothingMessage",comment: "")
+            toolsManager.async_set_localString( "nothingMessage") { text in
+                self.toastText = text
+            }
+           
             return
         }
         
@@ -260,7 +263,10 @@ extension MessageView{
         
         let _ = realm.deleteObjects(alldata)
         
-        self.toastText = NSLocalizedString("deleteSuccess",comment: "")
+        toolsManager.async_set_localString( "deleteSuccess") { text in
+            self.toastText = text
+        }
+        
         
     }
     

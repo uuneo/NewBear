@@ -32,7 +32,11 @@ struct MessageDetailView: View {
                             Button {
                                 let _ = RealmManager.shared.updateObject(message) { item2 in
                                     item2.isRead = !item2.isRead
-                                    self.toastText = NSLocalizedString("messageModeChanged",comment: "")
+                                    
+                                    toolsManager.async_set_localString( "messageModeChanged") { text in
+                                        self.toastText = text
+                                    }
+                                  
                                 }
                             } label: {
                                 Label(message.isRead ? NSLocalizedString("markNotRead",comment: "") :  NSLocalizedString("markRead",comment: ""), systemImage: message.isRead ? "envelope.open": "envelope")

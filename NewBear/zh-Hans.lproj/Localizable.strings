@@ -103,16 +103,10 @@ pushExampleTitle3 =  "推送铃声";
 pushExampleParams3 = "推送内容?sound=minuet";
 
 
-pushExampleHeader4 = "自定义icon";
-pushExampleFooter4 = "可以自定义icon=https://图片网址，内置4种：默认是info，warn，error，weixin,miniapp";
+pushExampleHeader4 = "自定义推送图标";
+pushExampleFooter4 = "可以自定义icon=https://图片网址";
 pushExampleTitle4 = "自定义icon";
 pushExampleParams4 = "推送内容?icon=warn";
-
-
-pushExampleHeader5 = "携带图片";
-pushExampleFooter5 = "image=https://图片网址";
-pushExampleTitle5 = "自定义图片";
-pushExampleParams5 = "推送内容?image=https://day.app/assets/images/avatar.jpg";
 
 pushExampleHeader6 = "自动保存";
 pushExampleFooter6 = "消息默认保存，除非携带isArchive=0，信息不会在前台出现";

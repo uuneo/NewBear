@@ -84,7 +84,9 @@ extension ServerListView{
                             Spacer()
                             Image(systemName: "doc.on.doc")
                                 .onTapGesture{
-                                    self.toastText = NSLocalizedString("copySuccessText",comment: "")
+                                    toolsManager.async_set_localString( "copySuccessText") { text in
+                                        self.toastText = text
+                                    }
                                     paw.copy(text: item.url + "/" + item.key)
                                 }
                             
@@ -96,7 +98,9 @@ extension ServerListView{
                                 Task{
                                     await paw.register(server: item)
                                 }
-                                self.toastText = NSLocalizedString("controlSuccess",comment: "")
+                                toolsManager.async_set_localString("controlSuccess") { text in
+                                    self.toastText = text
+                                }
                             }label: {
                                 Text(NSLocalizedString("registerAndCheck",comment: ""))
                             }.tint(.blue)
@@ -112,8 +116,10 @@ extension ServerListView{
                                     await paw.register(server: item)
                                 }
                                 
+                                toolsManager.async_set_localString("controlSuccess") { text in
+                                    self.toastText = text
+                                }
                                 
-                                self.toastText = NSLocalizedString("controlSuccess",comment: "")
                             }label: {
                                 Text(NSLocalizedString("resetKey",comment: "重置Key"))
                             }.tint(.red)
@@ -132,7 +138,10 @@ extension ServerListView{
                     if paw.servers.count > 1{
                         paw.servers.remove(atOffsets: indexSet)
                     }else{
-                        self.toastText = NSLocalizedString("needOneServer",comment: "")
+               
+                        toolsManager.async_set_localString("needOneServer") { text in
+                            self.toastText = text
+                        }
                     }
                     
                 })

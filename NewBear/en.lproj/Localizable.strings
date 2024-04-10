@@ -102,14 +102,10 @@ pushExampleTitle3 =  "Push Ringtones";
 pushExampleParams3 = "Push Content?sound=minuet";
 
 pushExampleHeader4 = "Customize icon";
-pushExampleFooter4 = "Customize icon with https://image-url, built-in 4 types: default, info, warn, error, weixin, miniapp";
+pushExampleFooter4 = "Customize icon with https://image-url";
 pushExampleTitle4 = "Custom Icon";
 pushExampleParams4 = "Push Content?icon=warn";
 
-pushExampleHeader5 = "With Image";
-pushExampleFooter5 = "image=https://image-url";
-pushExampleTitle5 = "Custom Image";
-pushExampleParams5 = "Push Content?image=https://day.app/assets/images/avatar.jpg";
 
 pushExampleHeader6 = "Auto Save";
 pushExampleFooter6 = "Messages are saved by default, unless isArchive=0 is included, messages won't appear in the foreground";

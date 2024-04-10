@@ -27,12 +27,12 @@ class NotificationService: UNNotificationServiceExtension {
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
     
-    lazy var realm: Realm? = {
+    var realm: Realm? = {
         let groupUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: settings.groupName)
         let fileUrl = groupUrl?.appendingPathComponent(settings.realmName)
         let config = Realm.Configuration(
             fileURL: fileUrl,
-            schemaVersion: 7,
+            schemaVersion: settings.realmModalVersion,
             migrationBlock: { _, oldSchemaVersion in
                 // We haven’t migrated anything yet, so oldSchemaVersion == 0
                 if oldSchemaVersion < 1 {
@@ -45,7 +45,10 @@ class NotificationService: UNNotificationServiceExtension {
         
         // Tell Realm to use this new configuration object for the default Realm
         Realm.Configuration.defaultConfiguration = config
-        return try? Realm()
+        let realm = try? Realm()
+        debugPrint( "\(realm?.objects(NotificationMessage.self).count ?? 0)")
+        
+        return realm
     }()
     
     
@@ -70,45 +73,56 @@ class NotificationService: UNNotificationServiceExtension {
             return  true
         }
         
+        debugPrint(userInfo,isArchive)
         
-        if isArchive == true {
-            
-            
-            
+        if isArchive {
+        
             
             do{
                 let local = try Realm()
-                if local.objects(NotificationMessage.self).where({$0.pushId == pushId }).count == 0{
-                    
-                    let message = NotificationMessage()
-                    message.title = title
-                    message.body = body
-                    message.icon = icon
-                    message.group = group ?? NSLocalizedString("defaultGroup",comment: "")
-                    message.url = url
-                    message.markdown = markdown
+                
+                
+                
+                let message = NotificationMessage()
+                message.title = title
+                message.body = body
+                message.icon = icon
+                message.group = group ?? NSLocalizedString("defaultGroup",comment: "")
+                message.url = url
+                message.markdown = markdown
+                
+                
+                guard let pushId = pushId else{
+                    try local.write {
+                        local.add(message)
+                    }
+                    return
+                }
+                
+                if pushId.isEmpty {
+                    try local.write {
+                        local.add(message)
+                    }
+                    return
+                }
+               
+                
+                if local.objects(NotificationMessage.self).where({$0.pushId == pushId}).count == 0{
                     message.pushId = pushId
-                    
                     try local.write {
                         local.add(message)
                     }
                     
-                    if let pushId = pushId{
-                        Task{
-                            do{
-                                let session =  URLSession(configuration: .default)
-                                if let requestUrl = URL(string: "\(otherUrl.callback)/\(pushId)"){
-                                    _ = try await session.data(for: URLRequest(url: requestUrl))
-                                }
-                                
-                            }catch{
-                                debugPrint(error)
-                            }
-                            
-                        }
+                    Task {
+                        guard let requestUrl = URL(string: "\(otherUrl.callback)/\(pushId)") else {return}
+                        _ = try await URLSession(configuration: .default).data(for: URLRequest(url: requestUrl))
                     }
+                    
+                    
+                    return
                 }
                 
+                debugPrint(realm?.objects(NotificationMessage.self).count ?? 0)
                 
             }catch{
 #if DEBUG

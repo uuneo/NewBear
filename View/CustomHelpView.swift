@@ -96,7 +96,12 @@ extension CustomHelpView{
                         .padding(.horizontal)
                         .onTapGesture {
                             UIPasteboard.general.string = resultUrl
-                            self.toastText = NSLocalizedString("copySuccessText",comment: "")
+                            
+                            toolsManager.async_set_localString("copySuccessText", "复制成功"){text in
+                                self.toastText = text
+                            }
+                            
+                          
                         }
                     Image(systemName: "safari")
                         .onTapGesture {
@@ -110,7 +115,10 @@ extension CustomHelpView{
                                             self.dismiss()
                                         }
                                     }else{
-                                        self.toastText = NSLocalizedString("offline",comment: "")
+                                        toolsManager.async_set_localString("offline", "复制成功"){text in
+                                            self.toastText = text
+                                        }
+                                        
                                     }
                                 }
                             }

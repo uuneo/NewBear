@@ -31,8 +31,8 @@ struct otherUrl {
 
 
 struct settings {
+    
     static let  groupName = "group.NewBear"
-    static let  realmName = "NewBear.realm"
     static let  cloudMessageName = "NewBearMessageCloud"
     static let  settingName = "cryptoSettingFields"
     static let  deviceToken = "deviceToken"
@@ -49,4 +49,6 @@ struct settings {
     static let  firstStartApp = "firstStartApp"
     static let  CryptoSettingFields = "CryptoSettingFields"
     static let  recordType = "NotificationMessage"
+    static let  realmName = "NewBear.realm"
+    static let realmModalVersion:UInt64 = 9
 }
