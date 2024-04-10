@@ -24,6 +24,9 @@ struct SettingView: View {
     @State private var cloudStatus = NSLocalizedString("checkimge",comment: "")
     @State private var serverSize:CGSize = .zero
     @State private var serverColor:Color = .red
+    @State private var errorAnimate1:Bool = false
+    @State private var errorAnimate2:Bool = false
+    @State private var errorAnimate3:Bool = false
 
     
     @AppStorage("setting_active_app_icon") var setting_active_app_icon:appIcon = .def
@@ -33,55 +36,21 @@ struct SettingView: View {
         
         VStack{
             List{
-                if !paw.isNetworkAvailable{
-                    Section(header:Text(
-                        NSLocalizedString("settingNetWorkHeader",comment: "")
-                    )) {
-                        Button{
-                            paw.openSetting()
-                        }label: {
-                            HStack{
-                                Text(NSLocalizedString("settingNetWorkTitle",comment: ""))
-                                    .foregroundStyle(Color("textBlack"))
-                                Spacer()
-                                Text(NSLocalizedString("openSetting",comment: ""))
-                            }
-                        }
-                    }
-                }
-                
-                if paw.notificationPermissionStatus.rawValue < 2 {
-                    Section(header:Text(NSLocalizedString("notificationHeader",comment: ""))) {
-                        Button{
-                            if paw.notificationPermissionStatus.rawValue == 0{
-                                paw.registerForRemoteNotifications()
-                            }else{
-                                paw.openSetting()
-                            }
-                        }label: {
-                            HStack{
-                                Text(NSLocalizedString("notificationTitle",comment: ""))
-                                    .foregroundStyle(Color("textBlack"))
-                                Spacer()
-                                Text(paw.notificationPermissionStatus.rawValue == 0 ? NSLocalizedString("openNotification",comment: "") : NSLocalizedString("openSetting",comment: ""))
-                            }
-                        }
-                    }
-                }
-                
         
                 Section(header: Text("iCloud"),footer: Text(NSLocalizedString("icloudHeader",comment: ""))) {
                     NavigationLink(destination: {
                         cloudMessageView()
                     }, label: {
                         HStack{
+                           
                             Label {
                                 Text(NSLocalizedString("icloudBody",comment: ""))
                                     
                             } icon: {
-                                Image(systemName: "externaldrive.badge.icloud")
+                                Image(systemName: "arrow.triangle.2.circlepath.icloud")
+                                    .scaleEffect(0.9)
                             }
-                           
+                        
 
                             Spacer()
                             Text(cloudStatus)
@@ -117,7 +86,14 @@ struct SettingView: View {
                             
                             
                         } label: {
-                            Label(NSLocalizedString("exportTitle",comment: ""), systemImage: "square.and.arrow.down")
+                            
+                            Label {
+                                Text(NSLocalizedString("exportTitle",comment: ""))
+                            } icon: {
+                                Image(systemName: "square.and.arrow.down")
+                                    .scaleEffect(0.9)
+                            }
+
                         }
                         
                         Spacer()
@@ -142,19 +118,23 @@ struct SettingView: View {
                         }
                     }label: {
                         HStack{
+                            
                             Label {
                                 Text("DeviceToken")
                                     .font(.system(size: 15))
                                     .foregroundStyle(Color("textBlack"))
                             } icon: {
                                 Image(systemName: "key.radiowaves.forward")
+                                    .scaleEffect(0.9)
                             }
+
 
                            
                             Spacer()
                             Text(maskString(paw.deviceToken))
                                 .foregroundStyle(.gray)
                             Image(systemName: "doc.on.doc")
+                                .scaleEffect(0.9)
                         }
                     }
                 }
@@ -177,12 +157,14 @@ struct SettingView: View {
                                         .scaledToFit()
                                         .frame(width: 25)
                                         .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .scaleEffect(0.9)
                                 }else{
                                     Image("logo")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 25)
                                         .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .scaleEffect(0.9)
                                 }
                             }
                             Spacer()
@@ -201,6 +183,7 @@ struct SettingView: View {
                             Text(NSLocalizedString("badgeModeTitle",comment: "角标模式"))
                         } icon: {
                             Image(systemName: "app.badge")
+                                .scaleEffect(0.9)
                         }
                     }
                     .onChange(of: paw.badgeMode) {value in
@@ -221,6 +204,7 @@ struct SettingView: View {
                             Text(NSLocalizedString("mailTitle", comment: "自动化配置"))
                         } icon: {
                             Image(systemName: "paperclip")
+                                .scaleEffect(0.9)
                         }
                     }
                     
@@ -232,6 +216,7 @@ struct SettingView: View {
                             Text(NSLocalizedString("cryptoConfigNavTitle", comment: "算法配置") )
                         } icon: {
                             Image(systemName: "bolt.shield")
+                                .scaleEffect(0.9)
                         }
                     }
                     
@@ -243,6 +228,7 @@ struct SettingView: View {
                             Text(NSLocalizedString("musicConfigList", comment: "铃声列表") )
                         } icon: {
                             Image(systemName: "headphones.circle")
+                                .scaleEffect(0.9)
                         }
                     }
                     
@@ -263,6 +249,7 @@ struct SettingView: View {
                                     .foregroundStyle(Color("textBlack"))
                             } icon: {
                                 Image(systemName: "gearshape")
+                                    .scaleEffect(0.9)
                                 
                             }
 
@@ -283,6 +270,7 @@ struct SettingView: View {
                                     .foregroundStyle(Color("textBlack"))
                             } icon: {
                                 Image(systemName: "questionmark.circle")
+                                    .scaleEffect(0.9)
                             }
 
                             Spacer()
@@ -303,6 +291,7 @@ struct SettingView: View {
                                     .foregroundStyle(Color("textBlack"))
                             } icon: {
                                 Image(systemName: "person.crop.circle.badge.questionmark")
+                                    .scaleEffect(0.9)
                             }
 
                             Spacer()
@@ -337,6 +326,7 @@ struct SettingView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 30)
+                                        .scaleEffect(0.9)
                                 }
                               
                                 Spacer()
@@ -352,13 +342,104 @@ struct SettingView: View {
                 
             }.listStyle(.insetGrouped)
             
-            
         }
         .toast(info: $toastText)
         .background(hexColor("#f5f5f5"))
         .toolbar {
             
-            ToolbarItem (placement: .topBarLeading){
+            Group{
+                if !paw.isNetworkAvailable && paw.notificationPermissionStatus.rawValue >= 2{
+                    ToolbarItem (placement: .topBarLeading){
+                        Button {
+                            paw.openSetting()
+                        } label: {
+                            Image(systemName: "wifi.exclamationmark")
+                                .foregroundStyle(.yellow)
+                                .opacity(errorAnimate1 ? 1 : 0.1)
+                                .onAppear{
+                                    withAnimation(Animation.bouncy(duration: 0.5).repeatForever()) {
+                                        self.errorAnimate1 = true
+                                    }
+                                }
+                                .onDisappear{
+                                    self.errorAnimate1 = false
+                                }
+                              
+                        }
+
+                    }
+                }
+                
+                if paw.notificationPermissionStatus.rawValue < 2 && paw.isNetworkAvailable {
+                    
+                    ToolbarItem (placement: .topBarLeading){
+                        Button {
+                            if paw.notificationPermissionStatus.rawValue == 0{
+                                paw.registerForRemoteNotifications()
+                            }else{
+                                paw.openSetting()
+                            }
+                        } label: {
+                            Image(systemName: "bell.slash")
+                                .foregroundStyle(.red)
+                                .opacity(errorAnimate2 ? 0.1 : 1)
+                                .onAppear{
+                                    withAnimation(Animation.bouncy(duration: 0.5).repeatForever()) {
+                                        self.errorAnimate2 = true
+                                    }
+                                }
+                                .onDisappear{
+                                    self.errorAnimate2 = false
+                                }
+                            
+                        }
+
+                    }
+                    
+                    
+                }
+                
+                if paw.notificationPermissionStatus.rawValue < 2 && !paw.isNetworkAvailable {
+                    
+                    ToolbarItem (placement: .topBarLeading){
+                        Button {
+                            if paw.notificationPermissionStatus.rawValue == 0{
+                                paw.registerForRemoteNotifications()
+                            }
+                            paw.openSetting()
+                        } label: {
+                            
+                            ZStack{
+                                
+                                Image(systemName: "bell.slash")
+                                    .foregroundStyle(.red)
+                                    .opacity(errorAnimate3 ? 0.1 : 1)
+                                
+                                Image(systemName: "wifi.exclamationmark")
+                                    .foregroundStyle(.yellow)
+                                    .opacity(errorAnimate3 ? 1 : 0.1)
+                                   
+                            }
+                            .onAppear{
+                                withAnimation(Animation.bouncy(duration: 0.5).repeatForever()) {
+                                    self.errorAnimate3 = true
+                                }
+                            }
+                            .onDisappear{
+                                self.errorAnimate3 = false
+                            }
+                            
+                          
+                            
+                        }
+
+                    }
+                    
+                    
+                }
+            }
+            
+            ToolbarItem {
                 Button {
                     pageView.fullPage = .scan
                 } label: {
@@ -367,10 +448,7 @@ struct SettingView: View {
 
             }
             ToolbarItem {
-                
-                
-              
-
+     
                 Button {
                     pageView.showServerListView.toggle()
                 } label: {
@@ -378,30 +456,6 @@ struct SettingView: View {
                         .foregroundStyle(serverColor)
                 }
 
-                
-                
-//                Section(header:Text(NSLocalizedString("serverConfig", comment: "配置/修改服务器")))  {
-//                    
-//                    Button {
-//                        pageView.showServerListView.toggle()
-//                    } label: {
-//                        HStack(alignment:.center){
-//                            Label {
-//                                Text(NSLocalizedString("serverList", comment: "服务器列表"))
-//                            } icon: {
-//                                Image(systemName: "server.rack")
-//                                    .scaleEffect(0.9)
-//                                    .foregroundStyle(serverColor)
-//                                    
-//                            }
-//                            Spacer()
-//                            Text("\(paw.servers.count)")
-//                            Image(systemName: "chevron.right")
-//                                .foregroundStyle(.gray)
-//                        }
-//                    }
-//
-//                }
             }
         
             
