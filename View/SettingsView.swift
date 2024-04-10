@@ -69,30 +69,7 @@ struct SettingView: View {
                     }
                 }
                 
-                Section(header:Text(NSLocalizedString("serverConfig", comment: "配置/修改服务器")))  {
-                    
-                    Button {
-                        pageView.showServerListView.toggle()
-                    } label: {
-                        HStack(alignment:.center){
-                            Label {
-                                Text(NSLocalizedString("serverList", comment: "服务器列表"))
-                            } icon: {
-                                Image(systemName: "server.rack")
-                                    .scaleEffect(0.9)
-                                    .foregroundStyle(serverColor)
-                                    
-                            }
-                            Spacer()
-                            Text("\(paw.servers.count)")
-                            Image(systemName: "chevron.right")
-                                .foregroundStyle(.gray)
-                        }
-                    }
-
-                }
-                
-                
+        
                 Section(header: Text("iCloud"),footer: Text(NSLocalizedString("icloudHeader",comment: ""))) {
                     NavigationLink(destination: {
                         cloudMessageView()
@@ -102,7 +79,7 @@ struct SettingView: View {
                                 Text(NSLocalizedString("icloudBody",comment: ""))
                                     
                             } icon: {
-                                Image(systemName: "externaldrive")
+                                Image(systemName: "externaldrive.badge.icloud")
                             }
                            
 
@@ -381,13 +358,50 @@ struct SettingView: View {
         .background(hexColor("#f5f5f5"))
         .toolbar {
             
-            ToolbarItem {
+            ToolbarItem (placement: .topBarLeading){
                 Button {
                     pageView.fullPage = .scan
                 } label: {
                     Image(systemName: "qrcode.viewfinder")
                 }
 
+            }
+            ToolbarItem {
+                
+                
+              
+
+                Button {
+                    pageView.showServerListView.toggle()
+                } label: {
+                    Image(systemName: "externaldrive.badge.wifi")
+                        .foregroundStyle(serverColor)
+                }
+
+                
+                
+//                Section(header:Text(NSLocalizedString("serverConfig", comment: "配置/修改服务器")))  {
+//                    
+//                    Button {
+//                        pageView.showServerListView.toggle()
+//                    } label: {
+//                        HStack(alignment:.center){
+//                            Label {
+//                                Text(NSLocalizedString("serverList", comment: "服务器列表"))
+//                            } icon: {
+//                                Image(systemName: "server.rack")
+//                                    .scaleEffect(0.9)
+//                                    .foregroundStyle(serverColor)
+//                                    
+//                            }
+//                            Spacer()
+//                            Text("\(paw.servers.count)")
+//                            Image(systemName: "chevron.right")
+//                                .foregroundStyle(.gray)
+//                        }
+//                    }
+//
+//                }
             }
         
             
