@@ -39,8 +39,6 @@ class RealmManager {
         guard let realm = realm else { return nil }
         return realm.objects(NotificationMessage.self)
     }
-    
-
 
     // Update
     func updateObject(_ object: NotificationMessage, with updates: (NotificationMessage) -> Void) -> Bool {
@@ -144,6 +142,18 @@ class RealmManager {
     func delByGroup(_ group:String){
         let datas = self.getObject()?.where({$0.group == group})
         let _ = self.deleteObjects(datas)
+    }
+    
+    func createMessage(message:NotificationMessage){
+        guard let realm = realm else { return }
+        
+       do{
+            try realm.write{
+                realm.add(message)
+            }
+        }catch{
+            debugPrint(error)
+        }
     }
 
 }

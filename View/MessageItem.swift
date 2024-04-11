@@ -17,7 +17,7 @@ import Combine
 struct MessageItem: View {
     @ObservedRealmObject var message:NotificationMessage
     @EnvironmentObject var paw:pawManager
-  
+    @AppStorage("setting_active_app_icon") var setting_active_app_icon:appIcon = .def
     @State private var toastText:String = ""
     @State private var showMark:Bool = false
     @State private var textHeight: CGFloat = .zero
@@ -164,7 +164,7 @@ extension MessageItem{
                     AsyncImageView(imageUrl: icon )
                     
                 }else{
-                    Image("logo")
+                    Image(setting_active_app_icon.toLogoImage)
                         .resizable()
                 }
             }

@@ -24,6 +24,8 @@ struct MessageView: View {
     @State private var selectGroup:String = ""
     @State private var searchText:String = ""
     
+    @AppStorage("setting_active_app_icon") var setting_active_app_icon:appIcon = .def
+    
     var messages:Results<NotificationMessage>{
         return createDatas(messagesRaw)
     }
@@ -92,7 +94,7 @@ struct MessageView: View {
                                             AsyncImageView(imageUrl: icon )
                                             
                                         }else{
-                                            Image("logo")
+                                            Image(setting_active_app_icon.toLogoImage)
                                                 .resizable()
                                         }
                                     }

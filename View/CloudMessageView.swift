@@ -53,35 +53,105 @@ struct cloudMessageView: View {
         .loading(showLoading)
         .navigationTitle(NSLocalizedString("cloudData",comment: ""))
         .toolbar{
-            ToolbarItem {
-                if messages.count > 0{
-                    Button{
-                        self.showLoading = true
+            if messages.count > 0{
+                ToolbarItem {
+                    
+                    Menu{
                         if messages.count > 0{
-                            self.exportJSON()
-                            self.isShareSheetPresented = true
-                        }else{
-                            toolsManager.async_set_localString("notData") { text in
-                                self.toastText = text
+                            Button{
+                                self.showLoading = true
+                                if messages.count > 0{
+                                    self.exportJSON()
+                                    self.isShareSheetPresented = true
+                                }else{
+                                    toolsManager.async_set_localString("notData") { text in
+                                        self.toastText = text
+                                    }
+                                    
+                                }
+                                self.showLoading = false
+                            }label: {
+                                Label {
+                                    Text("导出")
+                                } icon: {
+                                    Image(systemName: "square.and.arrow.up")
+                                }
+
+                               
+                            }
+                            
+                            Button{
+                                deleteMode = true
+                            }label: {
+                               
+                                Label {
+                                    Text("删除")
+                                } icon: {
+                                    Image(systemName: "trash")
+                                }
+                            }
+                        }
+                        Button{
+                            Task{
+                                self.showLoading = true
+                                if let messages = RealmManager.shared.getObject()?.filter({ value in
+                                    !value.cloud
+                                }){
+                                   
+                                  let _ =   await CloudKitManager.shared.uploadCloud(Array(messages))
+                                }
+                                self.showLoading = false
+                                toolsManager.async_set_localString("controlSuccess"){ text in
+                                    self.toastText = text
+                                }
+                            }
+                        }label: {
+                            
+                            
+                            Label {
+                                Text("同步到服务器")
+                            } icon: {
+                                Image(systemName: "icloud.and.arrow.up")
+                            }
+                        }
+                        
+                        Button{
+                            Task{
+                                self.showLoading = true
+                                if let messages = try? await CloudKitManager.shared.fetchAllMessages(){
+                                    for message in messages {
+                                       if  let localMessage = RealmManager.shared.getObject()?.filter({$0.id == message.id}),
+                                           localMessage.count == 0{
+                                           RealmManager.shared.createMessage(message: message)
+                                       }
+                                    }
+                                }
+                                self.showLoading = false
+                                toolsManager.async_set_localString("controlSuccess"){ text in
+                                    self.toastText = text
+                                }
+                               
+                            }
+                        }label: {
+                            Label {
+                                Text("同步到本地")
+                            } icon: {
+                                Image(systemName: "icloud.and.arrow.down")
                             }
                            
                         }
-                        self.showLoading = false
+                        
                     }label: {
-                        Image(systemName: "square.and.arrow.up")
+                        Image(systemName: "list.bullet.circle")
                     }
+                    
+                  
                 }
-               
+                
+    
+                
             }
-            ToolbarItem {
-                if messages.count > 0{
-                    Button{
-                        deleteMode = true
-                    }label: {
-                        Image(systemName: "trash")
-                    }
-                }
-            }
+           
         }
         .actionSheet(isPresented: $deleteMode) {
             ActionSheet(title: Text(NSLocalizedString("deleteTimeMessage",comment: "")),buttons: [

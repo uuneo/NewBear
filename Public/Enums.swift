@@ -29,6 +29,29 @@ enum appIcon:String,CaseIterable{
     case seven = "AppIcon7"
     
     static let arr = [appIcon.def,appIcon.zero,appIcon.one,appIcon.two,appIcon.three,appIcon.four,appIcon.five,appIcon.six,appIcon.seven]
+    
+    var toLogoImage: String{
+        switch self {
+        case .def:
+            logoImage.def.rawValue
+        case .zero:
+            logoImage.zero.rawValue
+        case .one:
+            logoImage.one.rawValue
+        case .two:
+            logoImage.two.rawValue
+        case .three:
+            logoImage.three.rawValue
+        case .four:
+            logoImage.four.rawValue
+        case .five:
+            logoImage.five.rawValue
+        case .six:
+            logoImage.six.rawValue
+        case .seven:
+            logoImage.seven.rawValue
+        }
+    }
 }
 
 
@@ -43,6 +66,8 @@ enum logoImage:String,CaseIterable{
     case six = "logo6"
     case seven = "logo7"
     static let arr = [logoImage.def,logoImage.zero,logoImage.one,logoImage.two,logoImage.three,logoImage.four,logoImage.five,logoImage.six,logoImage.seven]
+    
+    
 }
 
 

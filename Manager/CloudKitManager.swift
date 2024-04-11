@@ -47,6 +47,7 @@ class CloudKitManager {
         return updatedMessages
     }
     
+
     
     // 创建CKRecord并保存到CloudKit
     func saveMessageToCloudKit(message: NotificationMessage) async-> Bool  {
