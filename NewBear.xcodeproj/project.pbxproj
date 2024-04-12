@@ -256,6 +256,8 @@
 		197A34FB2BC5399A00A76EB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		197A34FC2BC53B8E00A76EB7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		197A35182BC552A000A76EB7 /* StartPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPageView.swift; sourceTree = "<group>"; };
+		19F7DCC02BC98834000AC837 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		19F7DCC12BC98A9B000AC837 /* PrivacyServiceInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyServiceInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +331,7 @@
 		197A34002BC534B000A76EB7 /* NewBear */ = {
 			isa = PBXGroup;
 			children = (
+				19F7DCC02BC98834000AC837 /* PrivacyInfo.xcprivacy */,
 				197A34FB2BC5399A00A76EB7 /* Info.plist */,
 				197A34F12BC5389500A76EB7 /* NewBear.entitlements */,
 				197A34012BC534B000A76EB7 /* NewBearApp.swift */,
@@ -476,6 +479,7 @@
 				197A34F02BC5387B00A76EB7 /* NotificationServiceExtension.entitlements */,
 				197A34B52BC535C800A76EB7 /* NotificationService.swift */,
 				197A34B72BC535C800A76EB7 /* Info.plist */,
+				19F7DCC12BC98A9B000AC837 /* PrivacyServiceInfo.xcprivacy */,
 			);
 			path = NotificationServiceExtension;
 			sourceTree = "<group>";
