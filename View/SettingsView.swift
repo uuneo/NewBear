@@ -151,21 +151,12 @@ struct SettingView: View {
                                 Text(NSLocalizedString("AppIconTitle",comment: "程序图标"))
                                     .foregroundStyle(Color("textBlack"))
                             } icon: {
-                                if let index = appIcon.arr.firstIndex(where: {$0 == setting_active_app_icon}){
-                                    Image(logoImage.arr[index].rawValue)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 25)
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                        .scaleEffect(0.9)
-                                }else{
-                                    Image("logo")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 25)
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                        .scaleEffect(0.9)
-                                }
+                                Image(setting_active_app_icon.toLogoImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 25)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .scaleEffect(0.9)
                             }
                             Spacer()
                             Image(systemName: "chevron.right")
