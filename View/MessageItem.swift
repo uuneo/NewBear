@@ -21,6 +21,11 @@ struct MessageItem: View {
     @State private var toastText:String = ""
     @State private var showMark:Bool = false
     @State private var textHeight: CGFloat = .zero
+    
+    
+    @State var markDownHeight:CGFloat = CGFloat.zero
+    
+    
     var searchText:String = ""
     var body: some View {
         
@@ -50,6 +55,7 @@ struct MessageItem: View {
                                 Spacer()
                                 Image(systemName: "bolt.horizontal.icloud.fill")
                                     .foregroundStyle(message.cloud ? .green : .pink)
+                                    .animation(.spring, value: message.cloud)
                                     .font(.caption)
                                 
                                 
@@ -101,23 +107,29 @@ struct MessageItem: View {
                                                 Markdown(markdownText)
                                                     .opacity(showMark ? 1 : 0)
                                                     .scaleEffect(showMark ? 1 : 0)
-                                                    
                                                 
                                                 Spacer()
+                                            }.overlay {
+                                                GeometryReader { proxy in
+                                                    let offset = proxy.frame(in: .local).height
+                                                    Color.clear.preference(key: markDownPreferenceKey.self, value: offset)
+                                                    
+                                                }.onPreferenceChange(markDownPreferenceKey.self) { value in
+                                                    markDownHeight = value
+                                                }
                                             }
                                             
                                         }
-                                        
+                                        .frame(height: showMark ?  min(markDownHeight, 300) : 0)
                                         
                                     }
-                                    .frame(height: showMark ? min(calculateTextHeight(text: markdownText) + 10, 300) : 0)
+                                    
                                     
                                     
                                 }
                                 
                             }
-                        }
-                            .padding(.leading)
+                        }.padding( showMark ? .vertical : .leading)
   
                         
                     }
@@ -127,7 +139,6 @@ struct MessageItem: View {
                 
             }
             .toast(info: $toastText)
-            .padding(.horizontal, 10)
             .padding(.top, 10)
         }header: {
             HStack{
@@ -144,15 +155,6 @@ struct MessageItem: View {
         
     }
     
-    private func calculateTextHeight(text: String) -> CGFloat {
-        let font = UIFont.preferredFont(forTextStyle: .body)
-        let boundingSize = CGSize(width: UIScreen.main.bounds.size.width - 32, height: .greatestFiniteMagnitude)
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let attributes = [NSAttributedString.Key.font: font]
-        let boundingRect = NSString(string: text).boundingRect(with: boundingSize, options: options, attributes: attributes, context: nil)
-        
-        return boundingRect.height
-    }
 }
 
 extension MessageItem{
