@@ -73,9 +73,12 @@ struct pawAppIconView: View {
                    
                 }
             }
+            .listRowBackground(Color.clear)
+            .listRowSeparatorTint(Color.clear)
         }
         .toast(info: $toastText)
         .listStyle(GroupedListStyle())
+        
         .navigationTitle(NSLocalizedString("AppIconTitle",comment: ""))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
