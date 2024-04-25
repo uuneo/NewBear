@@ -28,8 +28,8 @@ struct MessageItem: View {
     
     var searchText:String = ""
     var body: some View {
-        
         Section {
+        
             Grid{
                 if showMark{
                     GridRow(alignment: .center) {

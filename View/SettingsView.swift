@@ -8,6 +8,7 @@
 import SwiftUI
 import RealmSwift
 import CloudKit
+import Combine
 
 
 struct SettingView: View {
@@ -31,7 +32,8 @@ struct SettingView: View {
     
     @AppStorage("setting_active_app_icon") var setting_active_app_icon:appIcon = .def
     
-    var timerz = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+    @State private var timerz: AnyCancellable?
+    
     var body: some View {
         
         VStack{
@@ -479,25 +481,19 @@ struct SettingView: View {
             ShareSheet(activityItems: [self.jsonFileUrl!])
                 .presentationDetents([.medium, .large])
         }
-        .onReceive(self.timerz) { _ in
-            Task{
-                let color = await paw.healthAllColor()
-                paw.dispatch_sync_safely_main_queue {
-                    self.serverColor = color
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                Task{
+                    let color = await paw.healthAllColor()
+                    paw.dispatch_sync_safely_main_queue {
+                        self.serverColor = color
+                    }
                 }
             }
         }
-
         .navigationDestination(isPresented: $pageView.showServerListView) {
             ServerListView()
         }
-        .task {
-            let color = await paw.healthAllColor()
-            paw.dispatch_sync_safely_main_queue {
-                self.serverColor = color
-            }
-        }
-        
         
         
     }

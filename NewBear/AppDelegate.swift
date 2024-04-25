@@ -160,7 +160,7 @@ extension AppDelegate :UNUserNotificationCenterDelegate{
         generator.selectionChanged()
         
         
-        completionHandler(.sound)
+        completionHandler(.badge)
         
         
     }

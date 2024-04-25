@@ -175,12 +175,12 @@ struct CryptoConfigView: View {
                     set -e
                     
                     # bark key
-                    deviceKey='\(pawManager.shared.deviceToken)'
+                    deviceKey='\(pawManager.shared.servers[0].key)'
                     # push payload
                     json='{"body": "test", "sound": "birdsong"}'
                     
                     # \(String(format: NSLocalizedString("keyComment",comment: ""), Int(cryptoFields.algorithm.suffix(3))! / 8))
-                    key='\(pawManager.shared.servers[0].key)'
+                    key='\(cryptoFields.key)'
                     # \(NSLocalizedString("ivComment",comment: ""))
                     iv='\(cryptoFields.iv)'
                     

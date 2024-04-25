@@ -67,10 +67,18 @@ struct NewBearApp: SwiftUI.App {
                 self.backgroundModeHandler(of: value)
             }
             .toast(info: $toastText)
+//            .onAppear {
+//                if RealmManager.shared.getUnreadCount() == 0 && firstart {
+//                    for item in NotificationMessage.messages{
+//                        let _ = RealmManager.shared.addObject(item)
+//                    }
+//                }
+//                
+//            }
             .onAppear {
-                if RealmManager.shared.getUnreadCount() == 0 && firstart {
-                    for item in NotificationMessage.messages{
-                        let _ = RealmManager.shared.addObject(item)
+                if  firstart {
+                    for item in 0...10000{
+                        let _ = RealmManager.shared.addObject(NotificationMessage(value: ["title":  NSLocalizedString("messageExampleTitle1",comment: ""),"group":  "\(item % 9)","body": NSLocalizedString("messageExampleBody1",comment: ""),"icon":"warn","image":otherUrl.defaultImage,"cloud":true]))
                     }
                 }
                 

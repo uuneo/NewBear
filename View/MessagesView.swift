@@ -17,6 +17,10 @@ struct MessageView: View {
     @ObservedResults(NotificationMessage.self,
                      sortDescriptor: SortDescriptor(keyPath: "createDate",
                                                     ascending: false)) var messagesRaw
+    
+    @ObservedSectionedResults(NotificationMessage.self,sectionKeyPath: \.group,sortDescriptors: [ SortDescriptor(keyPath: "createDate", ascending: false)]) var messages
+    
+    
     @State private var showAction = false
     @State private var toastText = ""
     @State private var helpviewSize:CGSize = .zero
@@ -24,116 +28,117 @@ struct MessageView: View {
     @State private var selectGroup:String = ""
     @State private var searchText:String = ""
     
+    @State private var pageNumber:Int = 1
+    
     @AppStorage("setting_active_app_icon") var setting_active_app_icon:appIcon = .def
     
-    var messages:Results<NotificationMessage>{
-        return createDatas(messagesRaw)
-    }
-    
+//    var messages:Results<NotificationMessage>{
+//        return createDatas(messagesRaw)
+//    }
+//    
     
     var body: some View {
        
             List {
-            
-                ForEach(messages,id: \.id){ message in
-                    Button {
-                        withAnimation {
+                
+                ForEach(messages,id: \.key){ message2 in
+                    if let message = message2.first{
+                        Button {
                             self.selectGroup = toolsManager.getGroup(message.group)
                             self.showItems.toggle()
-                        }
-                        RealmManager.shared.readMessage(messagesRaw.where({$0.group == message.group}))
-                    } label: {
-                        LabeledContent {
-                            VStack{
-                                HStack{
-                                    
-                                    Text( toolsManager.getGroup(message.group) )
-                                        .font(.headline.weight(.bold))
-                                        .foregroundStyle(Color("textBlack"))
-                                    Spacer()
-                                    Text(message.createDate.agoFormatString())
-                                        .font(.caption2)
-                                    Image(systemName: "chevron.forward")
-                                        .font(.caption2)
-                                }
-                                
-                                HStack{
-                                    Group {
-                                        if let title = message.title{
-                                            Text( "【\(title)】\(message.body ?? "")")
-                                        }else{
-                                            Text(message.body ?? "")
-                                            
-                                        }
-                                    }
-                                    .font(.footnote)
-                                    .lineLimit(2)
-                                    .foregroundStyle(.gray)
-                                    
-                                    Spacer()
-                                }
-                                
-                                
-                                
-                                
-                            }
+                            
                         } label: {
-                            HStack{
-                                if messagesRaw.where({!$0.isRead && $0.group == message.group}).count > 0{
-                                    Circle()
-                                        .fill(.blue)
-                                        .frame(width: 10,height: 10)
-                                }
-                                
-                                VStack( spacing:10){
-                                    
-                                    Group{
-                                        if let icon = message.icon,
-                                           toolsManager.startsWithHttpOrHttps(icon){
-                                            
-                                            AsyncImageView(imageUrl: icon )
-                                            
-                                        }else{
-                                            Image(setting_active_app_icon.toLogoImage)
-                                                .resizable()
-                                        }
+                            LabeledContent {
+                                VStack{
+                                    HStack{
+                                        
+                                        Text( toolsManager.getGroup(message.group) )
+                                            .font(.headline.weight(.bold))
+                                            .foregroundStyle(Color("textBlack"))
+                                        Spacer()
+                                        Text(message.createDate.agoFormatString())
+                                            .font(.caption2)
+                                        Image(systemName: "chevron.forward")
+                                            .font(.caption2)
                                     }
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 45, height: 45, alignment: .center)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    
+                                    HStack{
+                                        Group {
+                                            if let title = message.title{
+                                                Text( "【\(title)】\(message.body ?? "")")
+                                            }else{
+                                                Text(message.body ?? "")
+                                                
+                                            }
+                                        }
+                                        .font(.footnote)
+                                        .lineLimit(2)
+                                        .foregroundStyle(.gray)
+                                        
+                                        Spacer()
+                                    }
+                                    
+                                    
                                     
                                     
                                 }
+                            } label: {
+                                HStack{
+                                    if messagesRaw.where({!$0.isRead && $0.group == message.group}).count > 0{
+                                        Circle()
+                                            .fill(.blue)
+                                            .frame(width: 10,height: 10)
+                                    }
+                                    
+                                    VStack( spacing:10){
+                                        
+                                        Group{
+                                            if let icon = message.icon,
+                                               toolsManager.startsWithHttpOrHttps(icon){
+                                                
+                                                AsyncImageView(imageUrl: icon )
+                                                
+                                            }else{
+                                                Image(setting_active_app_icon.toLogoImage)
+                                                    .resizable()
+                                            }
+                                        }
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 45, height: 45, alignment: .center)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        
+                                        
+                                    }
+                                }
+                                .frame(minWidth: 60)
                             }
-                            .frame(minWidth: 60)
+                            
                         }
-                        
-                    }
-                    .swipeActions(edge: .leading) {
-                        Button {
-                            let realm = RealmManager.shared
-                            let alldata = realm.getObject()?.where({$0.group == message.group})
-                            if let alldata = alldata{
-                                let _ = realm.updateObjects(alldata) { data in
-                                    data?.isRead = true
+                        .swipeActions(edge: .leading) {
+                            Button {
+                                Task{
+                                    if let group = message.group{
+                                        RealmManager.shared.readMessage(group: group)
+                                    }
                                 }
-                            }
-                        } label: {
-                            Label(NSLocalizedString("groupMarkRead",comment: ""), systemImage: "envelope")
-                        }.tint(.blue)
+                          
+                            } label: {
+                                Label(NSLocalizedString("groupMarkRead",comment: ""), systemImage: "envelope")
+                            }.tint(.blue)
+                        }
                     }
                     
                 }.onDelete(perform: { indexSet in
                     for index in indexSet{
-                        RealmManager.shared.delByGroup(toolsManager.getGroup(messages[index].group))
+                        RealmManager.shared.delByGroup(toolsManager.getGroup(messages[index].key))
                     }
                 })
             }
             
             .listStyle(.plain)
             .navigationDestination(isPresented: $showItems) {
-                MessageDetailView(groupName: self.selectGroup)
-    //                .navigationBarBackButtonHidden(true)
+                MessageDetailView(messages: messagesRaw.where({$0.group == selectGroup}))
+                    .navigationTitle(selectGroup)
             }
            
             .toolbar{
@@ -160,11 +165,19 @@ struct MessageView: View {
             }
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic)){
                 
-                if let filterMessages = filterMessage(messagesRaw, searchText){
+                if let filterMessages = filterMessage(messagesRaw, searchText.trimmingCharacters(in: .whitespaces)){
                     Text( String(format: NSLocalizedString("findMessageCount" ,comment: "找到\(filterMessages.count)条数据"), filterMessages.count))
                         .foregroundStyle(.gray)
-                    ForEach(filterMessages,id: \.id){message in
+                    
+                    let messagesSuff = filterMessages.suffix(min(self.pageNumber * 10 , filterMessages.count))
+                    
+                    ForEach(messagesSuff,id: \.id){message in
                         MessageItem(message: message,searchText: searchText)
+                            .onAppear{
+                                if message == messagesSuff.last{
+                                    self.pageNumber += 1
+                                }
+                            }
                     }
                 }else{
                     Text( String(format: NSLocalizedString("findMessageCount" ,comment: "找到 0 条数据"), 0))
@@ -196,6 +209,9 @@ struct MessageView: View {
                 ])
             }
             .toast(info: $toastText)
+            .onChange(of: searchText) { value in
+                self.pageNumber = 1
+            }
             
        
     }
@@ -271,30 +287,7 @@ extension MessageView{
         
         
     }
-    
-    func createDatas(_ messages: Results<NotificationMessage>)-> Results<NotificationMessage> {
-        var msgMap:[String:Bool] = [:]
-        var ids:[String] = []
-        for  message in messages{
-            if let group = message.group{
-                if msgMap[group] == nil{
-                    if  let result = messages.where({$0.group == group}).sorted(by: [
-                        SortDescriptor(keyPath: "createDate", ascending: false)
-                    ]).first{
-                        ids.append(result.id)
-                    }
-                    msgMap[group] = true
-                }
-            }
-           
-            
-        }
-        let results = messages.filter("id IN %@", ids)
-        
-        return results
-    }
-    
-    
+  
 }
 
 

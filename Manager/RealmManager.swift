@@ -20,6 +20,11 @@ class RealmManager {
     func getUnreadCount()-> Int?{
         return self.getObject()?.where({!$0.isRead}).count
     }
+    
+    
+    func getGroupCount(_ groupName:String)-> Int{
+        return self.getObject()?.count ?? 0
+    }
 
     // Create
     func addObject(_ object: NotificationMessage) -> Bool {
@@ -63,7 +68,12 @@ class RealmManager {
             }
         }
     }
-    
+    func readMessage(group: String){
+        let res = realm?.objects(NotificationMessage.self).where({$0.group == group})
+        if let messages = res{
+            self.readMessage(messages)
+        }
+    }
     
     
     func updateObjects(_ results: Results<NotificationMessage>?, with updates: (NotificationMessage?) -> Void) -> Bool {
@@ -124,6 +134,7 @@ class RealmManager {
             data?.isRead = true
         }
     }
+    
     func allDel(_ mode: Int = 0) {
         switch mode {
         case 0:
@@ -147,7 +158,7 @@ class RealmManager {
     func createMessage(message:NotificationMessage){
         guard let realm = realm else { return }
         
-       do{
+        do{
             try realm.write{
                 realm.add(message)
             }
@@ -155,5 +166,11 @@ class RealmManager {
             debugPrint(error)
         }
     }
-
+    
+    func allGroupNames()-> [String] {
+        guard let realm = realm else{return []}
+        let allKeys =  realm.objects(NotificationMessage.self).sectioned(by: \.group,ascending: true).allKeys
+        return allKeys.compactMap{ $0 }
+    }
+    
 }

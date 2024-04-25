@@ -9,24 +9,20 @@ import SwiftUI
 import RealmSwift
 
 struct MessageDetailView: View {
+    
+     var messages:Results<NotificationMessage>
+    
     @Environment(\.dismiss) private var dismiss
     @Environment(\.presentationMode) var presentationMode
-    var groupName: String
-    @ObservedResults var messages: Results<NotificationMessage>
-    
-    init(groupName: String) {
-        self.groupName = groupName
-        self._messages = ObservedResults(
-            NotificationMessage.self, where: { $0.group == groupName },
-            sortDescriptor: SortDescriptor(keyPath: "createDate", ascending: false)
-        )
-    }
-   
     @State private var toastText:String = ""
+    @State private var pageNumber:Int = 1
+    var showMsgCount:Int{
+        min(pageNumber * 10, messages.count)
+    }
     var body: some View {
         
         List {
-                ForEach(messages, id: \.id) { message in
+            ForEach(messages.suffix( showMsgCount ), id: \.id) { message in
                     MessageItem(message: message)
                         .swipeActions(edge: .leading) {
                             Button {
@@ -42,22 +38,32 @@ struct MessageDetailView: View {
                                 Label(message.isRead ? NSLocalizedString("markNotRead",comment: "") :  NSLocalizedString("markRead",comment: ""), systemImage: message.isRead ? "envelope.open": "envelope")
                             }.tint(.blue)
                         }
+                        .onAppear{
+                            if message == messages.last {
+                                self.pageNumber += 1
+                            }
+                        }
                     
-                }.onDelete(perform: $messages.remove)
+            }.onDelete { IndexSet in
+                for k in IndexSet{
+                   let _ =  RealmManager.shared.deleteObject(messages[k])
+                }
+            }
                 
             }
-            .navigationTitle(groupName)
+           
             .toast(info: $toastText)
             .onChange(of: messages) { value in
                 if value.count <= 0 {
                     dismiss()
                 }
+            }.onDisappear{
+                RealmManager.shared.readMessage(messages)
             }
-        
         
     }
 }
 
 #Preview {
-    MessageDetailView(groupName: "abc")
+    MessageDetailView(messages: RealmManager.shared.getObject()!)
 }
