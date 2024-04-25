@@ -13,8 +13,6 @@ import RealmSwift
 struct NewBearApp: SwiftUI.App {
     @Environment(\.scenePhase) var phase
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject var paw = pawManager.shared
-    @StateObject var pageView = pageState.shared
     @AppStorage(settings.firstStartApp) var firstart:Bool = true
     @State var showDelNotReadAlart:Bool = false
     @State var showDelReadAlart:Bool = false
@@ -36,7 +34,7 @@ struct NewBearApp: SwiftUI.App {
             .environmentObject(pageState.shared)
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
                 if let badge = RealmManager.shared.getUnreadCount(){
-                    paw.changeBadge(badge: badge)
+                    pawManager.shared.changeBadge(badge: badge)
                 }
             }
             .alert(isPresented: $showAlart) {
@@ -59,26 +57,19 @@ struct NewBearApp: SwiftUI.App {
                             }
                         ), secondaryButton: .cancel())
             }
-            .task {
-                paw.monitorNetwork()
-                paw.monitorNotification()
-            }
             .onChange(of: phase) { value in
                 self.backgroundModeHandler(of: value)
             }
             .toast(info: $toastText)
-//            .onAppear {
-//                if RealmManager.shared.getUnreadCount() == 0 && firstart {
-//                    for item in NotificationMessage.messages{
-//                        let _ = RealmManager.shared.addObject(item)
-//                    }
-//                }
-//                
-//            }
             .onAppear {
-                if  firstart {
-                    for item in 0...10000{
-                        let _ = RealmManager.shared.addObject(NotificationMessage(value: ["title":  NSLocalizedString("messageExampleTitle1",comment: ""),"group":  "\(item % 9)","body": NSLocalizedString("messageExampleBody1",comment: ""),"icon":"warn","image":otherUrl.defaultImage,"cloud":true]))
+                DispatchQueue.global().async {
+                    pawManager.shared.monitorNetwork()
+                    pawManager.shared.monitorNotification()
+                }
+                
+                if RealmManager.shared.getUnreadCount() == 0 && firstart {
+                    for item in NotificationMessage.messages{
+                        let _ = RealmManager.shared.addObject(item)
                     }
                 }
                 
@@ -98,7 +89,7 @@ struct NewBearApp: SwiftUI.App {
                     if let url = params["url"]{
                         
                         pageState.shared.scanUrl = url
-                        pageView.fullPage = .login
+                        pageState.shared.fullPage = .login
                         
                     }else{
                         self.toastText =  NSLocalizedString("paramsError", comment: "参数错误")
@@ -106,17 +97,17 @@ struct NewBearApp: SwiftUI.App {
                     
                 }else if host == "add"{
                     if let url = params["url"]{
-                        let (mode1,msg) = paw.addServer(url: url)
+                        let (mode1,msg) = pawManager.shared.addServer(url: url)
 #if DEBUG
                         debugPrint(mode1)
 #endif
                         
                         self.toastText = msg
                         if !pageState.shared.showServerListView {
-                            pageView.fullPage = .none
-                            pageView.sheetPage = .none
-                            pageView.page = .setting
-                            pageView.showServerListView = true
+                            pageState.shared.fullPage = .none
+                            pageState.shared.sheetPage = .none
+                            pageState.shared.page = .setting
+                            pageState.shared.showServerListView = true
                         }
                     }else{
                         
@@ -162,7 +153,7 @@ struct NewBearApp: SwiftUI.App {
                 }
             }
         case .background:
-            paw.addQuickActions()
+            pawManager.shared.addQuickActions()
             
         default:
             break

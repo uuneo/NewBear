@@ -51,14 +51,47 @@ struct MessageDetailView: View {
             }
                 
             }
+        .toolbar{
+            ToolbarItem {
+                HStack{
+                    Text("\(showMsgCount)")
+                    Text("/")
+                    Text("\(messages.count)")
+                }.font(.caption)
+            }
+        }
            
             .toast(info: $toastText)
             .onChange(of: messages) { value in
                 if value.count <= 0 {
                     dismiss()
                 }
-            }.onDisappear{
-                RealmManager.shared.readMessage(messages)
+            }.onAppear{
+                
+                let notReadMessages = messages.where({!$0.isRead})
+                
+                if notReadMessages.count > 0{
+                    DispatchQueue.global().async {
+                        // 获取后台线程上的 Realm 实例
+                        let backgroundRealm = try! Realm()
+                        do{
+                            try backgroundRealm.write {
+                                for k in notReadMessages{
+                                    if let item =  backgroundRealm.thaw(k){
+                                        item.isRead = true
+                                    }
+                                   
+                                }
+                            }
+                        }catch{
+                            debugPrint(error)
+                        }
+                       
+                    }
+                }
+                
+              
+               
             }
         
     }

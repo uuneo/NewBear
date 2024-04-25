@@ -31,11 +31,7 @@ struct MessageView: View {
     @State private var pageNumber:Int = 1
     
     @AppStorage("setting_active_app_icon") var setting_active_app_icon:appIcon = .def
-    
-//    var messages:Results<NotificationMessage>{
-//        return createDatas(messagesRaw)
-//    }
-//    
+ 
     
     var body: some View {
        
@@ -84,11 +80,12 @@ struct MessageView: View {
                                 }
                             } label: {
                                 HStack{
-                                    if messagesRaw.where({!$0.isRead && $0.group == message.group}).count > 0{
+                                    if message2.filter({!$0.isRead && $0.group == message.group}).count > 0 {
                                         Circle()
                                             .fill(.blue)
                                             .frame(width: 10,height: 10)
                                     }
+
                                     
                                     VStack( spacing:10){
                                         
@@ -116,6 +113,7 @@ struct MessageView: View {
                         }
                         .swipeActions(edge: .leading) {
                             Button {
+                               
                                 Task{
                                     if let group = message.group{
                                         RealmManager.shared.readMessage(group: group)
@@ -134,13 +132,11 @@ struct MessageView: View {
                     }
                 })
             }
-            
             .listStyle(.plain)
             .navigationDestination(isPresented: $showItems) {
                 MessageDetailView(messages: messagesRaw.where({$0.group == selectGroup}))
                     .navigationTitle(selectGroup)
             }
-           
             .toolbar{
                 ToolbarItem {
                     

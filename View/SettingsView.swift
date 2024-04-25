@@ -58,6 +58,7 @@ struct SettingView: View {
                             Text(cloudStatus)
                         }
                     })
+
                     .task{
                         let status = await CloudKitManager.shared.getCloudStatus()
                         paw.dispatch_sync_safely_main_queue {
@@ -482,7 +483,7 @@ struct SettingView: View {
                 .presentationDetents([.medium, .large])
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+            DispatchQueue.global().async {
                 Task{
                     let color = await paw.healthAllColor()
                     paw.dispatch_sync_safely_main_queue {

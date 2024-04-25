@@ -13,6 +13,12 @@ struct ContentView: View {
     @EnvironmentObject var paw: pawManager
     @EnvironmentObject var pageView:pageState
     @ObservedResults(NotificationMessage.self) var messages
+    
+    var readCount:Int{
+        messages.where({!$0.isRead}).count
+    }
+    
+    
     @State var toastText:String = ""
     var body: some View {
         TabView(selection: $pageView.page) {
@@ -24,7 +30,7 @@ struct ContentView: View {
                 Label(NSLocalizedString("bottomBarMsg",comment: ""), systemImage: "ellipsis.message")
             }
             .tag(pageState.tabPage.message)
-            .badge(messages.where({!$0.isRead}).count)
+            .badge(readCount)
             // MARK: 设置页面
             NavigationStack{
                 SettingView()
@@ -93,33 +99,37 @@ struct ContentView: View {
         }
         
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-            Task(priority: .background){
-                let messageNotCloud = messages.where({!$0.cloud})
-                if messageNotCloud.count == 0{
+            
+            let messageNotCloud = messages.where({!$0.cloud})
+            
+            if messageNotCloud.count > 0 || true {
+                Task{
+                    let result = await CloudKitManager.shared.uploadCloud(Array(messageNotCloud))
+                    do{
+                        let realm = try await Realm()
+                        try realm.write{
+                            for message in result{
+                                if let thawedObject = message.thaw(){
+                                    thawedObject.cloud = true
+                                }
+                                
+                            }
+                        }
+                    }catch{
+    #if DEBUG
+                        print(error)
+    #endif
+                        
+                    }
+                }
+            }
+            else{
 #if DEBUG
                     print("没有数据")
 #endif
-                    
-                }
-                let result = await CloudKitManager.shared.uploadCloud(Array(messageNotCloud))
-                do{
-                    let realm = try await Realm()
-                    try realm.write{
-                        for message in result{
-                            if let thawedObject = message.thaw(){
-                                thawedObject.cloud = true
-                            }
-                            
-                        }
-                    }
-                }catch{
-#if DEBUG
-                    print(error)
-#endif
-                    
-                }
-                
             }
+            
+           
         }
         
         
