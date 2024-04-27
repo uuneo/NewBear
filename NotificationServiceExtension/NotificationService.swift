@@ -64,7 +64,7 @@ class NotificationService: UNNotificationServiceExtension {
         let icon = userInfo["icon"] as? String
         let url = userInfo["url"] as? String
         let markdown = userInfo["markdown"] as? String
-        let pushId = userInfo["pushId"] as? String
+        let pushId = userInfo["pushid"] as? String
         
         var isArchive: Bool{
             if let archive = userInfo["isarchive"] as? String {
@@ -76,13 +76,10 @@ class NotificationService: UNNotificationServiceExtension {
         debugPrint(userInfo,isArchive)
         
         if isArchive {
-        
+            
             
             do{
                 let local = try Realm()
-                
-                
-                
                 let message = NotificationMessage()
                 message.title = title
                 message.body = body
@@ -99,15 +96,8 @@ class NotificationService: UNNotificationServiceExtension {
                     return
                 }
                 
-                if pushId.isEmpty {
-                    try local.write {
-                        local.add(message)
-                    }
-                    return
-                }
-               
                 
-                if local.objects(NotificationMessage.self).where({$0.pushId == pushId}).count == 0{
+                if local.objects(NotificationMessage.self).where({$0.pushId == pushId}).count == 0 {
                     message.pushId = pushId
                     try local.write {
                         local.add(message)
@@ -117,13 +107,10 @@ class NotificationService: UNNotificationServiceExtension {
                         guard let requestUrl = URL(string: "\(otherUrl.callback)/\(pushId)") else {return}
                         _ = try await URLSession(configuration: .default).data(for: URLRequest(url: requestUrl))
                     }
-                    
-                    
                     return
                 }
                 
-                debugPrint(realm?.objects(NotificationMessage.self).count ?? 0)
-                
+                debugPrint(local.objects(NotificationMessage.self).count)
             }catch{
 #if DEBUG
                 debugPrint(error)
@@ -189,6 +176,9 @@ class NotificationService: UNNotificationServiceExtension {
                 if let markdown = map["markdown"] as? String {
                     alert["markdown"] = markdown
                 }
+                if let pushid = map["pushid"] as? String{
+                    alert["pushid"] = pushid
+                }
                 
                 map["aps"] = ["alert": alert]
                 userInfo = map
@@ -223,8 +213,6 @@ class NotificationService: UNNotificationServiceExtension {
             let interruptionLevels: [String: UNNotificationInterruptionLevel] = [
                 "passive": UNNotificationInterruptionLevel.passive,
                 "active": UNNotificationInterruptionLevel.active,
-                // MARK: 兼容版本
-                "timeSensitive": UNNotificationInterruptionLevel.timeSensitive,
                 "timesensitive": UNNotificationInterruptionLevel.timeSensitive,
                 "critical": UNNotificationInterruptionLevel.critical,
             ]
@@ -257,7 +245,6 @@ class NotificationService: UNNotificationServiceExtension {
 #if DEBUG
                     print("转换失败")
 #endif
-                    
                     toolsManager.sendMail(config: email, title: "自动化\(action)", text: "数据编码失败")
                 }
             }

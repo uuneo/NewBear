@@ -46,7 +46,7 @@ struct settings {
     static let  syncServerUrl = "syncServerUrl"
     static let  syncServerParams = "syncServerParams"
     static let  emailConfig = "emailStmpConfig"
-    static let  iCloudName = "iCloud.NewBear"
+    static let  iCloudName = "iCloud.NewNewBear"
     static let  firstStartApp = "firstStartApp"
     static let  CryptoSettingFields = "CryptoSettingFields"
     static let  recordType = "NotificationMessage"

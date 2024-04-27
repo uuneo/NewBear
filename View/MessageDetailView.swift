@@ -9,9 +9,7 @@ import SwiftUI
 import RealmSwift
 
 struct MessageDetailView: View {
-    
      var messages:Results<NotificationMessage>
-    
     @Environment(\.dismiss) private var dismiss
     @Environment(\.presentationMode) var presentationMode
     @State private var toastText:String = ""
@@ -22,7 +20,7 @@ struct MessageDetailView: View {
     var body: some View {
         
         List {
-            ForEach(messages.suffix( showMsgCount ), id: \.id) { message in
+            ForEach(messages.prefix( showMsgCount ), id: \.id) { message in
                     MessageItem(message: message)
                         .swipeActions(edge: .leading) {
                             Button {
@@ -39,7 +37,7 @@ struct MessageDetailView: View {
                             }.tint(.blue)
                         }
                         .onAppear{
-                            if message == messages.last {
+                            if message == messages.prefix( showMsgCount )1.last {
                                 self.pageNumber += 1
                             }
                         }

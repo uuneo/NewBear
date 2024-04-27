@@ -56,7 +56,7 @@ class CloudKitManager {
         do{
             try await privateCloudDatabase.save(record)
 #if DEBUG
-            print("Successfully saved record to CloudKit")
+            print("Successfully saved record to CloudKit\(message)")
 #endif
            
             return true
