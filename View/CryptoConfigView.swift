@@ -167,34 +167,50 @@ struct CryptoConfigView: View {
             }
             return
         }
-        let text =   """
-                    #!/usr/bin/env bash
-                    
+        
+        let text = """
                     # Documentation: \(NSLocalizedString("encryptionUrl",comment: ""))
-                    
-                    set -e
-                    
-                    # bark key
-                    deviceKey='\(pawManager.shared.servers[0].key)'
-                    # push payload
-                    json='{"body": "test", "sound": "birdsong"}'
-                    
+                    # python demo: 使用AES加密数据，并发送到服务器
+                    # pip3 install pycryptodome
+
+                    import json
+                    import base64
+                    import requests
+                    from Crypto.Cipher import AES
+                    from Crypto.Util.Padding import pad
+
+
+                    def encrypt_AES_CBC(data, key, iv):
+                        cipher = AES.new(key, AES.MODE_\(cryptoFields.mode.uppercased()), iv)
+                        padded_data = pad(data.encode(), AES.block_size)
+                        encrypted_data = cipher.encrypt(padded_data)
+                        return encrypted_data
+
+
+                    # JSON数据
+                    json_string = json.dumps({"body": "test", "sound": "birdsong"})
+
                     # \(String(format: NSLocalizedString("keyComment",comment: ""), Int(cryptoFields.algorithm.suffix(3))! / 8))
-                    key='\(cryptoFields.key)'
+                    key = b"\(cryptoFields.key)"
                     # \(NSLocalizedString("ivComment",comment: ""))
-                    iv='\(cryptoFields.iv)'
-                    
-                    # \(NSLocalizedString("opensslEncodingComment",comment: ""))
-                    key=$(printf $key | xxd -ps -c 200)
-                    iv=$(printf $iv | xxd -ps -c 200)
-                    
-                    ciphertext=$(echo -n $json | openssl enc -aes-\(cryptoFields.algorithm.suffix(3))-\(cryptoFields.mode.lowercased()) -K $key \(cryptoFields.iv.count > 0 ? "-iv $iv " : "")| base64)
-                    
+                    iv= b"\(cryptoFields.iv)"
+
+                    # 加密
                     # \(NSLocalizedString("consoleComment",comment: "")) "\((try? AESCryptoModel(cryptoFields: cryptoFields).encrypt(text: "{\"body\": \"test\", \"sound\": \"birdsong\"}")) ?? "")"
-                    echo $ciphertext
+                    encrypted_data = encrypt_AES_CBC(json_string, key, iv)
                     
-                    # \(NSLocalizedString("ciphertextComment",comment: ""))
-                    curl --data-urlencode "ciphertext=$ciphertext"\( cryptoFields.iv.count == 0 ? "" : " --data-urlencode \"iv=\(cryptoFields.iv)\"") \(pawManager.shared.servers[0].url)/$deviceKey
+                    # 将加密后的数据转换为Base64编码
+                    encrypted_base64 = base64.b64encode(encrypted_data).decode()
+
+                    print("加密后的数据（Base64编码）：", encrypted_base64)
+
+                    deviceKey = '\(pawManager.shared.servers[0].key)'
+
+                    res = requests.get(f"\(pawManager.shared.servers[0].url)/{deviceKey}/test",
+                                       params={"ciphertext": encrypted_base64, "iv": iv})
+
+                    print(res.text)
+
                     """
         
         pawManager.shared.copy(text: text)

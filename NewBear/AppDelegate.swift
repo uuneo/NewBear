@@ -168,7 +168,7 @@ extension AppDelegate :UNUserNotificationCenterDelegate{
     // 处理点击后的操作
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         notificatonHandler(userInfo: response.notification.request.content.userInfo)
-        pawManager.shared.page = .message
+        pageState.shared.page = .message
         completionHandler()
         
     }
