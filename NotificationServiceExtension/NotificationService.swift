@@ -15,7 +15,6 @@ import UniformTypeIdentifiers
 import SwiftUI
 import Foundation
 import RealmSwift
-import UIKit
 
 class NotificationService: UNNotificationServiceExtension {
     
@@ -140,6 +139,7 @@ class NotificationService: UNNotificationServiceExtension {
         
         // 如果是加密推送，则使用密文配置 bestAttemptContent
         if let ciphertext = userInfo["ciphertext"] as? String {
+            debugPrint("开始解密",userInfo)
             do {
                 var map = try decrypt(ciphertext: ciphertext, iv: userInfo["iv"] as? String)
                 for (key, val) in map {
@@ -185,8 +185,11 @@ class NotificationService: UNNotificationServiceExtension {
                 bestAttemptContent.userInfo = userInfo
             }
             catch {
+                debugPrint(error)
                 bestAttemptContent.body = "Decryption Failed"
                 bestAttemptContent.userInfo = ["aps": ["alert": ["body": bestAttemptContent.body]]]
+                debugPrint(bestAttemptContent.userInfo)
+                contentHandler(bestAttemptContent)
                 return
             }
         }

@@ -37,7 +37,7 @@ struct MessageDetailView: View {
                             }.tint(.blue)
                         }
                         .onAppear{
-                            if message == messages.prefix( showMsgCount )1.last {
+                            if message == messages.prefix( showMsgCount ).last {
                                 self.pageNumber += 1
                             }
                         }
