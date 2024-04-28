@@ -160,63 +160,72 @@ struct CryptoConfigView: View {
     
     
     func createCopyText(){
-        if cryptoFields.iv == "" || cryptoFields.key == ""{
-            
-            toolsManager.async_set_localString("cryptoConfigParamsFail", "参数不全"){text in
-                self.toastText = text
-            }
-            return
+        
+        if !verifyIv() {
+            cryptoFields.iv = self.randomString(length: 16)
         }
+        
+        if !verifyKey(){
+            cryptoFields.key = self.randomString(length: expectKeyLength)
+        }
+        
+    
         
         let text = """
                     # Documentation: \(NSLocalizedString("encryptionUrl",comment: ""))
                     # python demo: 使用AES加密数据，并发送到服务器
                     # pip3 install pycryptodome
-
+                    
                     import json
                     import base64
                     import requests
                     from Crypto.Cipher import AES
                     from Crypto.Util.Padding import pad
-
-
+                    
+                    
                     def encrypt_AES_CBC(data, key, iv):
                         cipher = AES.new(key, AES.MODE_\(cryptoFields.mode.uppercased()), iv)
                         padded_data = pad(data.encode(), AES.block_size)
                         encrypted_data = cipher.encrypt(padded_data)
                         return encrypted_data
-
-
+                    
+                    
                     # JSON数据
                     json_string = json.dumps({"body": "test", "sound": "birdsong"})
-
+                    
                     # \(String(format: NSLocalizedString("keyComment",comment: ""), Int(cryptoFields.algorithm.suffix(3))! / 8))
                     key = b"\(cryptoFields.key)"
                     # \(NSLocalizedString("ivComment",comment: ""))
                     iv= b"\(cryptoFields.iv)"
-
+                    
                     # 加密
                     # \(NSLocalizedString("consoleComment",comment: "")) "\((try? AESCryptoModel(cryptoFields: cryptoFields).encrypt(text: "{\"body\": \"test\", \"sound\": \"birdsong\"}")) ?? "")"
                     encrypted_data = encrypt_AES_CBC(json_string, key, iv)
                     
                     # 将加密后的数据转换为Base64编码
                     encrypted_base64 = base64.b64encode(encrypted_data).decode()
-
+                    
                     print("加密后的数据（Base64编码）：", encrypted_base64)
-
+                    
                     deviceKey = '\(pawManager.shared.servers[0].key)'
-
+                    
                     res = requests.get(f"\(pawManager.shared.servers[0].url)/{deviceKey}/test",
                                        params={"ciphertext": encrypted_base64, "iv": iv})
-
+                    
                     print(res.text)
-
+                    
                     """
         
         pawManager.shared.copy(text: text)
         toolsManager.async_set_localString("copySuccessText", "复制成功"){text in
             self.toastText = text
         }
+    }
+    
+    
+    func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map { _ in letters.randomElement()! })
     }
 }
 
