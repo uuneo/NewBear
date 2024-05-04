@@ -42,6 +42,7 @@ struct SettingView: View {
                 Section(header: Text("iCloud"),footer: Text(NSLocalizedString("icloudHeader",comment: ""))) {
                     NavigationLink(destination: {
                         cloudMessageView()
+                            .toolbar(.hidden, for: .tabBar)
                     }, label: {
                         HStack{
                            
@@ -186,7 +187,9 @@ struct SettingView: View {
 
                     
                     
-                    NavigationLink(destination:  emailPageView()) {
+                    NavigationLink(destination:
+                                    emailPageView() .toolbar(.hidden, for: .tabBar)
+                    ) {
                         
                         Label {
                             Text(NSLocalizedString("mailTitle", comment: "自动化配置"))
@@ -197,7 +200,10 @@ struct SettingView: View {
                     }
                     
                     
-                    NavigationLink(destination: CryptoConfigView()) {
+                    NavigationLink(destination: 
+                                    CryptoConfigView()
+                                        .toolbar(.hidden, for: .tabBar)
+                    ) {
                         
                         
                         Label {
@@ -210,6 +216,7 @@ struct SettingView: View {
                     
                     NavigationLink{
                         RingtongView()
+                            .toolbar(.hidden, for: .tabBar)
                     }label: {
                         
                         Label {
@@ -488,6 +495,7 @@ struct SettingView: View {
         }
         .navigationDestination(isPresented: $pageView.showServerListView) {
             ServerListView()
+                .toolbar(.hidden, for: .tabBar)
         }
         
         

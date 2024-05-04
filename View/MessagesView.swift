@@ -135,6 +135,7 @@ struct MessageView: View {
             .listStyle(.plain)
             .navigationDestination(isPresented: $showItems) {
                 MessageDetailView(messages: messagesRaw.where({$0.group == selectGroup}))
+                    .toolbar(.hidden, for: .tabBar)
                     .navigationTitle(selectGroup)
             }
             .toolbar{

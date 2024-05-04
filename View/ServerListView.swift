@@ -69,12 +69,12 @@ struct ServerListView: View {
                                 }
                             }.padding(.vertical)
                         }.id(UUID().uuidString)
-                    }
-                    else{
+                    } else{
                         Spacer()
                             .frame(height: 1)
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             .listRowBackground(Color.clear)
+                            
                     }
                     
                    

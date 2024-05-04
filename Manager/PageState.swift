@@ -30,6 +30,7 @@ class pageState: ObservableObject{
     }
     
     @Published var page:tabPage = .message
+    
     @Published var sheetPage:pageModal = .none
     @Published var fullPage:pageModal = .none
     @Published var webUrl:String = ""

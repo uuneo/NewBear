@@ -15,7 +15,7 @@ timeMinHourAgo = "%1$d小时%2$d分钟前";
 
 
 bottomBarSettings = "设置";
-bottomBarMsg = "消息";
+bottomBarMsg = "消息列表";
 
 
 unknown = "未知";
