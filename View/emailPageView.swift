@@ -30,13 +30,11 @@ struct emailPageView: View {
                             
                             
                             if error != nil {
-                                toolsManager.async_set_localString( "sendMailFail", "调用失败") { text in
-                                    self.toastText = text
-                                }
+                                
+                                self.toastText = NSLocalizedString("sendMailFail", comment:  "调用失败")
                             }else{
-                                toolsManager.async_set_localString( "sendMailSuccess", "调用成功") { text in
-                                    self.toastText = text
-                                }
+                                
+                                self.toastText = NSLocalizedString("sendMailSuccess", comment:   "调用成功")
                             }
                             
                             

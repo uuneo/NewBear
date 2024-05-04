@@ -27,9 +27,8 @@ struct MessageDetailView: View {
                                 let _ = RealmManager.shared.updateObject(message) { item2 in
                                     item2.isRead = !item2.isRead
                                     
-                                    toolsManager.async_set_localString( "messageModeChanged") { text in
-                                        self.toastText = text
-                                    }
+                                    
+                                    self.toastText = NSLocalizedString("messageModeChanged", comment: "")
                                   
                                 }
                             } label: {

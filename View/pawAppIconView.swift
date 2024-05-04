@@ -64,9 +64,7 @@ struct pawAppIconView: View {
                                    
                                 }else{
                                 
-                                    toolsManager.async_set_localString( "switchError") { text in
-                                        self.toastText = text
-                                    }
+                                    self.toastText = NSLocalizedString("switchError", comment: "")
                                 }
                             }
                     

@@ -50,8 +50,6 @@ struct ContentView: View {
                 NavigationStack{
                     pawAppIconView()
                 }.presentationDetents([.medium])
-            case .addServer:
-                addServerView()
             case .web:
                 SFSafariViewWrapper(url: pageState.shared.webUrl)
                     .ignoresSafeArea()

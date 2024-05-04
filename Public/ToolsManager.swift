@@ -107,17 +107,7 @@ struct toolsManager{
         }
         
     }
-    
-    // MARK: 防止阻塞主线程
-    static func async_set_localString(_ key:String,_ comment: String = "",_ block: @escaping (_ text:String) -> ()) {
-        Task{
-            let text = NSLocalizedString(key, comment: comment)
-            DispatchQueue.main.sync {
-                block(text)
-            }
-        }
-    }
-    
+
     
     static func getGroup(_ group:String?)->String{
         return group ?? NSLocalizedString("defaultGroup",comment: "")

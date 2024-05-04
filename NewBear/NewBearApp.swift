@@ -50,9 +50,7 @@ struct NewBearApp: SwiftUI.App {
                             action: {
                                 RealmManager.shared.allDel( activeName == "alldelnotread" ? 1 : 0)
                                 
-                                toolsManager.async_set_localString("controlSuccess",  "操作成功") { text in
-                                    self.toastText = text
-                                }
+                                self.toastText = NSLocalizedString("controlSuccess", comment:"操作成功")
                                
                             }
                         ), secondaryButton: .cancel())
@@ -111,9 +109,7 @@ struct NewBearApp: SwiftUI.App {
                         }
                     }else{
                         
-                        toolsManager.async_set_localString("paramsError",  "参数错误") { text in
-                            self.toastText = text
-                        }
+                        self.toastText = NSLocalizedString("paramsError", comment:"参数错误")
                     }
                 }
                 
@@ -142,9 +138,7 @@ struct NewBearApp: SwiftUI.App {
                 switch name{
                 case "allread":
                     RealmManager.shared.allRead()
-                    toolsManager.async_set_localString("controlSuccess",  "操作成功") { text in
-                        self.toastText = text
-                    }
+                    self.toastText = NSLocalizedString("controlSuccess", comment:"操作成功")
                 case "alldelread","alldelnotread":
                     self.activeName = name
                     self.showAlart.toggle()

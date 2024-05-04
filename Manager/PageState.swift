@@ -19,7 +19,6 @@ class pageState: ObservableObject{
         case example
         case music
         case appIcon
-        case addServer
         case web
         case issues
         case none

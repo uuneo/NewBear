@@ -263,3 +263,9 @@ enum QuickAction{
         )
     ]
 }
+
+
+enum requestHeader :String {
+    case https = "https://"
+    case http = "http://"
+}

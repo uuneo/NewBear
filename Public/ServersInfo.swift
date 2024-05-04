@@ -9,7 +9,7 @@ import Foundation
 
 
 
-struct serverInfo: Codable, Identifiable{
+struct serverInfo: Codable, Identifiable,Equatable{
     var id:UUID = UUID()
     var url:String
     var key:String

@@ -97,9 +97,8 @@ extension CustomHelpView{
                         .onTapGesture {
                             UIPasteboard.general.string = resultUrl
                             
-                            toolsManager.async_set_localString("copySuccessText", "复制成功"){text in
-                                self.toastText = text
-                            }
+                          
+                            self.toastText = NSLocalizedString("copySuccessText", comment:  "复制成功")
                             
                           
                         }
@@ -115,9 +114,8 @@ extension CustomHelpView{
                                             self.dismiss()
                                         }
                                     }else{
-                                        toolsManager.async_set_localString("offline", "复制成功"){text in
-                                            self.toastText = text
-                                        }
+                                        
+                                        self.toastText = NSLocalizedString("offline", comment:  "复制成功")
                                         
                                     }
                                 }

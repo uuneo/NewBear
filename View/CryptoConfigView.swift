@@ -121,9 +121,8 @@ struct CryptoConfigView: View {
                     Button {
                         if verifyKey() && verifyIv(){
                            
-                            toolsManager.async_set_localString("cryptoConfigSuccess", "验证成功"){text in
-                                self.toastText = text
-                            }
+                            
+                            self.toastText = NSLocalizedString("cryptoConfigSuccess", comment: "验证成功")
                             
                            
                         }
@@ -138,9 +137,7 @@ struct CryptoConfigView: View {
     func verifyKey()-> Bool{
         if cryptoFields.key.count != expectKeyLength{
             cryptoFields.key = ""
-            toolsManager.async_set_localString("cryptoConfigKeyFail", "Key参数长度不正确"){text in
-                self.toastText = text
-            }
+            self.toastText = NSLocalizedString("cryptoConfigKeyFail", comment: "Key参数长度不正确")
             return false
         }
         return true
@@ -149,10 +146,7 @@ struct CryptoConfigView: View {
     func verifyIv() -> Bool{
         if cryptoFields.iv.count != 16 {
             cryptoFields.iv = ""
-           
-            toolsManager.async_set_localString("cryptoConfigIvFail", "Iv参数长度不正确"){text in
-                self.toastText = text
-            }
+            self.toastText = NSLocalizedString("cryptoConfigIvFail", comment: "Iv参数长度不正确")
             return false
         }
         return true
@@ -217,9 +211,8 @@ struct CryptoConfigView: View {
                     """
         
         pawManager.shared.copy(text: text)
-        toolsManager.async_set_localString("copySuccessText", "复制成功"){text in
-            self.toastText = text
-        }
+
+        self.toastText = NSLocalizedString("copySuccessText", comment:  "复制成功")
     }
     
     

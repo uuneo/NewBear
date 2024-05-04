@@ -237,9 +237,8 @@ extension MessageView{
         let realm = RealmManager.shared
         
         if realm.getObject()?.count == 0{
-            toolsManager.async_set_localString( "nothingMessage") { text in
-                self.toastText = text
-            }
+         
+            self.toastText = NSLocalizedString("nothingMessage", comment: "")
            
             return
         }
@@ -277,9 +276,7 @@ extension MessageView{
         
         let _ = realm.deleteObjects(alldata)
         
-        toolsManager.async_set_localString( "deleteSuccess") { text in
-            self.toastText = text
-        }
+        self.toastText = NSLocalizedString("deleteSuccess", comment: "")
         
         
     }

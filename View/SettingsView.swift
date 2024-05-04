@@ -74,17 +74,14 @@ struct SettingView: View {
                         Button {
                             
                             if RealmManager.shared.getObject()?.count ?? 0 > 0{
-                                toolsManager.async_set_localString("controlSuccess") { text in
-                                    self.toastText = text
-                                }
+                                
+                                self.toastText = NSLocalizedString("controlSuccess", comment: "")
                                
                                 self.exportJSON()
                                 self.isShareSheetPresented.toggle()
                                
                             }else{
-                                toolsManager.async_set_localString("nothingMessage") { text in
-                                    self.toastText = text
-                                }
+                                self.toastText = NSLocalizedString("nothingMessage", comment: "")
                             }
                             
                             
@@ -110,14 +107,11 @@ struct SettingView: View {
                     Button{
                         if paw.deviceToken != ""{
                             paw.copy(text: paw.deviceToken)
-                            toolsManager.async_set_localString("copySuccessText") { text in
-                                self.toastText = text
-                            }
+                            
+                            self.toastText = NSLocalizedString("copySuccessText", comment: "")
                          
                         }else{
-                            toolsManager.async_set_localString("needRegister") { text in
-                                self.toastText = text
-                            }
+                            self.toastText = NSLocalizedString("needRegister", comment: "")
                         }
                     }label: {
                         HStack{
@@ -541,9 +535,7 @@ extension SettingView{
            
         } catch {
             
-            toolsManager.async_set_localString("exportFail") { text in
-                self.toastText = text
-            }
+            self.toastText = NSLocalizedString("exportFail", comment: "")
            
 #if DEBUG
             print("Error encoding JSON: \(error.localizedDescription)")

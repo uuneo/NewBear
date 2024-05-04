@@ -305,3 +305,5 @@ defaultGroup = "默认";
 startUse = "进入首页";
 
 contactMe = "发现问题";
+
+editingtips = "非编辑状态";

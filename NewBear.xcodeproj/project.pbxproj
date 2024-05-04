@@ -72,7 +72,6 @@
 		197A349D2BC5352300A76EB7 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A344F2BC5352300A76EB7 /* ShareSheet.swift */; };
 		197A349E2BC5352300A76EB7 /* toastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34502BC5352300A76EB7 /* toastView.swift */; };
 		197A349F2BC5352300A76EB7 /* WebKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34512BC5352300A76EB7 /* WebKitView.swift */; };
-		197A34A02BC5352300A76EB7 /* addServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34532BC5352300A76EB7 /* addServerView.swift */; };
 		197A34A12BC5352300A76EB7 /* CloudMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34542BC5352300A76EB7 /* CloudMessageView.swift */; };
 		197A34A22BC5352300A76EB7 /* CryptoConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34552BC5352300A76EB7 /* CryptoConfigView.swift */; };
 		197A34A32BC5352300A76EB7 /* CustomHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34562BC5352300A76EB7 /* CustomHelpView.swift */; };
@@ -221,7 +220,6 @@
 		197A344F2BC5352300A76EB7 /* ShareSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		197A34502BC5352300A76EB7 /* toastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = toastView.swift; sourceTree = "<group>"; };
 		197A34512BC5352300A76EB7 /* WebKitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebKitView.swift; sourceTree = "<group>"; };
-		197A34532BC5352300A76EB7 /* addServerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addServerView.swift; sourceTree = "<group>"; };
 		197A34542BC5352300A76EB7 /* CloudMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudMessageView.swift; sourceTree = "<group>"; };
 		197A34552BC5352300A76EB7 /* CryptoConfigView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoConfigView.swift; sourceTree = "<group>"; };
 		197A34562BC5352300A76EB7 /* CustomHelpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHelpView.swift; sourceTree = "<group>"; };
@@ -453,7 +451,6 @@
 		197A34622BC5352300A76EB7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				197A34532BC5352300A76EB7 /* addServerView.swift */,
 				197A34542BC5352300A76EB7 /* CloudMessageView.swift */,
 				197A34552BC5352300A76EB7 /* CryptoConfigView.swift */,
 				197A34562BC5352300A76EB7 /* CustomHelpView.swift */,
@@ -733,7 +730,6 @@
 				197A346E2BC5352300A76EB7 /* MessageTools.swift in Sources */,
 				197A34A32BC5352300A76EB7 /* CustomHelpView.swift in Sources */,
 				197A34A12BC5352300A76EB7 /* CloudMessageView.swift in Sources */,
-				197A34A02BC5352300A76EB7 /* addServerView.swift in Sources */,
 				197A34AB2BC5352300A76EB7 /* ScanView.swift in Sources */,
 				197A34A62BC5352300A76EB7 /* MessageDetailView.swift in Sources */,
 				197A34682BC5352300A76EB7 /* RealmManager.swift in Sources */,

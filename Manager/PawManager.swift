@@ -296,8 +296,17 @@ extension pawManager{
 
 
 extension pawManager{
-    func addServer(url: String)-> (Bool,String){
+    func addServer(_ agreeName:String = "", url: String)-> (Bool,String){
         var toastText:String = ""
+        
+        
+        let url = agreeName + url.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if url.count < (agreeName.count + 2){
+            return (false, toastText)
+        }
+        
+        
         if !toolsManager.startsWithHttpOrHttps(url){
             toastText = NSLocalizedString("verifyFail",comment: "")
             return (false,toastText)

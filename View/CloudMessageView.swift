@@ -64,9 +64,9 @@ struct cloudMessageView: View {
                                     self.exportJSON()
                                     self.isShareSheetPresented = true
                                 }else{
-                                    toolsManager.async_set_localString("notData") { text in
-                                        self.toastText = text
-                                    }
+                                   
+                                    
+                                    self.toastText = NSLocalizedString("notData", comment: "")
                                     
                                 }
                                 self.showLoading = false
@@ -101,9 +101,8 @@ struct cloudMessageView: View {
                                   let _ =   await CloudKitManager.shared.uploadCloud(Array(messages))
                                 }
                                 self.showLoading = false
-                                toolsManager.async_set_localString("controlSuccess"){ text in
-                                    self.toastText = text
-                                }
+                                
+                                self.toastText = NSLocalizedString("controlSuccess", comment: "")
                             }
                         }label: {
                             
@@ -127,9 +126,8 @@ struct cloudMessageView: View {
                                     }
                                 }
                                 self.showLoading = false
-                                toolsManager.async_set_localString("controlSuccess"){ text in
-                                    self.toastText = text
-                                }
+                                
+                                self.toastText = NSLocalizedString("controlSuccess", comment: "")
                                
                             }
                         }label: {
@@ -189,9 +187,8 @@ struct cloudMessageView: View {
             let itemId  = messages[index2].id
             let res = await  CloudKitManager.shared.deleteMessage(itemId)
             
-            toolsManager.async_set_localString( res ? "deleteSuccess" :"deleteFail") { text in
-                self.toastText = text
-            }
+           
+            self.toastText = NSLocalizedString(res ? "deleteSuccess" :"deleteFail", comment: "")
             
             if res{
                 messages.remove(atOffsets: index)
@@ -248,9 +245,7 @@ struct cloudMessageView: View {
             print(error)
             
             
-            toolsManager.async_set_localString( "getFail") { text in
-                self.toastText = text
-            }
+            self.toastText = NSLocalizedString("getFail", comment: "")
 #endif
            
             
@@ -271,9 +266,8 @@ struct cloudMessageView: View {
             guard let jsonString = String(data: jsonData, encoding: .utf8),
                   let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else{
                 
-                toolsManager.async_set_localString("exportFail") { text in
-                    self.toastText = text
-                }
+                
+                self.toastText = NSLocalizedString("exportFail", comment: "")
                
                 return
             }
@@ -282,18 +276,17 @@ struct cloudMessageView: View {
             try jsonString.write(to: fileURL, atomically: false, encoding: .utf8)
             self.jsonFileUrl = fileURL
             
-            toolsManager.async_set_localString("exportSuccess") { text in
-                self.toastText = text
-            }
+            self.toastText = NSLocalizedString("exportSuccess", comment: "")
+            
+            
 
 #if DEBUG
             print("JSON file saved at: \(fileURL.absoluteString)")
 #endif
            
         } catch {
-            toolsManager.async_set_localString("exportFail") { text in
-                self.toastText = text
-            }
+            
+            self.toastText = NSLocalizedString("exportFail", comment: "")
 
 #if DEBUG
             print("Error encoding JSON: \(error.localizedDescription)")

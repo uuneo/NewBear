@@ -157,10 +157,8 @@ extension LoginView{
                     self.toastText = data.msg
                 }
             }else{
-                
-                toolsManager.async_set_localString( "requestFail", "请求失败") { text in
-                    self.toastText = text
-                }
+           
+                self.toastText = NSLocalizedString("requestFail", comment:   "请求失败")
               
             }
             

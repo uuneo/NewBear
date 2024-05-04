@@ -10,56 +10,75 @@ import SwiftUI
 struct ServerListView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var paw:pawManager
-    @State var showAction:Bool = false
-    @State var toastText:String = ""
-    @State var addMode:Bool = false
+    @State private var showAction:Bool = false
+    @State private var isEditing:EditMode = .inactive
+    @State private var isEditinged:Bool = false
+    @State private var toastText:String = ""
+    @State private var serverText:String = ""
+    @State var serverName:String = ""
+    @State private var pickerSelect:requestHeader = .https
     var showClose:Bool = false
+    
     var body: some View {
         NavigationStack{
-            serverList
-                .toolbar{
-                    ToolbarItem {
-                        Button{
-                            self.addMode.toggle()
-                        }label:{
-                            Image(systemName: "plus")
-                                .tint(Color("textBlack"))
-                        }
-                        .padding(.horizontal)
-                        
-                    }
-                    if showClose {
-                       
-                        ToolbarItem{
-                            Button {
-                                dismiss()
-                            } label: {
-                                Image(systemName: "xmark.seal")
-                            }
-
-                        }
-                    }
-                }
-                .sheet(isPresented: $addMode, content: {
-                    NavigationStack{
-                        addServerView()
-                    } .presentationDetents([.medium, .large])
-                })
-                .navigationTitle(NSLocalizedString("serverList",comment: ""))
-            
-        }
-    }
-    
-}
-
-extension ServerListView{
-    private var serverList:some View{
-        VStack{
-           
-            List{
+            VStack{
+               
+                List{
                     
-                ForEach(paw.servers,id: \.id){item in
-                    Section {
+                    if isEditing == .active{
+                        Section {
+                            HStack{
+                                
+                                Picker(selection: $pickerSelect) {
+                                    Text(requestHeader.http.rawValue).tag(requestHeader.http)
+                                    Text(requestHeader.https.rawValue).tag(requestHeader.https)
+                                }label: {
+                                   Text("")
+                                } .pickerStyle(.automatic)
+                                    .frame(maxWidth: 100)
+                                    .offset(x:-30)
+                                TextField(NSLocalizedString("inputServerAddress",comment: ""), text: $serverName)
+                                    
+                            }
+                           
+
+                        }header: {
+                            Text(NSLocalizedString("addNewServerListAddress",comment: ""))
+                        }footer: {
+                            HStack{
+                                Button{
+                                    pageState.shared.webUrl = otherUrl.delpoydoc
+                                    pageState.shared.fullPage = .web
+                                }label: {
+                                    Text(NSLocalizedString("checkServerDeploy",comment: ""))
+                                        .font(.caption2)
+                                }
+                                
+                                Spacer()
+                                
+                                Button{
+                                    
+                                    
+                                    let (success,_) = pawManager.shared.addServer(url: serverInfo.serverDefault.url)
+                                    if success{
+                                        self.dismiss()
+                                    }
+                                }label: {
+                                    Text(NSLocalizedString("recoverDefaultServer",comment: ""))
+                                        .font(.caption2)
+                                }
+                            }.padding(.vertical)
+                        }.id(UUID().uuidString)
+                    }
+                    else{
+                        Spacer()
+                            .frame(height: 1)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .listRowBackground(Color.clear)
+                    }
+                    
+                   
+                    ForEach(paw.servers,id: \.id){item in
                         HStack(alignment: .center){
                             Image(item.status ? "online": "offline")
                                 .padding(.horizontal,5)
@@ -70,6 +89,8 @@ extension ServerListView{
                                         .frame(width: 40)
                                     Text(item.name)
                                         .font(.headline)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.5)
                                     Spacer()
                                 }
                                 
@@ -77,6 +98,8 @@ extension ServerListView{
                                     Text("KEY:")
                                         .frame(width:40)
                                     Text(item.key)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.5)
                                     Spacer()
                                 } .font(.system(size: 10))
                                 
@@ -84,23 +107,18 @@ extension ServerListView{
                             Spacer()
                             Image(systemName: "doc.on.doc")
                                 .onTapGesture{
-                                    toolsManager.async_set_localString( "copySuccessText") { text in
-                                        self.toastText = text
-                                    }
+                                    self.toastText = NSLocalizedString("copySuccessText", comment: "")
                                     paw.copy(text: item.url + "/" + item.key)
                                 }
                             
                         }
                         .padding(.vertical,5)
-                        
                         .swipeActions(edge: .leading, allowsFullSwipe: true) {
                             Button{
                                 Task{
                                     await paw.register(server: item)
                                 }
-                                toolsManager.async_set_localString("controlSuccess") { text in
-                                    self.toastText = text
-                                }
+                                self.toastText = NSLocalizedString("controlSuccess", comment: "")
                             }label: {
                                 Text(NSLocalizedString("registerAndCheck",comment: ""))
                             }.tint(.blue)
@@ -115,45 +133,81 @@ extension ServerListView{
                                 Task{
                                     await paw.register(server: item)
                                 }
-                                
-                                toolsManager.async_set_localString("controlSuccess") { text in
-                                    self.toastText = text
-                                }
+                                self.toastText = NSLocalizedString("controlSuccess", comment: "")
                                 
                             }label: {
                                 Text(NSLocalizedString("resetKey",comment: "重置Key"))
                             }.tint(.red)
                         }
-                    } header: {
-                        HStack{
-                            Text(item.status ? NSLocalizedString("online",comment: "") : NSLocalizedString("offline",comment: ""))
-                            Spacer()
-//                            Text(NSLocalizedString("serverOnlineFooter",comment: ""))
-                        }
-                       
                     }
+                    .onDelete(perform: { indexSet in
+                        if isEditing == .active{
+                            if paw.servers.count > 1{
+                                paw.servers.remove(atOffsets: indexSet)
+                            }else{
+                                self.toastText =  NSLocalizedString("needOneServer", comment: "")
+                            }
+                        }else{
+                            self.toastText = NSLocalizedString("editingtips", comment: "编辑状态")
+                        }
+                    })
+                    .onMove(perform: { indices, newOffset in
+                        paw.servers.move(fromOffsets: indices, toOffset: newOffset)
+                    })
+
                     
                 }
-                .onDelete(perform: { indexSet in
-                    if paw.servers.count > 1{
-                        paw.servers.remove(atOffsets: indexSet)
-                    }else{
-               
-                        toolsManager.async_set_localString("needOneServer") { text in
-                            self.toastText = text
-                        }
-                    }
-                    
-                })
-
+                .refreshable {
+                    await paw.registerAll()
+                }
                 
             }
-            .refreshable {
-                await paw.registerAll()
-            }
+            .listRowSpacing(20)
+            .toast(info: $toastText)
             
-        }.toast(info: $toastText)
+                .toolbar{
+                
+                    ToolbarItem {
+                        EditButton()
+                    }
+                   
+                    
+                    if showClose {
+                       
+                        ToolbarItem{
+                            Button {
+                                dismiss()
+                            } label: {
+                                Image(systemName: "xmark.seal")
+                            }
+
+                        }
+                    }
+                }
+                .environment(\.editMode, $isEditing)
+                .navigationTitle(NSLocalizedString("serverList",comment: ""))
+            
+                .onChange(of: isEditing) { value in
+                    switch value{
+                    case .active:
+                        self.isEditinged = true
+                    case .inactive:
+                        if self.isEditinged{
+                            let (_, toast) =  pawManager.shared.addServer(pickerSelect.rawValue, url: serverName)
+                            self.toastText = toast
+                            self.isEditinged = false
+                        }
+                    case .transient:
+                        break
+                    @unknown default:
+                        break
+                    }
+                }
+            
+        }
     }
+
+    
 }
 
 
