@@ -231,7 +231,7 @@ doubleClickSave = "双击保存";
 
 
 requestFail = "请求失败";
-signTitle = "通知";
+signTitle = "邮件Key";
 signSubTitle = "替换key为邮件地址";
 signHelp = "不知道如何开始? 获取帮助";
 signRetry = "重试";

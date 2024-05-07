@@ -232,7 +232,7 @@ doubleClickSave = "Double Click to Save";
 
 
 requestFail = "Request Failed";
-signTitle = "Notification";
+signTitle = "Email Key";
 signSubTitle = "change key with email";
 signHelp = "Don't know how to get started? Get Help";
 signRetry = "Retry";
