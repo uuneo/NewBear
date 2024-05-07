@@ -485,6 +485,7 @@ struct SettingView: View {
         }
         .navigationDestination(isPresented: $pageView.showServerListView) {
             ServerListView()
+                .toolbar(.hidden, for: .tabBar)
         }
        
         
