@@ -17,7 +17,7 @@ struct ScanView: View {
     @State private var restart = false
     @State private var scanCode = ""
     @State private var showActive = false
-    var startConfig: (String, Int)->Void
+    var startConfig: (String)->Void
     var body: some View {
         ZStack{
             QRScannerSampleView(restart: $restart,flash: $torchIsOn,value: $scanCode)
@@ -25,19 +25,12 @@ struct ScanView: View {
 #if DEBUG
                     debugPrint(scanCode)
 #endif
-                 
-                    let (mode, url) = toolsManager.scanModeAndString(scanCode)
-                    switch mode {
-                    case "add":
-                        startConfig(url,0)
+                    if toolsManager.startsWithHttpOrHttps(scanCode){
+                        startConfig(scanCode)
                         self.dismiss()
-                    case "login":
-                        startConfig(url,1)
-                        self.dismiss()
-                    default:
+                    }else{
                         self.showActive.toggle()
                     }
-                    
                    
                 }
                 .actionSheet(isPresented: $showActive) {
@@ -49,8 +42,6 @@ struct ScanView: View {
 #if DEBUG
                             debugPrint(self.scanCode)
 #endif
-                 
-                           
                             self.scanCode = ""
                             self.restart.toggle()
                             self.showActive.toggle()
@@ -66,13 +57,7 @@ struct ScanView: View {
                 
             VStack{
                 HStack{
-                    Button{
-                        self.torchIsOn.toggle()
-                    }label: {
-                        Image(systemName: "flashlight.\(torchIsOn ? "on" : "off").circle")
-                            .font(.largeTitle)
-                            .padding(.top, 8)
-                    }
+                    
                     Spacer()
                     CloseButton()
                         .onTapGesture {
@@ -83,12 +68,15 @@ struct ScanView: View {
                 .padding()
                 .padding(.top,50)
                 Spacer()
-                VStack{
-                    Text("login:https://twown.com/config")
-                    Text("OR")
-                    Text("add:https://push.twown.com")
-                }.padding(.bottom, 50)
-                    .foregroundStyle(.gray)
+                
+                Button{
+                    self.torchIsOn.toggle()
+                }label: {
+                    Image(systemName: "flashlight.\(torchIsOn ? "on" : "off").circle")
+                        .font(.system(size: 50))
+                        .padding(.bottom, 80)
+                }
+
                 
             }
             
@@ -250,7 +238,7 @@ private extension FlashButton {
 }
 
 #Preview {
-    ScanView { _,_ in
+    ScanView { _ in
         
     }
 }

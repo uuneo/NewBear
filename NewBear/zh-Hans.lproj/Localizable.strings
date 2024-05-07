@@ -232,10 +232,10 @@ doubleClickSave = "双击保存";
 
 requestFail = "请求失败";
 signTitle = "通知";
-signSubTitle = "访问您的账户，注册获取您的通知";
+signSubTitle = "替换key为邮件地址";
 signHelp = "不知道如何开始? 获取帮助";
 signRetry = "重试";
-signPhoneInput = "请输入手机号码";
+signPhoneInput = "请输入邮件地址";
 signCodeInput = "请输入验证码";
 signGetCode = "获取验证码";
 
@@ -307,3 +307,6 @@ startUse = "进入首页";
 contactMe = "发现问题";
 
 editingtips = "非编辑状态";
+
+
+replaceKeyWithMail = "替换KEY为邮件地址";

@@ -11,6 +11,9 @@
 		192341D12BEA52D100547B5F /* emailPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192341D02BEA52D100547B5F /* emailPageView.swift */; };
 		192341D42BEA557900547B5F /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 192341D32BEA557900547B5F /* RiveRuntime */; };
 		192341E22BEA695A00547B5F /* sanz.riv in Resources */ = {isa = PBXBuildFile; fileRef = 192341E12BEA695A00547B5F /* sanz.riv */; };
+		192341E52BEA739000547B5F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 192341E42BEA739000547B5F /* Alamofire */; };
+		192341E72BEA739000547B5F /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 192341E62BEA739000547B5F /* AlamofireDynamic */; };
+		192341E92BEA74E400547B5F /* ChangeKeyWithEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192341E82BEA74E400547B5F /* ChangeKeyWithEmailView.swift */; };
 		197A34022BC534B000A76EB7 /* NewBearApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34012BC534B000A76EB7 /* NewBearApp.swift */; };
 		197A34042BC534B000A76EB7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34032BC534B000A76EB7 /* ContentView.swift */; };
 		197A34082BC534B200A76EB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 197A34072BC534B200A76EB7 /* Assets.xcassets */; };
@@ -79,7 +82,6 @@
 		197A34A12BC5352300A76EB7 /* CloudMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34542BC5352300A76EB7 /* CloudMessageView.swift */; };
 		197A34A22BC5352300A76EB7 /* CryptoConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34552BC5352300A76EB7 /* CryptoConfigView.swift */; };
 		197A34A32BC5352300A76EB7 /* CustomHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34562BC5352300A76EB7 /* CustomHelpView.swift */; };
-		197A34A52BC5352300A76EB7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34582BC5352300A76EB7 /* LoginView.swift */; };
 		197A34A62BC5352300A76EB7 /* MessageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34592BC5352300A76EB7 /* MessageDetailView.swift */; };
 		197A34A72BC5352300A76EB7 /* MessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A345A2BC5352300A76EB7 /* MessageItem.swift */; };
 		197A34A82BC5352300A76EB7 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A345B2BC5352300A76EB7 /* MessagesView.swift */; };
@@ -160,6 +162,7 @@
 		192341CC2BE6756800547B5F /* ContactsModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsModal.swift; sourceTree = "<group>"; };
 		192341D02BEA52D100547B5F /* emailPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emailPageView.swift; sourceTree = "<group>"; };
 		192341E12BEA695A00547B5F /* sanz.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = sanz.riv; sourceTree = "<group>"; };
+		192341E82BEA74E400547B5F /* ChangeKeyWithEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeKeyWithEmailView.swift; sourceTree = "<group>"; };
 		197A33FE2BC534B000A76EB7 /* NewBear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewBear.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		197A34012BC534B000A76EB7 /* NewBearApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBearApp.swift; sourceTree = "<group>"; };
 		197A34032BC534B000A76EB7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -229,7 +232,6 @@
 		197A34542BC5352300A76EB7 /* CloudMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudMessageView.swift; sourceTree = "<group>"; };
 		197A34552BC5352300A76EB7 /* CryptoConfigView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoConfigView.swift; sourceTree = "<group>"; };
 		197A34562BC5352300A76EB7 /* CustomHelpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHelpView.swift; sourceTree = "<group>"; };
-		197A34582BC5352300A76EB7 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		197A34592BC5352300A76EB7 /* MessageDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDetailView.swift; sourceTree = "<group>"; };
 		197A345A2BC5352300A76EB7 /* MessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItem.swift; sourceTree = "<group>"; };
 		197A345B2BC5352300A76EB7 /* MessagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
@@ -268,12 +270,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				192341E52BEA739000547B5F /* Alamofire in Frameworks */,
 				197A34DF2BC5371500A76EB7 /* Kingfisher in Frameworks */,
 				197A34DC2BC536FA00A76EB7 /* RealmSwift in Frameworks */,
 				197A34E82BC5376800A76EB7 /* SwiftSMTP in Frameworks */,
 				197A350F2BC53DE200A76EB7 /* MarkdownUI in Frameworks */,
 				197A34E52BC5374800A76EB7 /* QRScanner in Frameworks */,
 				192341D42BEA557900547B5F /* RiveRuntime in Frameworks */,
+				192341E72BEA739000547B5F /* AlamofireDynamic in Frameworks */,
 				197A34DA2BC536FA00A76EB7 /* Realm in Frameworks */,
 				197A35142BC53EE900A76EB7 /* CryptoSwift in Frameworks */,
 			);
@@ -470,7 +474,6 @@
 				197A34542BC5352300A76EB7 /* CloudMessageView.swift */,
 				197A34552BC5352300A76EB7 /* CryptoConfigView.swift */,
 				197A34562BC5352300A76EB7 /* CustomHelpView.swift */,
-				197A34582BC5352300A76EB7 /* LoginView.swift */,
 				197A34592BC5352300A76EB7 /* MessageDetailView.swift */,
 				197A345A2BC5352300A76EB7 /* MessageItem.swift */,
 				197A345B2BC5352300A76EB7 /* MessagesView.swift */,
@@ -482,6 +485,7 @@
 				197A34612BC5352300A76EB7 /* SignInView.swift */,
 				197A35182BC552A000A76EB7 /* StartPageView.swift */,
 				192341D02BEA52D100547B5F /* emailPageView.swift */,
+				192341E82BEA74E400547B5F /* ChangeKeyWithEmailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -544,6 +548,8 @@
 				197A350E2BC53DE200A76EB7 /* MarkdownUI */,
 				197A35132BC53EE900A76EB7 /* CryptoSwift */,
 				192341D32BEA557900547B5F /* RiveRuntime */,
+				192341E42BEA739000547B5F /* Alamofire */,
+				192341E62BEA739000547B5F /* AlamofireDynamic */,
 			);
 			productName = NewBear;
 			productReference = 197A33FE2BC534B000A76EB7 /* NewBear.app */;
@@ -635,6 +641,7 @@
 				197A350D2BC53DE200A76EB7 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				197A35122BC53EE900A76EB7 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
 				192341D22BEA557900547B5F /* XCRemoteSwiftPackageReference "rive-ios" */,
+				192341E32BEA739000547B5F /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 197A33FF2BC534B000A76EB7 /* Products */;
 			projectDirPath = "";
@@ -745,6 +752,7 @@
 				197A34702BC5352300A76EB7 /* PushExample.swift in Sources */,
 				197A34AD2BC5352300A76EB7 /* SettingsView.swift in Sources */,
 				192341D12BEA52D100547B5F /* emailPageView.swift in Sources */,
+				192341E92BEA74E400547B5F /* ChangeKeyWithEmailView.swift in Sources */,
 				197A34772BC5352300A76EB7 /* URLSession+.swift in Sources */,
 				197A34742BC5352300A76EB7 /* Array+.swift in Sources */,
 				197A34AE2BC5352300A76EB7 /* SignInView.swift in Sources */,
@@ -760,7 +768,6 @@
 				197A34732BC5352300A76EB7 /* ToolsManager.swift in Sources */,
 				197A34982BC5352300A76EB7 /* AngularButton.swift in Sources */,
 				197A34752BC5352300A76EB7 /* Color+.swift in Sources */,
-				197A34A52BC5352300A76EB7 /* LoginView.swift in Sources */,
 				197A34672BC5352300A76EB7 /* PawManager.swift in Sources */,
 				197A34642BC5352300A76EB7 /* CloudKitManager.swift in Sources */,
 			);
@@ -1194,6 +1201,14 @@
 				minimumVersion = 5.11.2;
 			};
 		};
+		192341E32BEA739000547B5F /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
 		197A34D82BC536FA00A76EB7 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
@@ -1265,6 +1280,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 192341D22BEA557900547B5F /* XCRemoteSwiftPackageReference "rive-ios" */;
 			productName = RiveRuntime;
+		};
+		192341E42BEA739000547B5F /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 192341E32BEA739000547B5F /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		192341E62BEA739000547B5F /* AlamofireDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 192341E32BEA739000547B5F /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = AlamofireDynamic;
 		};
 		197A34D92BC536FA00A76EB7 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;

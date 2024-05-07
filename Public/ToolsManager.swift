@@ -16,25 +16,7 @@ struct toolsManager{
         let test = NSPredicate(format:"SELF MATCHES %@", pattern)
         return test.evaluate(with: urlString)
     }
-    
-    
-    static func scanModeAndString(_ urlString: String) -> (String, String){
-        
-        
-        if urlString.hasPrefix("add:"){
-            let prefixRemoved = String(urlString.dropFirst(4))
-            if self.isValidURL(prefixRemoved){
-                return ("add", prefixRemoved)
-            }
-        }else if urlString.hasPrefix("config:"){
-            let prefixRemoved = String(urlString.dropFirst(7))
-            if self.isValidURL(prefixRemoved){
-                return ("config", prefixRemoved)
-            }
-        }
-        return ("", "")
-    }
-    
+
     
     
     static  func isValidURL(_ urlString: String) -> Bool {

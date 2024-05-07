@@ -8,25 +8,22 @@
 import SwiftUI
 
 struct SignInView: View {
-    @Binding var phoneNumber:String
-    @Binding var codeNumber:String
-    @Binding var isCountingDown:Bool
     
-    var registerUrl:String
-    var registerNotification: (_ mode:Int)->Void
+    @State var emailName:String = ""
+    @State var codeNumber:String = ""
+    @State var isCountingDown:Bool = false
     
     @State var appear = [false, false, false]
     @State var circleInitialY:CGFloat = CGFloat.zero
     @State var circleY:CGFloat = CGFloat.zero
     
-    @State var countdown:Int = 60
+    @State var countdown:Int = 180
     @FocusState private var isPhoneFocused: Bool
     @FocusState private var isCodeFocused: Bool
     
-       
     
     var filedColor:Color{
-        phoneNumber.count > 10 ? .blue : .red
+        toolsManager.isValidEmail(emailName) ? .blue : .red
     }
     
     
@@ -42,7 +39,7 @@ struct SignInView: View {
 
             }
             
-            Text(NSLocalizedString("signSubTitle", comment: "访问您的账户，注册获取您的通知"))
+            Text(NSLocalizedString("signSubTitle", comment: "替换key为email"))
                 .padding(.horizontal)
                 .font(.headline)
                 .foregroundStyle(.secondary)
@@ -112,14 +109,15 @@ struct SignInView: View {
     var form: some View {
         Group{
             
-            TextField(NSLocalizedString("signPhoneInput", comment: "请输入手机号码"), text: $phoneNumber)
+            
+            TextField(NSLocalizedString("signPhoneInput", comment: "请输入邮件地址"), text: $emailName)
                 .textContentType(.flightNumber)
-                .keyboardType(.phonePad)
+                .keyboardType(.emailAddress)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .foregroundStyle(.textBlack)
                 .customField(
-                    icon: "phone.bubble"
+                    icon: "envelope.fill"
                 )
                 .foregroundStyle(filedColor)
                 .overlay(
@@ -177,12 +175,12 @@ struct SignInView: View {
             
             
             if !isCountingDown{
-                angularButton(title: NSLocalizedString("signGetCode", comment: "获取验证码"),disable: phoneNumber.count == 0){
-                    registerNotification(0)
+                angularButton(title: NSLocalizedString("signGetCode", comment: "获取验证码"),disable: !toolsManager.isValidEmail(emailName)){
+                    isCountingDown.toggle()
                 }
             }else{
                 angularButton(title: NSLocalizedString("register", comment: "注册"),disable: codeNumber.count == 0){
-                    registerNotification(1)
+                    print("")
                 }
             }
             
@@ -195,7 +193,7 @@ struct SignInView: View {
     
     func startCountdown() {
             isCountingDown = true
-            countdown = 60
+            countdown = 180
             // 使用 Timer 定期更新 countdown
             Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 if countdown > 0 {
@@ -203,7 +201,7 @@ struct SignInView: View {
                 } else {
                     timer.invalidate()
                     isCountingDown = false
-                    self.countdown = 60
+                    self.countdown = 180
                 }
             }
         }
@@ -220,12 +218,16 @@ struct SignInView: View {
         }
     }
     
+    func sendCode(){
+        
+        
+    }
+    
+    
 }
 
-private func generateNewGreeting(mode:Int) ->Void {}
 
 #Preview {
-   
-    SignInView(phoneNumber: .constant(""), codeNumber: .constant(""), isCountingDown: .constant(false), registerUrl: "", registerNotification: generateNewGreeting)
+    SignInView()
 }
 

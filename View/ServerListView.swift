@@ -10,6 +10,7 @@ import SwiftUI
 struct ServerListView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var paw:pawManager
+    @EnvironmentObject var pageView:pageState
     @State private var showAction:Bool = false
     @State private var isEditing:EditMode = .inactive
     @State private var isEditinged:Bool = false
@@ -69,12 +70,18 @@ struct ServerListView: View {
                                 }
                             }.padding(.vertical)
                         }.id(UUID().uuidString)
-                    } else{
-                        Spacer()
-                            .frame(height: 1)
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                            .listRowBackground(Color.clear)
-                            
+                        
+                       
+                    }else{
+                        Button {
+                            pageView.fullPage = .login
+                        } label: {
+                            HStack{
+                                Spacer()
+                                Label(NSLocalizedString("replaceKeyWithMail", comment: " 替换key为邮件"), systemImage: "pencil")
+                                Spacer()
+                            }
+                        }
                     }
                     
                    
@@ -166,6 +173,15 @@ struct ServerListView: View {
             .toast(info: $toastText)
             
                 .toolbar{
+                    
+                    ToolbarItem {
+                        Button {
+                            pageView.fullPage = .scan
+                        } label: {
+                            Image(systemName: "qrcode.viewfinder")
+                        }
+
+                    }
                 
                     ToolbarItem {
                         EditButton()
@@ -215,5 +231,6 @@ struct ServerListView: View {
 #Preview {
     NavigationStack{
         ServerListView().environmentObject(pawManager.shared)
+            .environmentObject(pageState.shared)
     }
 }

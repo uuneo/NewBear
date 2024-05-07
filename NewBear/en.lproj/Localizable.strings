@@ -233,10 +233,10 @@ doubleClickSave = "Double Click to Save";
 
 requestFail = "Request Failed";
 signTitle = "Notification";
-signSubTitle = "Access your account, register to receive notifications";
+signSubTitle = "change key with email";
 signHelp = "Don't know how to get started? Get Help";
 signRetry = "Retry";
-signPhoneInput = "Enter your phone number";
+signPhoneInput = "Enter your Email";
 signCodeInput = "Enter the verification code";
 signGetCode = "Get Verification Code";
 
@@ -314,3 +314,6 @@ contactMe = "Discover Issues";
 
 
 editingtips = "Unedited state";
+
+
+replaceKeyWithMail = "Replace Key With Mail";

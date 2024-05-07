@@ -30,9 +30,9 @@ struct angularButton: View {
                 }
             )
             .frame(height: 50)
-            .accentColor(.primary.opacity(0.7))
-            .background(angularGradient)
-            .scaleEffect((isDetectingLongPress && !disable) ? 0.8 : 1)
+            .foregroundStyle(disable ? .gray : .primary)
+            .background( angularGradient)
+            .scaleEffect((isDetectingLongPress && !disable) ? 0.9 : 1)
             .gesture(
                 LongPressGesture(minimumDuration: 0.5)
                     .updating($isDetectingLongPress, body: { currentState, gestureState, transaction in
@@ -71,6 +71,7 @@ struct angularButton: View {
             .padding(6)
             .blur(radius: 20)
     }
+
 }
 
 

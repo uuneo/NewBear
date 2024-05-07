@@ -454,14 +454,7 @@ struct SettingView: View {
                 }
             }
             
-            ToolbarItem {
-                Button {
-                    pageView.fullPage = .scan
-                } label: {
-                    Image(systemName: "qrcode.viewfinder")
-                }
-
-            }
+           
             ToolbarItem {
      
                 Button {

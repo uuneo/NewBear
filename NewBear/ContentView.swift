@@ -75,7 +75,7 @@ struct ContentView: View {
             .fullScreenCover(isPresented: pageState.shared.fullPageShow){
                 switch pageState.shared.fullPage {
                 case .login:
-                    LoginView(registerUrl: pageState.shared.scanUrl)
+                    ChangeKeyWithEmailView()
                 case .servers:
                     ServerListView(showClose: true)
                 case .example:
@@ -83,21 +83,9 @@ struct ContentView: View {
                 case .music:
                     RingtongView()
                 case .scan:
-                    ScanView { code, mode in
-                        if mode == 0 {
-                            let (mode1,msg) = paw.addServer(url: code)
-                            self.toastText = msg
-                            if mode1{
-                                //                            pageView.sheetPage = .servers
-                                pageView.fullPage = .none
-                                pageView.sheetPage = .none
-                                pageView.page = .setting
-                                pageView.showServerListView = true
-                            }
-                        }else if mode == 1{
-                            pageView.scanUrl = code
-                            pageView.fullPage = .login
-                        }
+                    ScanView { code in
+                        let (_,msg) = paw.addServer(url: code)
+                        self.toastText = msg
                     }
                 case .web:
                     SFSafariViewWrapper(url: pageState.shared.webUrl)
