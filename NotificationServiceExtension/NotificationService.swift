@@ -20,7 +20,6 @@ class NotificationService: UNNotificationServiceExtension {
     
     @AppStorage(settings.badgemode,store: defaultStore) var badgeMode:badgeAutoMode = .auto
     @AppStorage(settings.emailConfig,store: defaultStore) var email:emailConfig = emailConfig.data
-    
     @AppStorage(settings.CryptoSettingFields,store: defaultStore) var cryptoFields:CryptoSettingFields = CryptoSettingFields.data
     
     var contentHandler: ((UNNotificationContent) -> Void)?
@@ -64,6 +63,7 @@ class NotificationService: UNNotificationServiceExtension {
         let url = userInfo["url"] as? String
         let markdown = userInfo["markdown"] as? String
         let pushId = userInfo["pushid"] as? String
+       
         
         var isArchive: Bool{
             if let archive = userInfo["isarchive"] as? String {
@@ -83,10 +83,16 @@ class NotificationService: UNNotificationServiceExtension {
                 message.title = title
                 message.body = body
                 message.icon = icon
-                message.group = group ?? NSLocalizedString("defaultGroup",comment: "")
+                
+                if let fromUser =  userInfo["fromuser"] as? String {
+                    message.group = fromUser
+                    message.fromUser = fromUser
+                } else {
+                    message.group = group ?? NSLocalizedString("defaultGroup",comment: "")
+                }
+                
                 message.url = url
                 message.markdown = markdown
-                
                 
                 guard let pushId = pushId else{
                     try local.write {
@@ -108,7 +114,6 @@ class NotificationService: UNNotificationServiceExtension {
                     }
                     return
                 }
-                
                 debugPrint(local.objects(NotificationMessage.self).count)
             }catch{
 #if DEBUG
@@ -160,9 +165,19 @@ class NotificationService: UNNotificationServiceExtension {
                     bestAttemptContent.body = body
                     alert["body"] = body
                 }
-                if let group = map["group"] as? String {
-                    bestAttemptContent.threadIdentifier = group
+                
+                
+                if let fromUser = map["fromuser"] as? String{
+                    bestAttemptContent.threadIdentifier = fromUser
+                    alert["fromuser"] = fromUser
+                }else{
+                    if let group = map["group"] as? String {
+                        bestAttemptContent.threadIdentifier = group
+                    }
                 }
+                
+                
+               
                 if var sound = map["sound"] as? String {
                     if !sound.hasSuffix(".caf") {
                         sound = "\(sound).caf"
@@ -179,6 +194,7 @@ class NotificationService: UNNotificationServiceExtension {
                 if let pushid = map["pushid"] as? String{
                     alert["pushid"] = pushid
                 }
+                
                 
                 map["aps"] = ["alert": alert]
                 userInfo = map
@@ -286,7 +302,6 @@ class NotificationService: UNNotificationServiceExtension {
     
     
 }
-
 
 
 

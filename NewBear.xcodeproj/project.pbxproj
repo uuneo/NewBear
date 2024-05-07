@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		192341CD2BE6756800547B5F /* ContactsModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192341CC2BE6756800547B5F /* ContactsModal.swift */; };
+		192341D12BEA52D100547B5F /* emailPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192341D02BEA52D100547B5F /* emailPageView.swift */; };
+		192341D42BEA557900547B5F /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 192341D32BEA557900547B5F /* RiveRuntime */; };
+		192341E22BEA695A00547B5F /* sanz.riv in Resources */ = {isa = PBXBuildFile; fileRef = 192341E12BEA695A00547B5F /* sanz.riv */; };
 		197A34022BC534B000A76EB7 /* NewBearApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34012BC534B000A76EB7 /* NewBearApp.swift */; };
 		197A34042BC534B000A76EB7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34032BC534B000A76EB7 /* ContentView.swift */; };
 		197A34082BC534B200A76EB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 197A34072BC534B200A76EB7 /* Assets.xcassets */; };
@@ -75,7 +79,6 @@
 		197A34A12BC5352300A76EB7 /* CloudMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34542BC5352300A76EB7 /* CloudMessageView.swift */; };
 		197A34A22BC5352300A76EB7 /* CryptoConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34552BC5352300A76EB7 /* CryptoConfigView.swift */; };
 		197A34A32BC5352300A76EB7 /* CustomHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34562BC5352300A76EB7 /* CustomHelpView.swift */; };
-		197A34A42BC5352300A76EB7 /* emailPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34572BC5352300A76EB7 /* emailPageView.swift */; };
 		197A34A52BC5352300A76EB7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34582BC5352300A76EB7 /* LoginView.swift */; };
 		197A34A62BC5352300A76EB7 /* MessageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34592BC5352300A76EB7 /* MessageDetailView.swift */; };
 		197A34A72BC5352300A76EB7 /* MessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A345A2BC5352300A76EB7 /* MessageItem.swift */; };
@@ -154,6 +157,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		192341CC2BE6756800547B5F /* ContactsModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsModal.swift; sourceTree = "<group>"; };
+		192341D02BEA52D100547B5F /* emailPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emailPageView.swift; sourceTree = "<group>"; };
+		192341E12BEA695A00547B5F /* sanz.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = sanz.riv; sourceTree = "<group>"; };
 		197A33FE2BC534B000A76EB7 /* NewBear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewBear.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		197A34012BC534B000A76EB7 /* NewBearApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBearApp.swift; sourceTree = "<group>"; };
 		197A34032BC534B000A76EB7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -223,7 +229,6 @@
 		197A34542BC5352300A76EB7 /* CloudMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudMessageView.swift; sourceTree = "<group>"; };
 		197A34552BC5352300A76EB7 /* CryptoConfigView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoConfigView.swift; sourceTree = "<group>"; };
 		197A34562BC5352300A76EB7 /* CustomHelpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHelpView.swift; sourceTree = "<group>"; };
-		197A34572BC5352300A76EB7 /* emailPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = emailPageView.swift; sourceTree = "<group>"; };
 		197A34582BC5352300A76EB7 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		197A34592BC5352300A76EB7 /* MessageDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDetailView.swift; sourceTree = "<group>"; };
 		197A345A2BC5352300A76EB7 /* MessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItem.swift; sourceTree = "<group>"; };
@@ -268,6 +273,7 @@
 				197A34E82BC5376800A76EB7 /* SwiftSMTP in Frameworks */,
 				197A350F2BC53DE200A76EB7 /* MarkdownUI in Frameworks */,
 				197A34E52BC5374800A76EB7 /* QRScanner in Frameworks */,
+				192341D42BEA557900547B5F /* RiveRuntime in Frameworks */,
 				197A34DA2BC536FA00A76EB7 /* Realm in Frameworks */,
 				197A35142BC53EE900A76EB7 /* CryptoSwift in Frameworks */,
 			);
@@ -299,9 +305,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		192341DC2BEA66CE00547B5F /* RiveGroupAssets */ = {
+			isa = PBXGroup;
+			children = (
+				192341E12BEA695A00547B5F /* sanz.riv */,
+			);
+			path = RiveGroupAssets;
+			sourceTree = "<group>";
+		};
 		197A33F52BC534B000A76EB7 = {
 			isa = PBXGroup;
 			children = (
+				192341DC2BEA66CE00547B5F /* RiveGroupAssets */,
 				197A34292BC5352300A76EB7 /* Extension */,
 				197A34172BC5352300A76EB7 /* Manager */,
 				197A34232BC5352300A76EB7 /* Public */,
@@ -379,6 +394,7 @@
 				197A34202BC5352300A76EB7 /* ResponseModal.swift */,
 				197A34212BC5352300A76EB7 /* ServersInfo.swift */,
 				197A34222BC5352300A76EB7 /* ToolsManager.swift */,
+				192341CC2BE6756800547B5F /* ContactsModal.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -454,7 +470,6 @@
 				197A34542BC5352300A76EB7 /* CloudMessageView.swift */,
 				197A34552BC5352300A76EB7 /* CryptoConfigView.swift */,
 				197A34562BC5352300A76EB7 /* CustomHelpView.swift */,
-				197A34572BC5352300A76EB7 /* emailPageView.swift */,
 				197A34582BC5352300A76EB7 /* LoginView.swift */,
 				197A34592BC5352300A76EB7 /* MessageDetailView.swift */,
 				197A345A2BC5352300A76EB7 /* MessageItem.swift */,
@@ -466,6 +481,7 @@
 				197A34602BC5352300A76EB7 /* SettingsView.swift */,
 				197A34612BC5352300A76EB7 /* SignInView.swift */,
 				197A35182BC552A000A76EB7 /* StartPageView.swift */,
+				192341D02BEA52D100547B5F /* emailPageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -527,6 +543,7 @@
 				197A34E72BC5376800A76EB7 /* SwiftSMTP */,
 				197A350E2BC53DE200A76EB7 /* MarkdownUI */,
 				197A35132BC53EE900A76EB7 /* CryptoSwift */,
+				192341D32BEA557900547B5F /* RiveRuntime */,
 			);
 			productName = NewBear;
 			productReference = 197A33FE2BC534B000A76EB7 /* NewBear.app */;
@@ -617,6 +634,7 @@
 				197A34E92BC537A500A76EB7 /* XCRemoteSwiftPackageReference "Down" */,
 				197A350D2BC53DE200A76EB7 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				197A35122BC53EE900A76EB7 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+				192341D22BEA557900547B5F /* XCRemoteSwiftPackageReference "rive-ios" */,
 			);
 			productRefGroup = 197A33FF2BC534B000A76EB7 /* Products */;
 			projectDirPath = "";
@@ -635,6 +653,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				197A348E2BC5352300A76EB7 /* noir.caf in Resources */,
+				192341E22BEA695A00547B5F /* sanz.riv in Resources */,
 				197A34952BC5352300A76EB7 /* tiptoes.caf in Resources */,
 				197A348A2BC5352300A76EB7 /* minuet.caf in Resources */,
 				197A34912BC5352300A76EB7 /* sherwoodforest.caf in Resources */,
@@ -710,6 +729,7 @@
 				197A34AC2BC5352300A76EB7 /* ServerListView.swift in Sources */,
 				197A349A2BC5352300A76EB7 /* LoadingView.swift in Sources */,
 				197A34712BC5352300A76EB7 /* ResponseModal.swift in Sources */,
+				192341CD2BE6756800547B5F /* ContactsModal.swift in Sources */,
 				197A34A22BC5352300A76EB7 /* CryptoConfigView.swift in Sources */,
 				197A34632BC5352300A76EB7 /* AudioManager.swift in Sources */,
 				197A34652BC5352300A76EB7 /* ImageManager.swift in Sources */,
@@ -724,6 +744,7 @@
 				197A34992BC5352300A76EB7 /* AsyncImageView.swift in Sources */,
 				197A34702BC5352300A76EB7 /* PushExample.swift in Sources */,
 				197A34AD2BC5352300A76EB7 /* SettingsView.swift in Sources */,
+				192341D12BEA52D100547B5F /* emailPageView.swift in Sources */,
 				197A34772BC5352300A76EB7 /* URLSession+.swift in Sources */,
 				197A34742BC5352300A76EB7 /* Array+.swift in Sources */,
 				197A34AE2BC5352300A76EB7 /* SignInView.swift in Sources */,
@@ -738,7 +759,6 @@
 				197A346D2BC5352300A76EB7 /* MessageModal.swift in Sources */,
 				197A34732BC5352300A76EB7 /* ToolsManager.swift in Sources */,
 				197A34982BC5352300A76EB7 /* AngularButton.swift in Sources */,
-				197A34A42BC5352300A76EB7 /* emailPageView.swift in Sources */,
 				197A34752BC5352300A76EB7 /* Color+.swift in Sources */,
 				197A34A52BC5352300A76EB7 /* LoginView.swift in Sources */,
 				197A34672BC5352300A76EB7 /* PawManager.swift in Sources */,
@@ -1166,6 +1186,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		192341D22BEA557900547B5F /* XCRemoteSwiftPackageReference "rive-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rive-app/rive-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.2;
+			};
+		};
 		197A34D82BC536FA00A76EB7 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
@@ -1233,6 +1261,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		192341D32BEA557900547B5F /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 192341D22BEA557900547B5F /* XCRemoteSwiftPackageReference "rive-ios" */;
+			productName = RiveRuntime;
+		};
 		197A34D92BC536FA00A76EB7 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 197A34D82BC536FA00A76EB7 /* XCRemoteSwiftPackageReference "realm-swift" */;

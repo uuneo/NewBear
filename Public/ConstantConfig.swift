@@ -51,5 +51,5 @@ struct settings {
     static let  CryptoSettingFields = "CryptoSettingFields"
     static let  recordType = "NotificationMessage"
     static let  realmName = "NewBear.realm"
-    static let realmModalVersion:UInt64 = 9
+    static let  realmModalVersion:UInt64 = 10
 }

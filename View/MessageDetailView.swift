@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 
 struct MessageDetailView: View {
-     var messages:Results<NotificationMessage>
+    var messages:Results<NotificationMessage>
     @Environment(\.dismiss) private var dismiss
     @Environment(\.presentationMode) var presentationMode
     @State private var toastText:String = ""

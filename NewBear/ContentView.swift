@@ -50,9 +50,6 @@ struct ContentView: View {
                     Label(NSLocalizedString("bottomBarSettings",comment: ""), systemImage: "gearshape")
                 }
                 .tag(pageState.tabPage.setting)
-               
-               
-                
             
         }
             

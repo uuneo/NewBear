@@ -68,8 +68,6 @@ struct SettingView: View {
                     }
                 }
                 
-                
-                
                 Section(footer:Text(NSLocalizedString("exportHeader",comment: ""))) {
                     HStack{
                         Button {
@@ -216,7 +214,6 @@ struct SettingView: View {
                     
                     NavigationLink{
                         RingtongView()
-                            .toolbar(.hidden, for: .tabBar)
                     }label: {
                         
                         Label {
@@ -495,8 +492,8 @@ struct SettingView: View {
         }
         .navigationDestination(isPresented: $pageView.showServerListView) {
             ServerListView()
-                .toolbar(.hidden, for: .tabBar)
         }
+       
         
         
     }
@@ -561,6 +558,9 @@ extension SettingView{
 #Preview {
     NavigationStack{
         SettingView()
+            .environmentObject(pawManager.shared)
+            .environmentObject(pageState.shared)
+            
     }
 }
 

@@ -2,7 +2,7 @@
 //  emailPageView.swift
 //  NewBear
 //
-//  Created by He Cho on 2024/4/4.
+//  Created by He Cho on 2024/5/7.
 //
 
 import SwiftUI

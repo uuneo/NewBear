@@ -109,7 +109,11 @@ struct MessageView: View {
                                 }
                                 .frame(minWidth: 60)
                             }
+                          
                             
+                        }
+                        .onLongPressGesture {
+                            self.showAction = true
                         }
                         .swipeActions(edge: .leading) {
                             Button {
@@ -209,7 +213,7 @@ struct MessageView: View {
             .onChange(of: searchText) { value in
                 self.pageNumber = 1
             }
-            
+           
        
     }
     
@@ -293,6 +297,9 @@ extension MessageView{
 #Preview {
     NavigationStack{
         MessageView()
+            .environmentObject(pawManager.shared)
+            .navigationTitle("信息")
+            
     }
     
 }
