@@ -37,6 +37,10 @@ class pawManager: ObservableObject{
     private init() {}
     
     
+    var defaultServer:String{
+        return self.servers.first!.url
+    }
+    
     
     func changeBadge(badge:Int){
         

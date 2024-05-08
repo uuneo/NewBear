@@ -42,7 +42,9 @@ struct ChangeKeyWithEmailView: View {
             
             
             GeometryReader { proxy in
-                SignInView()
+                SignInView(closeFunc: {
+                    self.closeView()
+                })
                 .rotationEffect(.degrees(viewState.width / 40))
                 .rotation3DEffect(.degrees(viewState.height / 20), axis: (x: 1, y: 0, z: 0), perspective: 1)
                 .shadow(color: Color("Shadow").opacity(0.2), radius: 30, x: 0, y: 30)

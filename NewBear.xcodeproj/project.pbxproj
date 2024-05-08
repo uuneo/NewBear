@@ -14,6 +14,7 @@
 		192341E52BEA739000547B5F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 192341E42BEA739000547B5F /* Alamofire */; };
 		192341E72BEA739000547B5F /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 192341E62BEA739000547B5F /* AlamofireDynamic */; };
 		192341E92BEA74E400547B5F /* ChangeKeyWithEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192341E82BEA74E400547B5F /* ChangeKeyWithEmailView.swift */; };
+		192341EB2BEB620500547B5F /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192341EA2BEB620500547B5F /* String+.swift */; };
 		197A34022BC534B000A76EB7 /* NewBearApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34012BC534B000A76EB7 /* NewBearApp.swift */; };
 		197A34042BC534B000A76EB7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34032BC534B000A76EB7 /* ContentView.swift */; };
 		197A34082BC534B200A76EB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 197A34072BC534B200A76EB7 /* Assets.xcassets */; };
@@ -163,6 +164,7 @@
 		192341D02BEA52D100547B5F /* emailPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emailPageView.swift; sourceTree = "<group>"; };
 		192341E12BEA695A00547B5F /* sanz.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = sanz.riv; sourceTree = "<group>"; };
 		192341E82BEA74E400547B5F /* ChangeKeyWithEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeKeyWithEmailView.swift; sourceTree = "<group>"; };
+		192341EA2BEB620500547B5F /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		197A33FE2BC534B000A76EB7 /* NewBear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewBear.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		197A34012BC534B000A76EB7 /* NewBearApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBearApp.swift; sourceTree = "<group>"; };
 		197A34032BC534B000A76EB7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				197A34262BC5352300A76EB7 /* Date+.swift */,
 				197A34272BC5352300A76EB7 /* URLSession+.swift */,
 				197A34282BC5352300A76EB7 /* View+.swift */,
+				192341EA2BEB620500547B5F /* String+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -733,6 +736,7 @@
 				197A34722BC5352300A76EB7 /* ServersInfo.swift in Sources */,
 				197A349C2BC5352300A76EB7 /* SFSafariViewController.swift in Sources */,
 				197A34D72BC5361600A76EB7 /* AppDelegate.swift in Sources */,
+				192341EB2BEB620500547B5F /* String+.swift in Sources */,
 				197A34AC2BC5352300A76EB7 /* ServerListView.swift in Sources */,
 				197A349A2BC5352300A76EB7 /* LoadingView.swift in Sources */,
 				197A34712BC5352300A76EB7 /* ResponseModal.swift in Sources */,

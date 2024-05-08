@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import Alamofire
 struct SignInView: View {
     
     @State var emailName:String = ""
@@ -21,7 +21,9 @@ struct SignInView: View {
     @FocusState private var isPhoneFocused: Bool
     @FocusState private var isCodeFocused: Bool
     
+    var closeFunc: (()->Void)?
     
+    @State private var selectServerIndex:Int = 0
     var filedColor:Color{
         toolsManager.isValidEmail(emailName) ? .blue : .red
     }
@@ -36,15 +38,22 @@ struct SignInView: View {
                     .slideFadeIn(show: appear[0], offset: 30)
                 Spacer()
                
-
+                Picker(selection: $selectServerIndex, label: Text("")) {
+                    
+                    ForEach(pawManager.shared.servers.indices, id: \.self){index in
+                        let item = pawManager.shared.servers[index]
+                        Text(item.url.removeHTTPPrefix()).tag(index)
+                            .minimumScaleFactor(0.5)
+                    }
+                }
             }
             
             Text(NSLocalizedString("signSubTitle", comment: "替换key为email"))
-                .padding(.horizontal)
+                .padding(.leading)
                 .font(.headline)
                 .foregroundStyle(.secondary)
                 .slideFadeIn(show: appear[1], offset: 20)
-                
+            
             form.slideFadeIn(show: appear[2], offset: 10)
             
             Divider()
@@ -59,16 +68,18 @@ struct SignInView: View {
                         pageState.shared.fullPage = .web
                     }
                 Spacer()
-                
-                Button(action: {
-                    self.countdown = 0
-                    self.codeNumber = ""
-                    self.isCodeFocused = false
-                    self.isCountingDown = false
-        
-                }) {
-                    Text(NSLocalizedString("signRetry", comment: "**重试**"))
+                if self.countdown != 180{
+                    Button(action: {
+                        self.countdown = 0
+                        self.codeNumber = ""
+                        self.isCodeFocused = false
+                        self.isCountingDown = false
+            
+                    }) {
+                        Text(NSLocalizedString("signRetry", comment: "**重试**"))
+                    }
                 }
+                
      
             }
             
@@ -176,11 +187,31 @@ struct SignInView: View {
             
             if !isCountingDown{
                 angularButton(title: NSLocalizedString("signGetCode", comment: "获取验证码"),disable: !toolsManager.isValidEmail(emailName)){
-                    isCountingDown.toggle()
+                    Task{
+                        if await self.sendCode(self.emailName){
+                            DispatchQueue.main.async {
+                                isCountingDown.toggle()
+                            }
+                        }
+                    }
+                    
+                    
                 }
             }else{
                 angularButton(title: NSLocalizedString("register", comment: "注册"),disable: codeNumber.count == 0){
-                    print("")
+                    Task{
+                        if await self.register(email: emailName, code: codeNumber){
+                            pawManager.shared.dispatch_sync_safely_main_queue {
+                                var result =   pawManager.shared.servers[selectServerIndex]
+                                  
+                                  result.key = emailName
+                                  
+                                  pawManager.shared.servers[selectServerIndex] = result
+                                  
+                                 closeFunc?()
+                            }
+                        }
+                    }
                 }
             }
             
@@ -218,13 +249,22 @@ struct SignInView: View {
         }
     }
     
-    func sendCode(){
+    func sendCode(_ email:String) async -> Bool {
+        let server = pawManager.shared.servers[selectServerIndex].url
+        let res = await AF.request("\(server)/sendCode?email=\(email)", interceptor: .retryPolicy).serializingDecodable(baseResponse<String>.self).response
         
-        
+        debugPrint(res)
+        return res.value?.code == 200
     }
-    
-    
+    func register(email:String, code:String) async -> Bool {
+        let server = pawManager.shared.servers[selectServerIndex]
+        let res = await AF.request("\(server.url)/keyWithEmail?email=\(email)&code=\(codeNumber)&key=\(server.key)&deviceToken=\(pawManager.shared.deviceToken)",interceptor: .retryPolicy).serializingDecodable(baseResponse<DeviceInfo>.self).response
+        debugPrint(res)
+       return res.value?.code == 200
+       
+    }
 }
+
 
 
 #Preview {

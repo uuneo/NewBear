@@ -92,6 +92,11 @@ struct SettingView: View {
                                 Image(systemName: "square.and.arrow.down")
                                     .scaleEffect(0.9)
                             }
+                            
+                            
+                            
+                            
+                            
 
                         }
                         

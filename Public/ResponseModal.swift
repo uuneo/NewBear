@@ -10,7 +10,8 @@ import Foundation
 struct baseResponse<T:Codable>:Codable{
     var code:Int
     var message:String
-    var data:T
+    var data:T?
+    var timestamp:Int?
 }
 
 
