@@ -11,10 +11,10 @@
 		192341D12BEA52D100547B5F /* emailPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192341D02BEA52D100547B5F /* emailPageView.swift */; };
 		192341D42BEA557900547B5F /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 192341D32BEA557900547B5F /* RiveRuntime */; };
 		192341E22BEA695A00547B5F /* sanz.riv in Resources */ = {isa = PBXBuildFile; fileRef = 192341E12BEA695A00547B5F /* sanz.riv */; };
-		192341E52BEA739000547B5F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 192341E42BEA739000547B5F /* Alamofire */; };
-		192341E72BEA739000547B5F /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 192341E62BEA739000547B5F /* AlamofireDynamic */; };
 		192341E92BEA74E400547B5F /* ChangeKeyWithEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192341E82BEA74E400547B5F /* ChangeKeyWithEmailView.swift */; };
 		192341EB2BEB620500547B5F /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192341EA2BEB620500547B5F /* String+.swift */; };
+		192341EF2BEB7FB500547B5F /* AlamofireDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 192341EC2BEB7FB500547B5F /* AlamofireDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		192341F22BEBADEA00547B5F /* ButtonPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192341F12BEBADEA00547B5F /* ButtonPress.swift */; };
 		197A34022BC534B000A76EB7 /* NewBearApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34012BC534B000A76EB7 /* NewBearApp.swift */; };
 		197A34042BC534B000A76EB7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A34032BC534B000A76EB7 /* ContentView.swift */; };
 		197A34082BC534B200A76EB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 197A34072BC534B200A76EB7 /* Assets.xcassets */; };
@@ -145,6 +145,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		192341EE2BEB7FB500547B5F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				192341EF2BEB7FB500547B5F /* AlamofireDynamic in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		197A34BE2BC535C900A76EB7 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -165,6 +176,7 @@
 		192341E12BEA695A00547B5F /* sanz.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = sanz.riv; sourceTree = "<group>"; };
 		192341E82BEA74E400547B5F /* ChangeKeyWithEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeKeyWithEmailView.swift; sourceTree = "<group>"; };
 		192341EA2BEB620500547B5F /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		192341F12BEBADEA00547B5F /* ButtonPress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPress.swift; sourceTree = "<group>"; };
 		197A33FE2BC534B000A76EB7 /* NewBear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewBear.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		197A34012BC534B000A76EB7 /* NewBearApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBearApp.swift; sourceTree = "<group>"; };
 		197A34032BC534B000A76EB7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -272,14 +284,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				192341E52BEA739000547B5F /* Alamofire in Frameworks */,
 				197A34DF2BC5371500A76EB7 /* Kingfisher in Frameworks */,
 				197A34DC2BC536FA00A76EB7 /* RealmSwift in Frameworks */,
 				197A34E82BC5376800A76EB7 /* SwiftSMTP in Frameworks */,
 				197A350F2BC53DE200A76EB7 /* MarkdownUI in Frameworks */,
 				197A34E52BC5374800A76EB7 /* QRScanner in Frameworks */,
 				192341D42BEA557900547B5F /* RiveRuntime in Frameworks */,
-				192341E72BEA739000547B5F /* AlamofireDynamic in Frameworks */,
 				197A34DA2BC536FA00A76EB7 /* Realm in Frameworks */,
 				197A35142BC53EE900A76EB7 /* CryptoSwift in Frameworks */,
 			);
@@ -467,6 +477,7 @@
 				197A344F2BC5352300A76EB7 /* ShareSheet.swift */,
 				197A34502BC5352300A76EB7 /* toastView.swift */,
 				197A34512BC5352300A76EB7 /* WebKitView.swift */,
+				192341F12BEBADEA00547B5F /* ButtonPress.swift */,
 			);
 			path = Templates;
 			sourceTree = "<group>";
@@ -534,6 +545,7 @@
 				197A33FB2BC534B000A76EB7 /* Frameworks */,
 				197A33FC2BC534B000A76EB7 /* Resources */,
 				197A34BE2BC535C900A76EB7 /* Embed Foundation Extensions */,
+				192341EE2BEB7FB500547B5F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -551,8 +563,7 @@
 				197A350E2BC53DE200A76EB7 /* MarkdownUI */,
 				197A35132BC53EE900A76EB7 /* CryptoSwift */,
 				192341D32BEA557900547B5F /* RiveRuntime */,
-				192341E42BEA739000547B5F /* Alamofire */,
-				192341E62BEA739000547B5F /* AlamofireDynamic */,
+				192341EC2BEB7FB500547B5F /* AlamofireDynamic */,
 			);
 			productName = NewBear;
 			productReference = 197A33FE2BC534B000A76EB7 /* NewBear.app */;
@@ -748,6 +759,7 @@
 				197A34022BC534B000A76EB7 /* NewBearApp.swift in Sources */,
 				197A346F2BC5352300A76EB7 /* PreferenceKey.swift in Sources */,
 				197A346B2BC5352300A76EB7 /* EmailConfig.swift in Sources */,
+				192341F22BEBADEA00547B5F /* ButtonPress.swift in Sources */,
 				197A349E2BC5352300A76EB7 /* toastView.swift in Sources */,
 				197A346C2BC5352300A76EB7 /* Enums.swift in Sources */,
 				197A34692BC5352300A76EB7 /* ConstantConfig.swift in Sources */,
@@ -1285,12 +1297,7 @@
 			package = 192341D22BEA557900547B5F /* XCRemoteSwiftPackageReference "rive-ios" */;
 			productName = RiveRuntime;
 		};
-		192341E42BEA739000547B5F /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 192341E32BEA739000547B5F /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		192341E62BEA739000547B5F /* AlamofireDynamic */ = {
+		192341EC2BEB7FB500547B5F /* AlamofireDynamic */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 192341E32BEA739000547B5F /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = AlamofireDynamic;

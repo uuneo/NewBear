@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Alamofire
+
 struct SignInView: View {
     
     @State var emailName:String = ""
@@ -24,6 +24,7 @@ struct SignInView: View {
     var closeFunc: (()->Void)?
     
     @State private var selectServerIndex:Int = 0
+    @State private var loadingText:String = ""
     var filedColor:Color{
         toolsManager.isValidEmail(emailName) ? .blue : .red
     }
@@ -185,22 +186,34 @@ struct SignInView: View {
            
             
             
-            if !isCountingDown{
-                angularButton(title: NSLocalizedString("signGetCode", comment: "获取验证码"),disable: !toolsManager.isValidEmail(emailName)){
+            angularButton(title: !isCountingDown ? NSLocalizedString("signGetCode", comment: "获取验证码") : NSLocalizedString("register", comment: "注册"), disable: !isCountingDown ? !toolsManager.isValidEmail(emailName) : codeNumber.count == 0,loading: loadingText ){
+                if !isCountingDown{
+                    self.loadingText = "正在获取验证码"
                     Task{
-                        if await self.sendCode(self.emailName){
+                        let (success, msg) = await self.sendCode(self.emailName)
+                        if success {
                             DispatchQueue.main.async {
                                 isCountingDown.toggle()
                             }
+                        }else{
+                            DispatchQueue.main.async {
+                                
+                                self.loadingText = msg ?? "其他错误"
+                            }
                         }
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            
+                            self.loadingText = ""
+                        }
+                        
                     }
-                    
-                    
-                }
-            }else{
-                angularButton(title: NSLocalizedString("register", comment: "注册"),disable: codeNumber.count == 0){
+                }else{
+                    self.loadingText = "正在切换key"
                     Task{
-                        if await self.register(email: emailName, code: codeNumber){
+                        
+                        let (success, msg) = await self.register(email: emailName, code: codeNumber)
+                        if success {
                             pawManager.shared.dispatch_sync_safely_main_queue {
                                 var result =   pawManager.shared.servers[selectServerIndex]
                                   
@@ -210,10 +223,54 @@ struct SignInView: View {
                                   
                                  closeFunc?()
                             }
+                        }else{
+                            pawManager.shared.dispatch_sync_safely_main_queue {
+                                self.loadingText = msg ?? "其他错误"
+                                
+                            }
+                        }
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            
+                            self.loadingText = ""
                         }
                     }
+                    
                 }
             }
+            
+            
+            
+//            
+//            if !isCountingDown{
+//                angularButton(title: NSLocalizedString("signGetCode", comment: "获取验证码"),disable: !toolsManager.isValidEmail(emailName)){
+//                    Task{
+//                        if await self.sendCode(self.emailName){
+//                            DispatchQueue.main.async {
+//                                isCountingDown.toggle()
+//                            }
+//                        }
+//                    }
+//                    
+//                    
+//                }
+//            }else{
+//                angularButton(title: NSLocalizedString("register", comment: "注册"),disable: codeNumber.count == 0){
+//                    Task{
+//                        if await self.register(email: emailName, code: codeNumber){
+//                            pawManager.shared.dispatch_sync_safely_main_queue {
+//                                var result =   pawManager.shared.servers[selectServerIndex]
+//                                  
+//                                  result.key = emailName
+//                                  
+//                                  pawManager.shared.servers[selectServerIndex] = result
+//                                  
+//                                 closeFunc?()
+//                            }
+//                        }
+//                    }
+//                }
+//            }
             
             
             
@@ -249,18 +306,25 @@ struct SignInView: View {
         }
     }
     
-    func sendCode(_ email:String) async -> Bool {
-        let server = pawManager.shared.servers[selectServerIndex].url
-        let res = await AF.request("\(server)/sendCode?email=\(email)", interceptor: .retryPolicy).serializingDecodable(baseResponse<String>.self).response
-        
-        debugPrint(res)
-        return res.value?.code == 200
-    }
-    func register(email:String, code:String) async -> Bool {
+    func sendCode(_ email:String) async -> (Bool,String?) {
         let server = pawManager.shared.servers[selectServerIndex]
-        let res = await AF.request("\(server.url)/keyWithEmail?email=\(email)&code=\(codeNumber)&key=\(server.key)&deviceToken=\(pawManager.shared.deviceToken)",interceptor: .retryPolicy).serializingDecodable(baseResponse<DeviceInfo>.self).response
-        debugPrint(res)
-       return res.value?.code == 200
+        
+        do{
+            let res:baseResponse<String>? = try await pawManager.shared.fetch( "\(server.url)/sendCode?email=\(email)&key=\(server.key)")
+            return (res?.code == 200, res?.message)
+        }catch{
+            return (false,"发生错误")
+        }
+    }
+    func register(email:String, code:String) async -> (Bool,String?) {
+        let server = pawManager.shared.servers[selectServerIndex]
+        
+        do{
+            let res:baseResponse<DeviceInfo>? = try await pawManager.shared.fetch("\(server.url)/keyWithEmail?email=\(email)&code=\(codeNumber)&key=\(server.key)&deviceToken=\(pawManager.shared.deviceToken)")
+            return (res?.code == 200, res?.message)
+        }catch{
+            return (false,"发生错误")
+        }
        
     }
 }

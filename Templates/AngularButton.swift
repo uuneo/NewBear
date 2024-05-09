@@ -11,50 +11,60 @@ import SwiftUI
 struct angularButton: View {
     var title:String
     var disable:Bool = false
+    var loading:String = ""
     var onTap:()->Void
-    @GestureState var isDetectingLongPress = false
-    @State var completedLongPress = false
+   
+    
+    @State private var ispress = false
+    
     var body: some View {
-        Text(completedLongPress ? "Loading..." : title)
-            .fontWeight(.semibold)
-            .frame(maxWidth: .infinity, maxHeight: 50)
-            .background(
-                ZStack {
-                    
-                    if !disable{
-                        angularGradient
-                    }
-                    LinearGradient(gradient: Gradient(colors: [Color(.systemBackground).opacity(1), Color(.systemBackground).opacity(0.6)]), startPoint: .top, endPoint: .bottom)
-                        .cornerRadius(20)
-                        .blendMode(.softLight)
-                }
-            )
-            .frame(height: 50)
-            .foregroundStyle(disable ? .gray : .primary)
-            .background( angularGradient)
-            .scaleEffect((isDetectingLongPress && !disable) ? 0.9 : 1)
-            .gesture(
-                LongPressGesture(minimumDuration: 0.5)
-                    .updating($isDetectingLongPress, body: { currentState, gestureState, transaction in
-                        gestureState = currentState
-                        transaction.animation = .spring(response: 0.3, dampingFraction: 0.3)
-                    })
-                    .onEnded({ finished in
+        
+        HStack{
+            
+            Spacer()
+            Text(loading != "" ? loading : title)
+                .fontWeight(.semibold)
+                .frame(maxWidth: .infinity, maxHeight: 50)
+                .background(
+                    ZStack {
+                        
                         if !disable{
-                            completedLongPress = finished
+                            angularGradient
                         }
-                       
-                    })
-            )
-            .simultaneousGesture(
-               
-                TapGesture().onEnded({ value in
-                    if !disable{
+                        LinearGradient(gradient: Gradient(colors: [Color(.systemBackground).opacity(1), Color(.systemBackground).opacity(0.6)]), startPoint: .top, endPoint: .bottom)
+                            .cornerRadius(20)
+                            .blendMode(.softLight)
+                    }
+                )
+                .animation(.easeInOut,value: loading)
+                .animation(.easeInOut,value: disable)
+                .animation(.easeInOut,value: ispress)
+                .frame(height: 50)
+                .foregroundStyle(disable ? .gray : .primary)
+                .foregroundStyle(loading == "" ? .primary : Color.red)
+                .background( angularGradient)
+                .scaleEffect(ispress ? 0.9 : 1)
+                .opacity(ispress ? 0.6 : 1)
+                .onTapGesture {
+                    if !disable && loading == "" {
                         onTap()
                     }
-                   
-                })
-            )
+                }
+                .pressEvents {
+                    if !disable && loading == "" {
+                        self.ispress = true
+                    }
+                  
+                } onRelease: {
+                    
+                    if !disable && loading == "" {
+                        self.ispress = false
+                    }
+                }
+            Spacer()
+        }
+        
+       
     }
     
     var angularGradient: some View {

@@ -16,12 +16,18 @@ struct cloudMessageView: View {
     @State private var jsonFileUrl:URL?
     @State private var isShareSheetPresented = false
     @State private var deleteMode:Bool = false
+    
+    @State private var pageNumber:Int = 1
+    var showMsgCount:Int{
+        min(pageNumber * 10, messages.count)
+    }
+    
     var body: some View {
         List{
             
             HStack{
                 Spacer()
-                Text(String(format: NSLocalizedString("someMessageCount", comment: "多少条消息"), paw.cloudCount))
+                Text("\(showMsgCount) / \(String(format: NSLocalizedString("someMessageCount", comment: "多少条消息"), paw.cloudCount))")
                     .font(.system(size: 16))
                     
             }.listRowBackground(Color.clear)
@@ -37,8 +43,14 @@ struct cloudMessageView: View {
                 
             }
             
-            ForEach(messages, id: \.id){item in
+            ForEach(messages.prefix(showMsgCount), id: \.id){item in
                 MessageItem(message: item)
+                    .onAppear{
+                        if item == messages.prefix( showMsgCount ).last {
+                            self.pageNumber += 1
+                        }
+                    }
+                    
             }.onDelete(perform: { indexSet in
                 Task{
                     await self.deleteMessageOne(indexSet)

@@ -13,10 +13,9 @@ struct ServerListView: View {
     @EnvironmentObject var pageView:pageState
     @State private var showAction:Bool = false
     @State private var isEditing:EditMode = .inactive
-    @State private var isEditinged:Bool = false
     @State private var toastText:String = ""
     @State private var serverText:String = ""
-    @State var serverName:String = ""
+    @State private var serverName:String = ""
     @State private var pickerSelect:requestHeader = .https
     var showClose:Bool = false
     
@@ -26,22 +25,29 @@ struct ServerListView: View {
                
                 List{
                     
+                    
+                    
                     if isEditing == .active{
                         Section {
-                            HStack{
-                                
-                                Picker(selection: $pickerSelect) {
-                                    Text(requestHeader.http.rawValue).tag(requestHeader.http)
-                                    Text(requestHeader.https.rawValue).tag(requestHeader.https)
-                                }label: {
-                                   Text("")
-                                } .pickerStyle(.automatic)
-                                    .frame(maxWidth: 100)
-                                    .offset(x:-30)
-                                TextField(NSLocalizedString("inputServerAddress",comment: ""), text: $serverName)
-                                    
-                            }
-                           
+                            TextField(NSLocalizedString("inputServerAddress",comment: ""), text: $serverName)
+                                .textContentType(.flightNumber)
+                                .keyboardType(.URL)
+                                .autocapitalization(.none)
+                                .disableAutocorrection(true)
+                                .padding(.leading, 100)
+                                .overlay{
+                                    HStack{
+                                        Picker(selection: $pickerSelect) {
+                                            Text(requestHeader.http.rawValue).tag(requestHeader.http)
+                                            Text(requestHeader.https.rawValue).tag(requestHeader.https)
+                                        }label: {
+                                           Text("")
+                                        } .pickerStyle(.automatic)
+                                            .frame(maxWidth: 100)
+                                            .offset(x:-30)
+                                        Spacer()
+                                    }
+                                }
 
                         }header: {
                             Text(NSLocalizedString("addNewServerListAddress",comment: ""))
@@ -69,7 +75,7 @@ struct ServerListView: View {
                                         .font(.caption2)
                                 }
                             }.padding(.vertical)
-                        }.id(UUID().uuidString)
+                        }
                         
                        
                     }else{
@@ -204,20 +210,13 @@ struct ServerListView: View {
                 .navigationTitle(NSLocalizedString("serverList",comment: ""))
             
                 .onChange(of: isEditing) { value in
-                    switch value{
-                    case .active:
-                        self.isEditinged = true
-                    case .inactive:
-                        if self.isEditinged{
-                            let (_, toast) =  pawManager.shared.addServer(pickerSelect.rawValue, url: serverName)
-                            self.toastText = toast
-                            self.isEditinged = false
-                        }
-                    case .transient:
-                        break
-                    @unknown default:
-                        break
+                    
+                    if value == .inactive && serverName.count > 0{
+                        let (_, toast) =  pawManager.shared.addServer(pickerSelect.rawValue, url: serverName)
+                        self.toastText = toast
+                        self.serverName = ""
                     }
+                   
                 }
             
         }

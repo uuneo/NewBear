@@ -28,7 +28,7 @@ struct SettingView: View {
     @State private var errorAnimate1:Bool = false
     @State private var errorAnimate2:Bool = false
     @State private var errorAnimate3:Bool = false
-
+    @State private var showLoading:Bool = false
     
     @AppStorage("setting_active_app_icon") var setting_active_app_icon:appIcon = .def
     
@@ -74,13 +74,18 @@ struct SettingView: View {
                             
                             if RealmManager.shared.getObject()?.count ?? 0 > 0{
                                 
-                                self.toastText = NSLocalizedString("controlSuccess", comment: "")
+                                self.showLoading = true
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
+                                    self.exportJSON()
+                                    self.showLoading = false
+                                    self.isShareSheetPresented.toggle()
+                                }
                                
-                                self.exportJSON()
-                                self.isShareSheetPresented.toggle()
                                
                             }else{
                                 self.toastText = NSLocalizedString("nothingMessage", comment: "")
+                                self.showLoading = false
                             }
                             
                             
@@ -361,8 +366,10 @@ struct SettingView: View {
                 
                 
             }.listStyle(.insetGrouped)
+                
             
         }
+        .loading(showLoading)
         .toast(info: $toastText)
         .background(hexColor("#f5f5f5"))
         .toolbar {

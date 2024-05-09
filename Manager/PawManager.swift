@@ -367,4 +367,11 @@ extension pawManager{
         }
         
     }
+    
+    func fetch<T:Codable>(_ url:String) async throws -> T?{
+        guard let requestUrl = URL(string: url) else {return  nil}
+        let data = try await session.data(for: URLRequest(url: requestUrl))
+        let result = try JSONDecoder().decode(T.self, from: data)
+        return result
+    }
 }

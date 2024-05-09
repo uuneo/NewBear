@@ -7,37 +7,48 @@
 
 import SwiftUI
 
-struct LoadingView: View {
-    @State var show:Bool
-    @State var text:String
+
+struct LoadingPress: ViewModifier{
     
+    var show:Bool = false
+    var title:String = ""
     
-    var body: some View {
-        ZStack(alignment: .center) {
-            VStack{
-                ProgressView()
-                    .scaleEffect(3)
-                    .padding()
-                Text(text)
-                    .font(.caption)
-            }
+    func body(content: Content) -> some View {
+        
+        ZStack {
+            content
+               
             
+            if show{
+                VStack{
+                    
+                    ProgressView()
+                        .scaleEffect(3)
+                        .padding()
+                    
+                    Text(title)
+                        .font(.caption)
+                }
+                .background(
+                    Rectangle()
+                        .fill(Color.black.opacity(0.8))
+                        .blur(radius: 10)
+                        .frame(width: UIScreen.main.bounds.width,height: UIScreen.main.bounds.height)
+                        
+                    
+                )
+                .toolbar(.hidden, for: .tabBar, .navigationBar)
+                .navigationBarTitleDisplayMode(.inline)
+            }
+               
+                
         }
-        .padding()
-        .opacity(show ? 1 : 0)
-        .animation(.easeIn(duration: 0.8), value: show)
-        .edgesIgnoringSafeArea(.all)
     }
 }
 
+
 extension View {
-    func loading(_ show:Bool,_ text:String = "") -> some View {
-        ZStack {
-            self
-                .blur(radius: show ? 3.0 : 0)
-            if show {
-                LoadingView(show: show,text: text)
-            }
-        }
+    func loading(_ show:Bool, _ title:String = "")-> some View{
+        modifier(LoadingPress(show: show, title: title))
     }
 }

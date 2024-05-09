@@ -112,9 +112,6 @@ struct MessageView: View {
                           
                             
                         }
-                        .onLongPressGesture {
-                            self.showAction = true
-                        }
                         .swipeActions(edge: .leading) {
                             Button {
                                
