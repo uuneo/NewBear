@@ -9,54 +9,59 @@ import SwiftUI
 
 struct cloudMessageView: View {
     @EnvironmentObject var paw:pawManager
-    @State var toastText = ""
-    @State var messages:[NotificationMessage] = []
-    @State var imageID:String = ""
-    @State var showLoading = false
+    @State private var toastText = ""
+    @State private var messages:[NotificationMessage] = []
+    @State private var imageID:String = ""
+    @State private var showLoading = false
     @State private var jsonFileUrl:URL?
     @State private var isShareSheetPresented = false
     @State private var deleteMode:Bool = false
     
     @State private var pageNumber:Int = 1
+    
     var showMsgCount:Int{
         min(pageNumber * 10, messages.count)
     }
     
     var body: some View {
-        List{
-            
-            HStack{
-                Spacer()
-                Text("\(showMsgCount) / \(String(format: NSLocalizedString("someMessageCount", comment: "多少条消息"), paw.cloudCount))")
-                    .font(.system(size: 16))
-                    
-            }.listRowBackground(Color.clear)
-            
-            if messages.count == 0 && !showLoading{
+        
+        VStack{
+            List{
+                
                 HStack{
                     Spacer()
-                    Text(NSLocalizedString("notData",comment: ""))
-                    Spacer()
-                }.frame(height: 300)
-                    .padding()
-                    .listRowBackground(Color.clear)
+                    Text("\(showMsgCount) / \(String(format: NSLocalizedString("someMessageCount", comment: "多少条消息"), paw.cloudCount))")
+                        .font(.system(size: 16))
+                        
+                }.listRowBackground(Color.clear)
                 
-            }
-            
-            ForEach(messages.prefix(showMsgCount), id: \.id){item in
-                MessageItem(message: item)
-                    .onAppear{
-                        if item == messages.prefix( showMsgCount ).last {
-                            self.pageNumber += 1
-                        }
-                    }
+                if messages.count == 0 && !showLoading{
+                    HStack{
+                        Spacer()
+                        Text(NSLocalizedString("notData",comment: ""))
+                        Spacer()
+                    }.frame(height: 300)
+                        .padding()
+                        .listRowBackground(Color.clear)
                     
-            }.onDelete(perform: { indexSet in
-                Task{
-                    await self.deleteMessageOne(indexSet)
                 }
-            })
+                
+                ForEach(messages.prefix(showMsgCount), id: \.id){item in
+                    MessageItem(message: item)
+                        .onAppear{
+                            if item == messages.prefix( showMsgCount ).last {
+                                self.pageNumber += 1
+                            }
+                        }
+                        
+                }.onDelete(perform: { indexSet in
+                    Task{
+                        await self.deleteMessageOne(indexSet)
+                    }
+                })
+            }
         }
+       
     
         .task {
            await self.setMessage()

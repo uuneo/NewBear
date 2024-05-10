@@ -17,6 +17,7 @@ struct LoadingPress: ViewModifier{
         
         ZStack {
             content
+                .disabled(show)
                
             
             if show{
@@ -29,16 +30,7 @@ struct LoadingPress: ViewModifier{
                     Text(title)
                         .font(.caption)
                 }
-                .background(
-                    Rectangle()
-                        .fill(Color.black.opacity(0.8))
-                        .blur(radius: 10)
-                        .frame(width: UIScreen.main.bounds.width,height: UIScreen.main.bounds.height)
-                        
-                    
-                )
-                .toolbar(.hidden, for: .tabBar, .navigationBar)
-                .navigationBarTitleDisplayMode(.inline)
+                .toolbar(.hidden, for: .tabBar)
             }
                
                 
