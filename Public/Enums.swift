@@ -18,11 +18,11 @@ enum badgeAutoMode:String, CaseIterable {
 
 
 enum appIcon:String,CaseIterable{
-    case def = "AppIcon"
+    case def = "AppIcon3"
     case zero = "AppIcon0"
     case one = "AppIcon1"
     case two = "AppIcon2"
-    case three = "AppIcon3"
+    case three = "AppIcon"
     case four = "AppIcon4"
     case five = "AppIcon5"
     case six = "AppIcon6"
@@ -56,11 +56,11 @@ enum appIcon:String,CaseIterable{
 
 
 enum logoImage:String,CaseIterable{
-    case def = "logo"
+    case def = "logo3"
     case zero = "logo0"
     case one = "logo1"
     case two = "logo2"
-    case three = "logo3"
+    case three = "logo"
     case four = "logo4"
     case five = "logo5"
     case six = "logo6"
