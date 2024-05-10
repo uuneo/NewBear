@@ -140,7 +140,7 @@ struct StartPageView: View {
                                 }
                             }
                         }
-                    }.frame(width: 120)
+                    }.frame(maxWidth: 200)
                         .padding()
                         .background(.ultraThinMaterial)
                         .clipShape(Capsule())

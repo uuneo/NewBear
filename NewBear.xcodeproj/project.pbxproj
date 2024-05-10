@@ -125,6 +125,7 @@
 		197A35162BC53EF800A76EB7 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 197A35152BC53EF800A76EB7 /* CryptoSwift */; };
 		197A35172BC5437A00A76EB7 /* Localizable.strings in Sources */ = {isa = PBXBuildFile; fileRef = 197A34F82BC5391100A76EB7 /* Localizable.strings */; };
 		197A35192BC552A000A76EB7 /* StartPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A35182BC552A000A76EB7 /* StartPageView.swift */; };
+		19FDFDDB2BEDAC7B00ACA2D5 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 192341EC2BEB7FB500547B5F /* AlamofireDynamic */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -284,6 +285,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19FDFDDB2BEDAC7B00ACA2D5 /* AlamofireDynamic in Frameworks */,
 				197A34DF2BC5371500A76EB7 /* Kingfisher in Frameworks */,
 				197A34DC2BC536FA00A76EB7 /* RealmSwift in Frameworks */,
 				197A34E82BC5376800A76EB7 /* SwiftSMTP in Frameworks */,
