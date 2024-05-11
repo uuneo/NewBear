@@ -1,6 +1,6 @@
 <!-- docs/_sidebar.md -->
 
-- [Beego](/en-us/#Beego)
+- [newbear](/en-us/#newbear)
 - **App**
   - [Tutorial](/en-us/tutorial)
   - [Automate](/en-us/email)

@@ -1,23 +1,23 @@
  *感谢[BARK](https://github.com/Finb/Bark) 的开源项目*
-### Beego <!-- {docsify-ignore-all} -->
+### newbear <!-- {docsify-ignore-all} -->
 - 免费、轻量！简单调用接口即可给自己的iPhone发送推送。
 - 依赖苹果APNs，及时、稳定、可靠
 - 不会消耗设备的电量， 基于系统推送服务与推送扩展，APP本体并不需要运行。
 - 隐私安全，可以通过一些方式确保包含作者本人在内的所有人都无法窃取你的隐私。<br>*点击详细了解如何保障[隐私安全](/privacy)*
 
 ### 源码
-- [Beego](https://github.com/tsaohe/Beego) 是完整开源的 iOS APP，用来接收自定义推送。
-- [BeegoServer](https://github.com/tsaohe/BeegoServer) 是完整开源的 Beego 服务后端，用来接收用户的推送请求并转发给苹果APNS。
+- [newbear](https://github.com/uuneo/newbear) 是完整开源的 iOS APP，用来接收自定义推送。
+- [NewBearService](https://github.com/uuneo/NewBearService) 是完整开源的 newbear 服务后端，用来接收用户的推送请求并转发给苹果APNS。
 
 ### 反馈
-- [Beego 问题反馈群](https://t.me/Beego)
-- [GitHub Issues](https://github.com/tsaohe/Beego/issues)
+- [newbear 问题反馈群](https://t.me/newbear)
+- [GitHub Issues](https://github.com/uuneo/newbear/issues)
 
 - [Bark 问题反馈群](https://t.me/joinchat/OsCbLzovUAE0YjY1) （注意点击入群验证）
 - [GitHub Issues](https://github.com/Finb/Bark/issues)
 
 ### 免费
-* Beego **2024年1月**上线。 *（ BARK他搞多久，我就多久...）*<br> 
+* newbear **2024年1月**上线。 *（ BARK他搞多久，我就多久...）*<br> 
 * Bark **2018年7月**上线至少会维持运营到 **2031年7月** 。*（说不出口“永久”这个词，后续还有需求再续吧）*<br> 
 
 

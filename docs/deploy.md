@@ -1,23 +1,23 @@
 *感谢[BARK](https://github.com/Finb/Bark) 的开源项目*
 ## Docker 
 ```
-docker run -dt --name Beego -p 8080:8080 -v `pwd`/data:/data thurmantsao/alarm-paw-server
+docker run -dt --name newbear -p 8080:8080 -v `pwd`/data:/data uuneo/newbear
 ```
 
 ## Docker-Compose 
 ```
-mkdir -p Beego/data \
-&& cd Beego \
-&& curl -sl https://github.com/tsaohe/BeegoServer/blob/main/deploy/compose.yaml > docker-compose.yaml \
-&& curl -sl https://github.com/tsaohe/BeegoServer/blob/main/deploy/data/config.yaml > ./data/config.yaml \
+mkdir -p newbear/data \
+&& cd newbear \
+&& curl -sl https://github.com/uuneo/NewBearService/blob/main/deploy/compose.yaml > docker-compose.yaml \
+&& curl -sl https://github.com/uuneo/NewBearService/blob/main/deploy/data/config.yaml > ./data/config.yaml \
 && docker-compose up -d
 
 ```
 ## 手动部署
 
-1. 根据平台下载可执行文件:<br> <a href='https://github.com/tsaohe/BeegoServer/releases'>https://github.com/tsaohe/BeegoServer/releases</a><br>
+1. 根据平台下载可执行文件:<br> <a href='https://github.com/uuneo/NewBearService/releases'>https://github.com/uuneo/NewBearService/releases</a><br>
 或自己编译<br>
-<a href="https://github.com/tsaohe/BeegoServer">https://github.com/tsaohe/BeegoServer</a>
+<a href="https://github.com/uuneo/NewBearService">https://github.com/uuneo/NewBearService</a>
 
 2. 运行
 ```
@@ -36,10 +36,10 @@ Render 能非常简单的创建免费的 alarm-paw-server
 2. 创建一个 [New Web Service](https://dashboard.render.com/select-repo?type=web)
 3. 在底部的 **Public Git repository** 输入框输入下面的URL
 ```
-https://github.com/tsaohe/BeegoServer
+https://github.com/uuneo/NewBearService
 ```
 4. 点击 **Continue** 输入表单
-   * Name - 名称，随便取个名字，例如 BeegoServer
+   * Name - 名称，随便取个名字，例如 NewBearService
    * Region - 服务器地区，选择离你近的
    * Start Command - 程序执行命令,填`./app -serverless true`。（注意不要漏了 ./app 前面的点）
    * Instance Type - 选 Free ，免费的足够用了。
@@ -67,7 +67,7 @@ curl http://0.0.0.0:8080/ping
 
 1. APP端负责将<a href="https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622958-application">DeviceToken</a>发送到服务端。 <br>服务端收到一个推送请求后，将发送推送给Apple服务器。然后手机收到推送
 
-2. 服务端代码: <a href='https://github.com/tsaohe/BeegoServer'>https://github.com/tsaohe/BeegoServer</a><br>
+2. 服务端代码: <a href='https://github.com/uuneo/NewBearService'>https://github.com/uuneo/NewBearService</a><br>
 
-3. App代码: <a href="https://github.com/tsaohe/Beego">https://github.com/tsaohe/Beego</a>
+3. App代码: <a href="https://github.com/uuneo/newbear">https://github.com/uuneo/newbear</a>
 

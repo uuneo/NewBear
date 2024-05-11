@@ -6,7 +6,7 @@
 
 ```shell
 # 设置环境变量
-# 下载 key https://github.com/tsaohe/BeegoServer/tree/main/deploy/Beego.p8
+# 下载 key https://github.com/uuneo/NewBearService/tree/main/deploy/newbear.p8
 # 将 key 文件路径填到下面
 TOKEN_KEY_FILE_NAME= 
 # 从 app 设置中复制 DeviceToken 到这

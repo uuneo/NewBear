@@ -33,7 +33,7 @@ curl -X POST https://push.twown.com/your_key \
 curl -X "POST" "//https://push.twown.com/your_key" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "body": "Test Beego Server",
+  "body": "Test newbear Server",
   "title": "Test Title",
   "badge": 1,
   "category": "myNotificationCategory",
@@ -49,7 +49,7 @@ curl -X "POST" "//https://push.twown.com/your_key" \
 curl -X "POST" "https://push.twown.com/push" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "body": "Test Beego Server",
+  "body": "Test newbear Server",
   "title": "Test Title",
   "device_key": "your_key"
 }'

@@ -1,11 +1,11 @@
 
  *感谢[BARK](https://github.com/Finb/Bark) 的开源项目*
 ## 下载源码
-从GitHub下载源码 [Beego](https://github.com/tsaohe/Beego)
+从GitHub下载源码 [newbear](https://github.com/uuneo/newbear)
 
 或
 ```sh
-git clone https://github.com/tsaohe/Beego.git
+git clone https://github.com/uuneo/newbear.git
 ```
 ## 配置依赖
 - Golang 1.18+
